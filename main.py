@@ -5,4 +5,4 @@ from pygame.locals import *
 import views
 
 if __name__ == '__main__':
-    views.Test().run()
+    views.Home().run()

@@ -23,8 +23,10 @@ light_blue = (59, 55, 89)
 dark_gray = (23, 23, 23) 
 gray = (136, 136, 136) 
 
-COLOR_INACTIVE = pygame.Color('lightskyblue3')
-COLOR_ACTIVE = pygame.Color('dodgerblue2')
+COLOR_INACTIVE = black
+COLOR_ACTIVE = blue
+
+VERSION = " (DDK firmware V1.1)"
 
 stop = False
 

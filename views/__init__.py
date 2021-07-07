@@ -1,11 +1,9 @@
-from views.productSearching import Product_Searching
-from views.productRequest import Product_Request
 from views.home import Home
-from views.search import Search
+from views.request import Request
+from views.request_add import Request_Add
 from views.test import Test
 
-__all__ = [ 'Product_Searching',
-            'Product_Request',
-            'Home',
-            'Search',
+__all__ = [ 'Home',
+            'Request',
+            'Request_add',
             'Test']

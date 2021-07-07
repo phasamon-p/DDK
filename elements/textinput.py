@@ -4,17 +4,28 @@ import config
 
 class InputBox:
 
-    def __init__(self, x, y, w, h, text, app):
-        self.fontname = None # 'fonts/SEGOEUIB.TTF'
+    def __init__(self, start_row, start_column, w_column, h_row, text, app):
+        self.fontname = 'fonts/SEGOEUIB.TTF'
         self.fontsize = 32
+        self.border = 3
         self.set_font()
         self.app = app
-        self.rect = pygame.Rect(x, y, w, h)
+        self.start_row = start_row
+        self.start_column = start_column
+        self.w_column = w_column  
+        self.h_row = h_row
+        self.set_size()
         self.color = config.COLOR_INACTIVE
         self.text = text
-        self.txt_surface = self.font.render(text, True, self.color)
+        self.txt_surface = self.font.render(self.text, True, self.color)
         self.active = False
 
+    def set_size(self):
+        if self.h_row > 1:
+            self.rect = pygame.Rect((self.start_row * config.bwidth) + (self.start_row * config.margin), (self.start_column * config.bheight) + ((self.start_column + 1) * config.margin) + 1 ,((self.w_column * config.bwidth) + (self.w_column * config.margin)) - self.border, ((self.h_row * config.bheight) + ((self.h_row- 1) * config.margin)) - self.border)
+        else:
+            self.rect = pygame.Rect((self.start_row * config.bwidth) + (self.start_row * config.margin), (self.start_column * config.bheight) + ((self.start_column + 1) * config.margin) + 1 ,((self.w_column * config.bwidth) + (self.w_column * config.margin)) - self.border, ((self.h_row * config.bheight) - self.border))
+    
     def set_font(self):
         """Set the font from its name and size."""
         self.font = pygame.font.Font(self.fontname, self.fontsize)
@@ -52,6 +63,6 @@ class InputBox:
 
     def draw(self):
         # Blit the text.
-        self.app.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+        self.app.blit(self.txt_surface, (self.rect.x+20, self.rect.y+5))
         # Blit the rect.
-        pygame.draw.rect(self.app, self.color, self.rect, 5)
+        pygame.draw.rect(self.app, self.color, self.rect, self.border)

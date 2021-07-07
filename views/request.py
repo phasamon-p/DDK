@@ -1,4 +1,4 @@
-""" Search (Searching Product) """
+""" Product request (Product request list) """
 import pygame
 from pygame.locals import *
 import time
@@ -8,9 +8,7 @@ import config
 import elements
 import views
 
-
-
-class Search:
+class Request:
     """Create a single-window app with multiple scenes."""
 
     def __init__(self):
@@ -76,13 +74,16 @@ class Search:
             exec(self.click[column_click, row_click])
 
     def run(self):
+        """Initialize Caption and Valiable."""
         self.number = 1
-        
-        """Initialize Title and Image."""
-        elements.Title('PRODUCT REQUEST LIST', pos=(200, 67), app=(self.screen)).draw()
+        pygame.display.set_caption('Product request' + config.VERSION)
+       
+        while self.running:
+            """Refresh surface."""
+            self.screen.fill(Color('white')) 
 
-        """Initialize user interface."""
-        for row in range(12):
+            """Initialize user interface."""
+            for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin
                 row_click = row
                 for column in range(12):
@@ -91,6 +92,8 @@ class Search:
                     position = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1), (config.margin + config.bheight) * row + (config.bheight / 3.5) + 20)
                     position2 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1), (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
                     position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) - 30, (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
+                    if row == 0 and column == 0:
+                        elements.Title('PRODUCT REQUEST LIST', pos=(200, 67), app=(self.screen)).draw()
                     if row == 3 and column == 8:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 204, config.bheight + 67).Rect()
                         elements.Text_Button('    ADD', position, app=(self.screen)).draw()
@@ -109,9 +112,8 @@ class Search:
                     if row == 10 and column == 6:
                         elements.Button(self.screen, config.gray, x, y, config.bwidth + 107, config.bheight).Rect()
                         elements.Text_Button_Medium('  NEXT', position2, app=(self.screen)).draw() 
-
-        """Run the main event loop."""
-        while self.running:
+            
+            """Run the main event loop."""
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
                     self.do_shortcut(event)
@@ -121,4 +123,5 @@ class Search:
                     self.do_click(event)
             
             pygame.display.update()
+            pygame.display.flip()
         pygame.quit()

@@ -1,8 +1,9 @@
 from pygame import image
-from elements.text import Title, Number, Text_Button, Text_Mainbutton, Text_Button_Medium
+from elements.text import Title, Number, Text_Button, Text_Mainbutton, Text_Button_Medium, Header_Table
 from elements.button import Button
 from elements.image import Image
 from elements.textinput import InputBox
+from elements.rectangle import Rectangle
 
 __all__ = [ 'Title',
             'Number',
@@ -11,4 +12,6 @@ __all__ = [ 'Title',
             'Text_Mainbutton',
             'Image',
             'Text_Button_Medium',
-            'InputBox']
+            'Header_Table',
+            'InputBox',
+            'Rectangle']

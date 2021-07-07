@@ -2,7 +2,6 @@
 import pygame
 from pygame.locals import *
 
-
 import time
 import os
 
@@ -35,30 +34,28 @@ class Home:
         }
     
         self.click = {
-            # Click search button
-            (7, 2): 'views.Search().run(); pygame.quit()',
-            (8, 2): 'views.Search().run(); pygame.quit()',
-            (9, 2): 'views.Search().run(); pygame.quit()',
-            (10, 2): 'views.Search().run(); pygame.quit()',
-            (7, 3): 'views.Search().run(); pygame.quit()',
-            (8, 3): 'views.Search().run(); pygame.quit()',
-            (9, 3): 'views.Search().run(); pygame.quit()',
-            (10, 3): 'views.Search().run(); pygame.quit()',
+            # Click Request button
+            (7, 2): 'print("SEARCH")',
+            (8, 2): 'print("SEARCH")',
+            (9, 2): 'print("SEARCH")',
+            (10, 2): 'print("SEARCH")',
+            (7, 3): 'print("SEARCH")',
+            (8, 3): 'print("SEARCH")',
+            (9, 3): 'print("SEARCH")',
+            (10, 3): 'print("SEARCH")',
             # Click request button
-            (7, 5): 'print("REQUEST")',
-            (8, 5): 'print("REQUEST")',
-            (9, 5): 'print("REQUEST")',
-            (10, 5): 'print("REQUEST")',
-            (7, 6): 'print("REQUEST")',
-            (8, 6): 'print("REQUEST")',
-            (9, 6): 'print("REQUEST")',
-            (10, 6): 'print("REQUEST")',
+            (7, 5): 'views.Request().run(); pygame.quit()',
+            (8, 5): 'views.Request().run(); pygame.quit()',
+            (9, 5): 'views.Request().run(); pygame.quit()',
+            (10, 5): 'views.Request().run(); pygame.quit()',
+            (7, 6): 'views.Request().run(); pygame.quit()',
+            (8, 6): 'views.Request().run(); pygame.quit()',
+            (9, 6): 'views.Request().run(); pygame.quit()',
+            (10, 6): 'views.Request().run(); pygame.quit()',
             # Click admin button
             (7, 8): 'print("ADMIN")',
             (8, 8): 'print("ADMIN")',
             (9, 8): 'print("ADMIN")',
-            (10, 8): 'print("ADMIN")',
-            (7, 9): 'print("ADMIN")',
             (8, 9): 'print("ADMIN")',
             (9, 9): 'print("ADMIN")',
             (10, 9): 'print("ADMIN")',
@@ -79,20 +76,23 @@ class Home:
             exec(self.click[column_click, row_click])
 
     def run(self):
-        self.number = 1
+        """Initialize Caption and Valiable."""
+        pygame.display.set_caption('Home' + config.VERSION)
+        
+        while self.running:
+            """Refresh surface."""
+            self.screen.fill(Color('white')) 
 
-        """Initialize Title and Image."""
-        elements.Image('images/qr.png', (200, 200), app=(self.screen)).draw()
-        elements.InputBox(100, 100, 140, 32,"Text Input", app=(self.screen))
-
-        """Initialize user interface."""
-        for row in range(12):
+            """Initialize user interface."""
+            for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin
                 row_click = row
                 for column in range(12):
                     x = (config.margin + config.bwidth) * column + config.margin
                     column_click = column
                     position = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1), (config.margin + config.bheight) * row + (config.bheight / 3.5) + 5)
+                    if row == 0 and column == 0:
+                        elements.Image('images/touchid.png', (200, 200), app=(self.screen)).draw()
                     if row == 2 and column == 7:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 321, config.bheight + 67).Rect()
                         elements.Text_Mainbutton('   SEARCH', position, app=(self.screen)).draw()
@@ -101,10 +101,9 @@ class Home:
                         elements.Text_Mainbutton('  REQUEST', position, app=(self.screen)).draw()
                     if row == 8 and column == 7:
                         elements.Button(self.screen, config.red, x, y, config.bwidth + 321, config.bheight + 67).Rect()
-                        elements.Text_Mainbutton('    ADMIN', position, app=(self.screen)).draw()                   
-
-        """Run the main event loop."""
-        while self.running:
+                        elements.Text_Mainbutton('    ADMIN', position, app=(self.screen)).draw()
+            
+            """Run the main event loop."""
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
                     self.do_shortcut(event)
@@ -114,6 +113,7 @@ class Home:
                     self.do_click(event)
             
             pygame.display.update()
+            pygame.display.flip()
         pygame.quit()
 
 class Person:
