@@ -22,6 +22,7 @@ blue_arm = (2, 89, 154)
 light_blue = (59, 55, 89)
 dark_gray = (23, 23, 23) 
 gray = (136, 136, 136) 
+dark_yellow = (164, 137, 0)
 
 COLOR_INACTIVE = black
 COLOR_ACTIVE = blue

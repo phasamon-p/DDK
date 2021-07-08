@@ -29,31 +29,28 @@ class Request:
         }
         
         self.click = {
-            # Click search button
-            (8, 3): 'print("ADD")',
-            (9, 3): 'print("ADD")',
-            (10, 3): 'print("ADD")',
-            (8, 4): 'print("ADD")',
-            (9, 4): 'print("ADD")',
-            (10, 4): 'print("ADD")',
-            # Click request button
-            (8, 5): 'print("DELETE")',
-            (9, 5): 'print("DELETE")',
-            (10, 5): 'print("DELETE")',
+            # Click add button
+            (8, 4): 'views.Request_Add().run(); pygame.quit()',
+            (9, 4): 'views.Request_Add().run(); pygame.quit()',
+            (10, 4): 'views.Request_Add().run(); pygame.quit()',
+            (8, 5): 'views.Request_Add().run(); pygame.quit()',
+            (9, 5): 'views.Request_Add().run(); pygame.quit()',
+            (10, 5): 'views.Request_Add().run(); pygame.quit()',
+            # Click delete button
             (8, 6): 'print("DELETE")',
             (9, 6): 'print("DELETE")',
             (10, 6): 'print("DELETE")',
-            # Click admin button
-            (8, 7): 'print("CONFIRM")',
-            (9, 7): 'print("CONFIRM")',
-            (10, 7): 'print("CONFIRM")',
+            (8, 7): 'print("DELETE")',
+            (9, 7): 'print("DELETE")',
+            (10, 7): 'print("DELETE")',
+            # Click confirm button
             (8, 8): 'print("CONFIRM")',
             (9, 8): 'print("CONFIRM")',
             (10, 8): 'print("CONFIRM")',
-            # Click admin button
-            (8, 9): 'views.Home().run(); pygame.quit()',
-            (9, 9): 'views.Home().run(); pygame.quit()',
-            (10, 9): 'views.Home().run(); pygame.quit()',
+            (8, 9): 'print("CONFIRM")',
+            (9, 9): 'print("CONFIRM")',
+            (10, 9): 'print("CONFIRM")',
+            # Click cancel button
             (8, 10): 'views.Home().run(); pygame.quit()',
             (9, 10): 'views.Home().run(); pygame.quit()',
             (10, 10): 'views.Home().run(); pygame.quit()',
@@ -89,23 +86,29 @@ class Request:
                 for column in range(12):
                     x = (config.margin + config.bwidth) * column + config.margin
                     column_click = column
-                    position = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1), (config.margin + config.bheight) * row + (config.bheight / 3.5) + 20)
+                    position = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 20, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
                     position2 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1), (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
                     position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) - 30, (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
+                    position4 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 15, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
                     if row == 0 and column == 0:
-                        elements.Title('PRODUCT REQUEST LIST', pos=(200, 67), app=(self.screen)).draw()
-                    if row == 3 and column == 8:
-                        elements.Button(self.screen, config.green, x, y, config.bwidth + 204, config.bheight + 67).Rect()
-                        elements.Text_Button('    ADD', position, app=(self.screen)).draw()
-                    if row == 5 and column == 8:
-                        elements.Button(self.screen, config.dark_gray, x, y, config.bwidth + 204, config.bheight + 67).Rect()  
-                        elements.Text_Button('  DELETE', position, app=(self.screen)).draw()
-                    if row == 7 and column == 8:
-                        elements.Button(self.screen, config.blue, x, y, config.bwidth + 204, config.bheight + 67).Rect()
-                        elements.Text_Button(' CONFIRM', position, app=(self.screen)).draw()  
-                    if row == 9 and column == 8:
-                        elements.Button(self.screen, config.red, x, y, config.bwidth + 204, config.bheight + 67).Rect()
-                        elements.Text_Button('  CANCEL', position, app=(self.screen)).draw()
+                        elements.Title('PRODUCT REQUEST LIST', pos=(230, 67), app=(self.screen)).draw()
+                        elements.Header_Table('No.', 1, 3, app=(self.screen)).draw()
+                        elements.Header_Table('Product name', 2, 3, app=(self.screen)).draw()
+                        elements.Header_Table('QTY.', 6, 3, app=(self.screen)).draw()
+                        elements.Header_Table('Locker', 7, 3, app=(self.screen)).draw()
+                        elements.Rectangle(1, 4, 7, 6, app=(self.screen)).draw()
+                    if row == 4 and column == 8:
+                        elements.Button(self.screen, config.green, x, y, config.bwidth + 214, config.bheight + 67).Rect()
+                        elements.Text_Button_Medium('     ADD', position, app=(self.screen)).draw()
+                    if row == 6 and column == 8:
+                        elements.Button(self.screen, config.dark_gray, x, y, config.bwidth + 214, config.bheight + 67).Rect()  
+                        elements.Text_Button_Medium('   DELETE', position, app=(self.screen)).draw()
+                    if row == 8 and column == 8:
+                        elements.Button(self.screen, config.blue, x, y, config.bwidth + 214, config.bheight + 67).Rect()
+                        elements.Text_Button_Medium('  CONFIRM', position4, app=(self.screen)).draw()  
+                    if row == 10 and column == 8:
+                        elements.Button(self.screen, config.red, x, y, config.bwidth + 214, config.bheight).Rect()
+                        elements.Text_Button_Medium('     CANCEL', position2, app=(self.screen)).draw()
                     if row == 10 and column == 1:
                         elements.Button(self.screen, config.gray, x, y, config.bwidth + 107, config.bheight).Rect()
                         elements.Text_Button_Medium(' PREVIOUS', position3, app=(self.screen)).draw() 

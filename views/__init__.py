@@ -1,9 +1,14 @@
 from views.home import Home
-from views.request import Request
-from views.request_add import Request_Add
 from views.test import Test
+from views.search import Search
+from views.request import Request_Add, Request
+from views.admin import System_Management, User_Management, Product_Management
 
 __all__ = [ 'Home',
             'Request',
-            'Request_add',
-            'Test']
+            'Request_Add',
+            'Test',
+            'Search',
+            'System_Management',
+            'User_Management',
+            'Product_Management']

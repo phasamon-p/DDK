@@ -29,20 +29,20 @@ class Home:
             (K_x, KMOD_LALT): 'print("alt+X")',
             (K_x, KMOD_LCTRL): 'home.App().run()',
             (K_x, KMOD_LMETA + KMOD_LSHIFT): 'print("cmd+shift+X")',
-            (K_x, KMOD_LMETA + KMOD_LALT): 'print("cmd+alt+X")',
+            (K_x, KMOD_LMETA + KMOD_LALT): 'print("cmd+alt+X")', 
             (K_x, KMOD_LMETA + KMOD_LALT + KMOD_LSHIFT): 'print("cmd+alt+shift+X")',
         }
     
         self.click = {
             # Click Request button
-            (7, 2): 'print("SEARCH")',
-            (8, 2): 'print("SEARCH")',
-            (9, 2): 'print("SEARCH")',
-            (10, 2): 'print("SEARCH")',
-            (7, 3): 'print("SEARCH")',
-            (8, 3): 'print("SEARCH")',
-            (9, 3): 'print("SEARCH")',
-            (10, 3): 'print("SEARCH")',
+            (7, 2): 'views.Search().run(); pygame.quit()',
+            (8, 2): 'views.Search().run(); pygame.quit()',
+            (9, 2): 'views.Search().run(); pygame.quit()',
+            (10, 2): 'views.Search().run(); pygame.quit()',
+            (7, 3): 'views.Search().run(); pygame.quit()',
+            (8, 3): 'views.Search().run(); pygame.quit()',
+            (9, 3): 'views.Search().run(); pygame.quit()',
+            (10, 3): 'views.Search().run(); pygame.quit()',
             # Click request button
             (7, 5): 'views.Request().run(); pygame.quit()',
             (8, 5): 'views.Request().run(); pygame.quit()',
@@ -53,12 +53,14 @@ class Home:
             (9, 6): 'views.Request().run(); pygame.quit()',
             (10, 6): 'views.Request().run(); pygame.quit()',
             # Click admin button
-            (7, 8): 'print("ADMIN")',
-            (8, 8): 'print("ADMIN")',
-            (9, 8): 'print("ADMIN")',
-            (8, 9): 'print("ADMIN")',
-            (9, 9): 'print("ADMIN")',
-            (10, 9): 'print("ADMIN")',
+            (7, 8): 'views.System_Management().run(); pygame.quit()',
+            (8, 8): 'views.System_Management().run(); pygame.quit()',
+            (9, 8): 'views.System_Management().run(); pygame.quit()',
+            (10, 8): 'views.System_Management().run(); pygame.quit()',
+            (7, 9): 'views.System_Management().run(); pygame.quit()',
+            (8, 9): 'views.System_Management().run(); pygame.quit()',
+            (9, 9): 'views.System_Management().run(); pygame.quit()',
+            (10, 9): 'views.System_Management().run(); pygame.quit()',
         }
 
     def do_shortcut(self, event):
