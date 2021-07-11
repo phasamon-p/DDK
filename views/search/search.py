@@ -6,6 +6,7 @@ import os
 import config 
 import elements
 import views
+import data_example
 
 
 
@@ -20,6 +21,10 @@ class Search:
         self.screen = pygame.display.set_mode(config.screensize, flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
+        self.next_button = False # Set default avtivation status of next button
+        self.previous_button = False # Set default avtivation status of previous button
+        self.index = 0 # Set default index value of listview page
+        self.product_data = ""
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -32,12 +37,12 @@ class Search:
 
         self.click = {
             # Click search button
-            (8, 3): 'print("SEARCH")',
-            (9, 3): 'print("SEARCH")',
-            (10, 3): 'print("SEARCH")',
-            (8, 4): 'print("SEARCH")',
-            (9, 4): 'print("SEARCH")',
-            (10, 4): 'print("SEARCH")',
+            (8, 3): 'self.product_data = self.search_click()',
+            (9, 3): 'self.product_data = self.search_click()',
+            (10, 3): 'self.product_data = self.search_click()',
+            (8, 4): 'self.product_data = self.search_click()',
+            (9, 4): 'self.product_data = self.search_click()',
+            (10, 4): 'self.product_data = self.search_click()',
             # Click numpad button
             (8, 5): 'print("1")',
             (9, 5): 'print("2")',
@@ -58,6 +63,12 @@ class Search:
             (8, 10): 'views.Home().run(); pygame.quit()',
             (9, 10): 'views.Home().run(); pygame.quit()',
             (10, 10): 'views.Home().run(); pygame.quit()',
+            # Click previous button
+            (1, 10): 'self.previousbutton_click()',
+            (2, 10): 'self.previousbutton_click()',
+            # Click next button
+            (6, 10): 'self.nextbutton_click()',
+            (7, 10): 'self.nextbutton_click()',
         }
 
     def do_shortcut(self, event):
@@ -74,6 +85,29 @@ class Search:
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
+    def search_click(self):
+        x = data_example.product['product']
+        return x
+
+    def active_button(self):
+        """Check activation next button."""
+        if len(self.product_data) - (self.index * 5) >= 5 :
+            self.next_button = True
+        else:
+            self.next_button = False
+        """Check activation previous button."""
+        if self.index > 0:
+            self.previous_button = True
+        else:
+            self.previous_button = False
+    def nextbutton_click(self):
+        if self.next_button:
+            self.index += 1
+
+    def previousbutton_click(self):
+        if self.previous_button:
+            self.index -= 1
+
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption('Product search' + config.VERSION)
@@ -83,7 +117,8 @@ class Search:
         while self.running:
             self.number = 1
             self.screen.fill(Color('white'))
-
+            self.product_listview = elements.Search_Listview(1, 5, 7, 5, app=(self.screen),data = self.product_data, index = self.index)
+            self.active_button()
             """Initialize user interface."""
             for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin
@@ -99,8 +134,9 @@ class Search:
                         elements.Header_Table('Product name', 2, 4, app=(self.screen)).draw()
                         elements.Header_Table('QTY.', 6, 4, app=(self.screen)).draw()
                         elements.Header_Table('Locker', 7, 4, app=(self.screen)).draw()
-                        elements.Rectangle(1, 5, 7, 5, app=(self.screen)).draw()
-                        self.search_input.draw()                      
+                        # elements.Rectangle(1, 5, 7, 5, app=(self.screen)).draw()
+                        self.search_input.draw() 
+                        self.product_listview.draw()                     
                     if row == 3 and column == 8:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 214, config.bheight + 67).Rect()
                         elements.Text_Button('     SEARCH', position4, app=(self.screen)).draw()
@@ -123,10 +159,16 @@ class Search:
                         elements.Button(self.screen, config.red, x, y, config.bwidth + 214, config.bheight + 67).Rect()
                         elements.Text_Button('     CANCEL', position4, app=(self.screen)).draw()
                     if row == 10 and column == 1:
-                        elements.Button(self.screen, config.gray, x, y, config.bwidth + 107, config.bheight).Rect()
+                        if self.previous_button:
+                            elements.Button(self.screen, config.dark_gray, x, y, config.bwidth + 107, config.bheight).Rect()
+                        else:
+                            elements.Button(self.screen, config.gray, x, y, config.bwidth + 107, config.bheight).Rect()
                         elements.Text_Button_Medium(' PREVIOUS', position3, app=(self.screen)).draw() 
                     if row == 10 and column == 6:
-                        elements.Button(self.screen, config.gray, x, y, config.bwidth + 107, config.bheight).Rect()
+                        if self.next_button:
+                            elements.Button(self.screen, config.dark_gray, x, y, config.bwidth + 107, config.bheight).Rect()
+                        else:
+                            elements.Button(self.screen, config.gray, x, y, config.bwidth + 107, config.bheight).Rect()
                         elements.Text_Button_Medium('  NEXT', position2, app=(self.screen)).draw()                
 
             for event in pygame.event.get():
