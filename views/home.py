@@ -22,8 +22,6 @@ class Home:
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
 
-        self.person = Person()
-
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
             (K_x, KMOD_LALT): 'print("alt+X")',
@@ -70,10 +68,10 @@ class Home:
         if (k, m) in self.shortcuts:
             exec(self.shortcuts[k, m])
 
-    def do_click(self, event):
+    def do_click(self, x, y):
         """Find the mouse positionm in the gird and execute the event."""
-        column_click = event.pos[0] // (config.bwidth + config.margin)
-        row_click = event.pos[1] // (config.bheight + config.margin)
+        column_click = x // (config.bwidth + config.margin)
+        row_click = y // (config.bheight + config.margin)
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
@@ -107,12 +105,21 @@ class Home:
             
             """Run the main event loop."""
             for event in pygame.event.get():
+                if event.type == FINGERDOWN:
+                    print(event)
                 if event.type == KEYDOWN:
                     self.do_shortcut(event)
                 if event.type == QUIT:
                     self.running = False
-                if event.type == MOUSEBUTTONDOWN:
-                    self.do_click(event)
+                if event.type == MOUSEBUTTONDOWN or event.type == FINGERDOWN:
+                    # self.do_click(event)
+                    if event.type == FINGERDOWN:
+                        x = event.x * config.width
+                        y = event.y * config.height
+                        self.do_click(x, y)
+                    else:
+                        x, y = event.pos
+                        self.do_click(x, y)
             
             pygame.display.update()
             pygame.display.flip()

@@ -42,6 +42,20 @@ class InputBox:
             (10, 8): 'self.update("#")',
         }
 
+        self.num_press = {
+            # Click numpad button
+            ("1"): 'self.update("1")',
+            ("2"): 'self.update("2")',
+            ("3"): 'self.update("3")',
+            ("4"): 'self.update("4")',
+            ("5"): 'self.update("5")',
+            ("6"): 'self.update("6")',
+            ("7"): 'self.update("7")',
+            ("8"): 'self.update("8")',
+            ("9"): 'self.update("9")',
+            ("0"): 'self.update("0")',
+        }
+
     def set_size(self):
         if self.h_row > 1:
             if self.w_column > 1:
@@ -56,16 +70,26 @@ class InputBox:
     
     def set_font(self):
         """Set the font from its name and size."""
-        self.font = pygame.font.Font(self.fontname, self.fontsize)
-
-    def numpad_click(self, event):
+        self.font = pygame.font.Font(self.fontname, self.fontsize) 
+    
+    def numpad_click(self, x, y):
         """Find the mouse positionm in the gird and execute the event."""
-        column_click = event.pos[0] // (config.bwidth + config.margin)
-        row_click = event.pos[1] // (config.bheight + config.margin)
+        column_click = x // (config.bwidth + config.margin)
+        row_click = y // (config.bheight + config.margin)
         if (column_click, row_click) in self.numpad:
             exec(self.numpad[column_click, row_click])
-    
+
     def handle_event(self, event):
+        if event.type == MOUSEBUTTONDOWN or event.type == FINGERDOWN:
+            if self.numpad_active & self.active:
+                if event.type == FINGERDOWN:
+                    x = event.x * config.width
+                    y = event.y * config.height
+                    self.numpad_click(x, y)
+                else:
+                    x, y = event.pos
+                    self.pos_mouse = x, y = event.pos
+                    self.numpad_click(x, y)
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.numpad_active & self.active:
                 self.numpad_click(event)
@@ -184,31 +208,55 @@ class InputBox_2:
         """Set the font from its name and size."""
         self.font = pygame.font.Font(self.fontname, self.fontsize)
 
-    def numpad_click(self, event):
+    # def numpad_click(self, event):
+    #     """Find the mouse positionm in the gird and execute the event."""
+    #     column_click = event.pos[0] // (config.bwidth + config.margin)
+    #     row_click = event.pos[1] // (config.bheight + config.margin)
+    #     if (column_click, row_click) in self.numpad:
+    #         exec(self.numpad[column_click, row_click])
+
+    def numpad_click(self, x, y):
         """Find the mouse positionm in the gird and execute the event."""
-        column_click = event.pos[0] // (config.bwidth + config.margin)
-        row_click = event.pos[1] // (config.bheight + config.margin)
+        column_click = x // (config.bwidth + config.margin)
+        row_click = y // (config.bheight + config.margin)
         if (column_click, row_click) in self.numpad:
             exec(self.numpad[column_click, row_click])
 
     def numpad_press(self, event):
-        """Find the mouse positionm in the gird and execute the event."""
+        """Find the mouse position in the gird and execute the event."""
         if (event.unicode) in self.num_press:
             exec(self.num_press[event.unicode])
     
     def handle_event(self, event, index):
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == MOUSEBUTTONDOWN or event.type == FINGERDOWN:
             if self.numpad_active & self.active:
-                self.numpad_click(event)
+                if event.type == FINGERDOWN:
+                    x = event.x * config.width
+                    y = event.y * config.height
+                    self.numpad_click(x, y)
+                else:
+                    x, y = event.pos
+                    self.pos_mouse = x, y = event.pos
+                    self.numpad_click(x, y)
             # If the user clicked on the input_box rect.
-            if self.rect.collidepoint(event.pos):
-                if index == 1:
-                # Toggle the active variable.
-                    views.request_data.inbox_active[0] = True
-                    views.request_data.inbox_active[1] = False
-                if index == 2:
-                    views.request_data.inbox_active[1] = True
-                    views.request_data.inbox_active[0] = False
+            if event.type == FINGERDOWN:
+                if self.rect.collidepoint(event.x * config.width,event.y * config.height):
+                    if index == 1:
+                    # Toggle the active variable.
+                        views.request_data.inbox_active[0] = True
+                        views.request_data.inbox_active[1] = False
+                    if index == 2:
+                        views.request_data.inbox_active[1] = True
+                        views.request_data.inbox_active[0] = False
+            elif event.type == MOUSEBUTTONDOWN:
+                if self.rect.collidepoint(event.pos):
+                    if index == 1:
+                    # Toggle the active variable.
+                        views.request_data.inbox_active[0] = True
+                        views.request_data.inbox_active[1] = False
+                    if index == 2:
+                        views.request_data.inbox_active[1] = True
+                        views.request_data.inbox_active[0] = False
             else:
                 pass
                 # self.active = False
