@@ -56,9 +56,9 @@ class Request:
             (9, 9): 'print("CONFIRM")',
             (10, 9): 'print("CONFIRM")',
             # Click cancel button
-            (8, 10): 'views.Home().run(); pygame.quit()',
-            (9, 10): 'views.Home().run(); pygame.quit()',
-            (10, 10): 'views.Home().run(); pygame.quit()',
+            (8, 10): 'self.cancel_click()',
+            (9, 10): 'self.cancel_click()',
+            (10, 10): 'self.cancel_click()',
              # Click previous button
             (1, 10): 'self.previousbutton_click()',
             (2, 10): 'self.previousbutton_click()',
@@ -106,6 +106,11 @@ class Request:
             views.request_data.delete()
         else:
             print("Can not delete request list because list is emty")
+
+    def cancel_click(self):
+        views.request_data.reset()
+        views.Home().run()
+        pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""

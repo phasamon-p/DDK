@@ -22,12 +22,16 @@ class Home:
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
 
+        # self.shortcuts = {
+        #     (K_x, KMOD_LALT): '',
+        # }
+
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
-            (K_x, KMOD_LALT): 'print("alt+X")',
-            (K_x, KMOD_LCTRL): 'home.App().run()',
+            (K_x, KMOD_LALT): 'self.exit_fullscreen()',
+            (K_x, KMOD_LCTRL): 'print("ctrl + X")',
             (K_x, KMOD_LMETA + KMOD_LSHIFT): 'print("cmd+shift+X")',
-            (K_x, KMOD_LMETA + KMOD_LALT): 'print("cmd+alt+X")', 
+            (K_x, KMOD_LMETA + KMOD_LALT): 'print("cmd+alt+X")',
             (K_x, KMOD_LMETA + KMOD_LALT + KMOD_LSHIFT): 'print("cmd+alt+shift+X")',
         }
     
@@ -74,6 +78,11 @@ class Home:
         row_click = y // (config.bheight + config.margin)
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
+
+    def exit_fullscreen(self):
+        print("alt+X")
+        config.flags = RESIZABLE
+        self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
 
     def run(self):
         """Initialize Caption and Valiable."""

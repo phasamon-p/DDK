@@ -10,5 +10,9 @@ def add(object):
 def delete():
     request_list.pop()
 
+def reset():
+    request_list.clear()
+
 # Set Valiable of activattion list view button
 inbox_active = [False, False]
+

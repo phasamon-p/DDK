@@ -2,7 +2,7 @@ from pygame import image
 from elements.text import Title, Number, Text_Button, Text_Mainbutton, Text_Button_Medium, Header_Table
 from elements.button import Button
 from elements.image import Image
-from elements.textinput import InputBox, InputBox_2, InputBox_Quantity
+from elements.textinput import InputBox, InputBox_2, InputBox_Number, InputBox_Text
 from elements.rectangle import Rectangle
 from elements.listview import Search_Listview, Request_Listview
 
@@ -16,7 +16,8 @@ __all__ = [ 'Title',
             'Header_Table',
             'InputBox',
             'InputBox_2',
-            'InputBox_Quantity',
+            'InputBox_Number',
             'Rectangle',
             'Search_Listview',
-            'Request_Listview']
+            'Request_Listview',
+            'InputBox_Text']

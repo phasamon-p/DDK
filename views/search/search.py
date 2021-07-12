@@ -17,8 +17,7 @@ class Search:
         """Initialize pygame and the application."""
         pygame.init() # Initialize the pygame
         pygame.display.init()  # Initialize the display module
-        flags = RESIZABLE
-        self.screen = pygame.display.set_mode(config.screensize, flags) # Set mode of screen
+        self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
         self.next_button = False # Set default avtivation status of next button

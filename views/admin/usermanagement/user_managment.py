@@ -30,23 +30,23 @@ class User_Management:
         
         self.click = {
             # Click add button
-            (1, 3): 'print("ADREDD")',
-            (5, 3): 'print("ADD")',
-            (6, 3): 'print("ADD")',
-            (7, 3): 'print("ADD")',
-            (8, 3): 'print("ADD")',
-            (9, 3): 'print("ADD")',
-            (10, 3): 'print("ADD")',
-            (1, 4): 'print("ADD")',
-            (2, 4): 'print("ADD")',
-            (3, 4): 'print("ADD")',
-            (4, 4): 'print("ADD")',
-            (5, 4): 'print("ADD")',
-            (6, 4): 'print("ADD")',
-            (7, 4): 'print("ADD")',
-            (8, 4): 'print("ADD")',
-            (9, 4): 'print("ADD")',
-            (10, 4): 'print("ADD")',
+            (1, 3): 'self.add_click()',
+            (5, 3): 'self.add_click()',
+            (6, 3): 'self.add_click()',
+            (7, 3): 'self.add_click()',
+            (8, 3): 'self.add_click()',
+            (9, 3): 'self.add_click()',
+            (10, 3): 'self.add_click()',
+            (1, 4): 'self.add_click()',
+            (2, 4): 'self.add_click()',
+            (3, 4): 'self.add_click()',
+            (4, 4): 'self.add_click()',
+            (5, 4): 'self.add_click()',
+            (6, 4): 'self.add_click()',
+            (7, 4): 'self.add_click()',
+            (8, 4): 'self.add_click()',
+            (9, 4): 'self.add_click()',
+            (10, 4): 'self.add_click()',
 
             # Click edit or delete button
             (1, 6): 'print("EDIT OR DELETE")',
@@ -107,6 +107,10 @@ class User_Management:
         row_click = y // (config.bheight + config.margin)
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
+
+    def add_click(self):
+        views.User_Id(False).run()
+        pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""
