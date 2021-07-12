@@ -43,19 +43,6 @@ class Search:
             (8, 4): 'self.product_data = self.search_click()',
             (9, 4): 'self.product_data = self.search_click()',
             (10, 4): 'self.product_data = self.search_click()',
-            # Click numpad button
-            (8, 5): 'print("1")',
-            (9, 5): 'print("2")',
-            (10, 5): 'print("3")',
-            (8, 6): 'print("4")',
-            (9, 6): 'print("5")',
-            (10, 6): 'print("6")',
-            (8, 7): 'print("7")',
-            (9, 7): 'print("8")',
-            (10, 7): 'print("9")',
-            (8, 8): 'print("*")',
-            (9, 8): 'print("0")',
-            (10, 8): 'print("#")',
             # Click cancel button
             (8, 9): 'views.Home().run(); pygame.quit()',
             (9, 9): 'views.Home().run(); pygame.quit()',
@@ -91,7 +78,7 @@ class Search:
 
     def active_button(self):
         """Check activation next button."""
-        if len(self.product_data) - (self.index * 5) >= 5 :
+        if len(self.product_data) - (self.index * 5) > 5 :
             self.next_button = True
         else:
             self.next_button = False
@@ -111,7 +98,7 @@ class Search:
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption('Product search' + config.VERSION)
-        self.search_input = elements.InputBox(1, 3, 7, 1, "", app=(self.screen), active=True)
+        self.search_input = elements.InputBox(1, 3, 7, 1, app = (self.screen), active = True, numpad_active = True)
 
         """Run the main event loop."""
         while self.running:

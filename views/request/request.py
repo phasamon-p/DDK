@@ -17,7 +17,12 @@ class Request:
         pygame.display.init()  # Initialize the display module
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
-        self.running = True 
+        self.running = True
+
+        self.next_button = False # Set default avtivation status of next button
+        self.previous_button = False # Set default avtivation status of previous button
+        self.index = 0 # Set default index value of listview page
+        self.product_data = views.request_data.request_list
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -37,12 +42,12 @@ class Request:
             (9, 5): 'views.Request_Add().run(); pygame.quit()',
             (10, 5): 'views.Request_Add().run(); pygame.quit()',
             # Click delete button
-            (8, 6): 'print("DELETE")',
-            (9, 6): 'print("DELETE")',
-            (10, 6): 'print("DELETE")',
-            (8, 7): 'print("DELETE")',
-            (9, 7): 'print("DELETE")',
-            (10, 7): 'print("DELETE")',
+            (8, 6): 'self.delete_list()',
+            (9, 6): 'self.delete_list()',
+            (10, 6): 'self.delete_list()',
+            (8, 7): 'self.delete_list()',
+            (9, 7): 'self.delete_list()',
+            (10, 7): 'self.delete_list()',
             # Click confirm button
             (8, 8): 'print("CONFIRM")',
             (9, 8): 'print("CONFIRM")',
@@ -54,6 +59,12 @@ class Request:
             (8, 10): 'views.Home().run(); pygame.quit()',
             (9, 10): 'views.Home().run(); pygame.quit()',
             (10, 10): 'views.Home().run(); pygame.quit()',
+             # Click previous button
+            (1, 10): 'self.previousbutton_click()',
+            (2, 10): 'self.previousbutton_click()',
+            # Click next button
+            (6, 10): 'self.nextbutton_click()',
+            (7, 10): 'self.nextbutton_click()',
         }
 
     def do_shortcut(self, event):
@@ -70,15 +81,42 @@ class Request:
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
+    def active_button(self):
+        """Check activation next button."""
+        if len(self.product_data) - (self.index * 6) > 6 :
+            self.next_button = True
+        else:
+            self.next_button = False
+        """Check activation previous button."""
+        if self.index > 0:
+            self.previous_button = True
+        else:
+            self.previous_button = False
+
+    def nextbutton_click(self):
+        if self.next_button:
+            self.index += 1
+
+    def previousbutton_click(self):
+        if self.previous_button:
+            self.index -= 1
+
+    def delete_list(self):
+        if len(self.product_data) > 0:
+            views.request_data.delete()
+        else:
+            print("Can not delete request list because list is emty")
+
     def run(self):
         """Initialize Caption and Valiable."""
         self.number = 1
         pygame.display.set_caption('Product request' + config.VERSION)
-       
+
         while self.running:
             """Refresh surface."""
             self.screen.fill(Color('white')) 
-
+            self.product_listview = elements.Request_Listview(1, 4, 7, 6, app=(self.screen),data = self.product_data, index = self.index)
+            self.active_button()
             """Initialize user interface."""
             for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin
@@ -96,7 +134,7 @@ class Request:
                         elements.Header_Table('Product name', 2, 3, app=(self.screen)).draw()
                         elements.Header_Table('QTY.', 6, 3, app=(self.screen)).draw()
                         elements.Header_Table('Locker', 7, 3, app=(self.screen)).draw()
-                        elements.Rectangle(1, 4, 7, 6, app=(self.screen)).draw()
+                        self.product_listview.draw()      
                     if row == 4 and column == 8:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 214, config.bheight + 67).Rect()
                         elements.Text_Button_Medium('     ADD', position, app=(self.screen)).draw()
@@ -110,10 +148,16 @@ class Request:
                         elements.Button(self.screen, config.red, x, y, config.bwidth + 214, config.bheight).Rect()
                         elements.Text_Button_Medium('     CANCEL', position2, app=(self.screen)).draw()
                     if row == 10 and column == 1:
-                        elements.Button(self.screen, config.gray, x, y, config.bwidth + 107, config.bheight).Rect()
+                        if self.previous_button:
+                            elements.Button(self.screen, config.dark_gray, x, y, config.bwidth + 107, config.bheight).Rect()
+                        else:
+                            elements.Button(self.screen, config.gray, x, y, config.bwidth + 107, config.bheight).Rect()
                         elements.Text_Button_Medium(' PREVIOUS', position3, app=(self.screen)).draw() 
                     if row == 10 and column == 6:
-                        elements.Button(self.screen, config.gray, x, y, config.bwidth + 107, config.bheight).Rect()
+                        if self.next_button:
+                            elements.Button(self.screen, config.dark_gray, x, y, config.bwidth + 107, config.bheight).Rect()
+                        else:
+                            elements.Button(self.screen, config.gray, x, y, config.bwidth + 107, config.bheight).Rect()
                         elements.Text_Button_Medium('  NEXT', position2, app=(self.screen)).draw() 
             
             """Run the main event loop."""

@@ -7,11 +7,20 @@ import config
 import elements
 import views
 
-
+class product_list():
+    section = ""
+    qrcode = ""
+    item_number = ""
+    product_name = ""
+    part_numbe = ""
+    part_name = ""
+    drawing_number = ""
+    locker_number = ""
+    quantity = ""
+    other = ""
 
 class Request_Add:
     """Create a single-window app with multiple scenes."""
-
     def __init__(self):
         """Initialize pygame and the application."""
         pygame.init() # Initialize the pygame
@@ -20,7 +29,9 @@ class Request_Add:
         self.screen = pygame.display.set_mode(config.screensize, flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
-
+        views.request_data.inbox_active[0] = True # Set default input box activation
+        views.request_data.inbox_active[1] = False # Set default input box activation
+        self.product_list = product_list()
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
             (K_x, KMOD_LALT): 'print("alt+X")',
@@ -29,36 +40,22 @@ class Request_Add:
             (K_x, KMOD_LMETA + KMOD_LALT): 'print("cmd+alt+X")',
             (K_x, KMOD_LMETA + KMOD_LALT + KMOD_LSHIFT): 'print("cmd+alt+shift+X")',
         }
-
         self.click = {
             # Click search button
-            (8, 3): 'print("SEARCH"); self.toggle_input()',
-            (9, 3): 'print("SEARCH"); self.toggle_input()',
-            (10, 3): 'print("SEARCH"); self.toggle_input()',
-            # Click numpad button
-            (8, 4): 'print("1")',
-            (9, 4): 'print("2")',
-            (10, 4): 'print("3")',
-            (8, 5): 'print("4")',
-            (9, 5): 'print("5")',
-            (10, 5): 'print("6")',
-            (8, 6): 'print("7")',
-            (9, 6): 'print("8")',
-            (10, 6): 'print("9")',
-            (8, 7): 'print("*")',
-            (9, 7): 'print("0")',
-            (10, 7): 'print("#")',
+            (8, 3): 'print("SEARCH");',
+            (9, 3): 'print("SEARCH");',
+            (10, 3): 'print("SEARCH");',
             # Click add button
-            (8, 8): 'print("ADD")',
-            (9, 8): 'print("ADD")',
-            (10, 8): 'print("ADD")',
-            (8, 9): 'print("ADD")',
-            (9, 9): 'print("ADD")',
-            (10, 9): 'print("ADD")',
+            (8, 8): 'self.add()',
+            (9, 8): 'self.add()',
+            (10, 8): 'self.add()',
+            (8, 9): 'self.add()',
+            (9, 9): 'self.add()',
+            (10, 9): 'self.add()',
             # Click cancel button
-            (8, 10): 'views.Request().run(); pygame.quit()',
-            (9, 10): 'views.Request().run(); pygame.quit()',
-            (10, 10): 'views.Request().run(); pygame.quit()',
+            (8, 10): 'self.cancel()',
+            (9, 10): 'self.cancel()',
+            (10, 10): 'self.cancel()',
         }
 
     def do_shortcut(self, event):
@@ -75,19 +72,37 @@ class Request_Add:
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
-    def toggle_input(self):
-          self.quantity_input.active = True
+    def add(self):
+        if self.search_value != "":
+            self.product_list.product_name = self.search_value
+            if self.quantity_value != "":
+                self.product_list.quantity = self.quantity_value
+                views.request_data.add(self.product_list)
+                views.Request().run(); pygame.quit()
+            else:
+                self.product_list.quantity = ""
+                print("Quantity is invalid")
+        else:
+            self.product_list.product_name = self.search_value
+            print("Product request is invalid")
+
+    def cancel(self):
+        views.Request().run()
+        pygame.quit()
+       
 
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption('Add product requestion' + config.VERSION)
-        self.search_input = elements.InputBox(1, 3, 7, 1, "", app = (self.screen), active = True)
-        self.quantity_input = elements.InputBox(1, 10, 7, 1, "", app = (self.screen), active = False)
-
+        self.search_input = elements.InputBox_2(1, 3, 7, 1, app = (self.screen), active = views.request_data.inbox_active[0], numpad_active = True)
+        self.quantity_input = elements.InputBox_2(1, 10, 7, 1, app = (self.screen), active = views.request_data.inbox_active[1], numpad_active = True)
+        
         """Run the main event loop."""
         while self.running:
             self.number = 1
             self.screen.fill(Color('white'))
+            self.search_input.active = views.request_data.inbox_active[0]
+            self.quantity_input.active = views.request_data.inbox_active[1]
 
             """Initialize user interface."""
             for row in range(12):
@@ -134,8 +149,8 @@ class Request_Add:
                         elements.Text_Button_Medium('     CANCEL', position, app=(self.screen)).draw()                 
 
             for event in pygame.event.get():
-                self.search_value = self.search_input.handle_event(event)
-                self.quantity_value = self.quantity_input.handle_event(event)
+                self.search_value = self.search_input.handle_event(event, 1)
+                self.quantity_value = self.quantity_input.handle_event(event, 2)
                 if event.type == KEYDOWN:
                     self.do_shortcut(event)
                 if event.type == QUIT:
