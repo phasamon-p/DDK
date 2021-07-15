@@ -10,7 +10,7 @@ import data_example
 
 
 
-class User_Name:
+class User_Lname:
     """Create a single-window app with multiple scenes."""
 
     def __init__(self, editstage):
@@ -26,11 +26,11 @@ class User_Name:
         self.product_data = ""
         self.editstage = editstage
         if self.editstage:
-            self.caption = 'Edit user name'
-            self.title = 'EDIT USER NAME'
+            self.caption = 'Edit user lastname'
+            self.title = 'EDIT USER LASTNAME'
         else:
-            self.caption = 'Add user name'
-            self.title = 'ADD USER NAME'
+            self.caption = 'Add user lastname'
+            self.title = 'ADD USER LASTNAME'
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -73,21 +73,21 @@ class User_Name:
             exec(self.click[column_click, row_click])
 
     def next_click(self):
-        if self.username_value != '':
-            views.user_data.user_data['user_name'] = self.username_value
-            views.User_Lname(False).run()
+        if self.userlastname_value != '':
+            views.user_data.user_data['user_lname'] = self.userlastname_value
+            views.User_Department(False).run()
         else:
-            print("Please enter user name")
+            print("Please enter user lastname")
 
     def cancel_click(self):
-        views.user_data.user_data['user_name'] = ''
-        views.User_Id(False).run()
+        views.user_data.user_data['user_lname'] = ''
+        views.User_Name(False).run()
         pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
-        self.username_input = elements.InputBox_Text(1, 3, 10, 1, views.user_data.user_data['user_name'], app = (self.screen), active = True, numpad_active = True)
+        self.userlastname_input = elements.InputBox_Text(1, 3, 10, 1, views.user_data.user_data['user_lname'], app = (self.screen), active = True, numpad_active = True)
         print("User_data :", views.user_data.user_data)
         """Run the main event loop."""
         while self.running:
@@ -102,12 +102,12 @@ class User_Name:
                     position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 10, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
                     position4 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 10, (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
                     if row == 0 and column == 0:
-                        elements.Title(self.title, pos=(370, 67), app=(self.screen)).draw()
+                        elements.Title(self.title, pos=(270, 67), app=(self.screen)).draw()
                         elements.Header_Table('MESSAGE', 1, 4, app=(self.screen)).draw()
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
-                        self.username_input.draw()                  
+                        self.userlastname_input.draw()                  
                     """Initialize Button."""
                     if row == 4 and column == 8:
                         elements.Button(self.screen, config.blue, x, y, config.bwidth + 214, config.bheight + 67).Rect()
@@ -124,7 +124,7 @@ class User_Name:
                    
 
             for event in pygame.event.get():
-                self.username_value = self.username_input.handle_event(event)
+                self.userlastname_value = self.userlastname_input.handle_event(event)
                 if event.type == KEYDOWN:
                     self.do_shortcut(event)
                 if event.type == QUIT:
