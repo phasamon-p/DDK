@@ -7,6 +7,7 @@ import services
 import config
 
 if __name__ == '__main__':
-    # views.Home().run()
-    views.User_Department(False).run()
+    views.Home().run()
+    
+    # views.User_Lockeraccess(False).run()
     

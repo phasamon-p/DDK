@@ -26,12 +26,10 @@ class User_Department:
         self.product_data = ""
         self.editstage = editstage
 
-        self.as1_button = False
-        self.as2_button = False
-        self.mt1_button = False
-        self.mt2_button = False
-        self.pr_button = False
-        self.department_value = ''
+        self.department_button = [False, False, False, False, False]
+        self.department_value = [False, False, False, False, False]
+        self.first_check()
+
         if self.editstage:
             self.caption = 'Edit user department'
             self.title = 'EDIT USER DEPARTMENT'
@@ -50,60 +48,60 @@ class User_Department:
 
         self.click = {
             # Click AS1 button
-            (1, 3): 'self.as1_click()',
-            (2, 3): 'self.as1_click()',
-            (3, 3): 'self.as1_click()',
-            (4, 3): 'self.as1_click()',
-            (5, 3): 'self.as1_click()',
-            (1, 4): 'self.as1_click()',
-            (2, 4): 'self.as1_click()',
-            (3, 4): 'self.as1_click()',
-            (4, 4): 'self.as1_click()',
-            (5, 4): 'self.as1_click()',
+            (1, 3): 'self.toggle_button(1)',
+            (2, 3): 'self.toggle_button(1)',
+            (3, 3): 'self.toggle_button(1)',
+            (4, 3): 'self.toggle_button(1)',
+            (5, 3): 'self.toggle_button(1)',
+            (1, 4): 'self.toggle_button(1)',
+            (2, 4): 'self.toggle_button(1)',
+            (3, 4): 'self.toggle_button(1)',
+            (4, 4): 'self.toggle_button(1)',
+            (5, 4): 'self.toggle_button(1)',
             # Click AS2 button
-            (6, 3): 'self.as2_click()',
-            (7, 3): 'self.as2_click()',
-            (8, 3): 'self.as2_click()',
-            (9, 3): 'self.as2_click()',
-            (10, 3): 'self.as2_click()',
-            (6, 4): 'self.as2_click()',
-            (7, 4): 'self.as2_click()',
-            (8, 4): 'self.as2_click()',
-            (9, 4): 'self.as2_click()',
-            (10, 4): 'self.as2_click()',
+            (6, 3): 'self.toggle_button(2)',
+            (7, 3): 'self.toggle_button(2)',
+            (8, 3): 'self.toggle_button(2)',
+            (9, 3): 'self.toggle_button(2)',
+            (10, 3): 'self.toggle_button(2)',
+            (6, 4): 'self.toggle_button(2)',
+            (7, 4): 'self.toggle_button(2)',
+            (8, 4): 'self.toggle_button(2)',
+            (9, 4): 'self.toggle_button(2)',
+            (10, 4): 'self.toggle_button(2)',
             # Click MT1 button
-            (1, 5): 'self.mt1_click()',
-            (2, 5): 'self.mt1_click()',
-            (3, 5): 'self.mt1_click()',
-            (4, 5): 'self.mt1_click()',
-            (5, 5): 'self.mt1_click()',
-            (1, 6): 'self.mt1_click()',
-            (2, 6): 'self.mt1_click()',
-            (3, 6): 'self.mt1_click()',
-            (4, 6): 'self.mt1_click()',
-            (5, 6): 'self.mt1_click()',
+            (1, 5): 'self.toggle_button(3)',
+            (2, 5): 'self.toggle_button(3)',
+            (3, 5): 'self.toggle_button(3)',
+            (4, 5): 'self.toggle_button(3)',
+            (5, 5): 'self.toggle_button(3)',
+            (1, 6): 'self.toggle_button(3)',
+            (2, 6): 'self.toggle_button(3)',
+            (3, 6): 'self.toggle_button(3)',
+            (4, 6): 'self.toggle_button(3)',
+            (5, 6): 'self.toggle_button(3)',
             # Click MT2 button
-            (6, 5): 'self.mt2_click()',
-            (7, 5): 'self.mt2_click()',
-            (8, 5): 'self.mt2_click()',
-            (9, 5): 'self.mt2_click()',
-            (10, 5): 'self.mt2_click()',
-            (6, 6): 'self.mt2_click()',
-            (7, 6): 'self.mt2_click()',
-            (8, 6): 'self.mt2_click()',
-            (9, 6): 'self.mt2_click()',
-            (10, 6): 'self.mt2_click()',
+            (6, 5): 'self.toggle_button(4)',
+            (7, 5): 'self.toggle_button(4)',
+            (8, 5): 'self.toggle_button(4)',
+            (9, 5): 'self.toggle_button(4)',
+            (10, 5): 'self.toggle_button(4)',
+            (6, 6): 'self.toggle_button(4)',
+            (7, 6): 'self.toggle_button(4)',
+            (8, 6): 'self.toggle_button(4)',
+            (9, 6): 'self.toggle_button(4)',
+            (10, 6): 'self.toggle_button(4)',
             # Click PR button
-            (4, 7): 'self.pr_click()',
-            (5, 7): 'self.pr_click()',
-            (6, 7): 'self.pr_click()',
-            (7, 7): 'self.pr_click()',
-            (8, 7): 'self.pr_click()',
-            (4, 8): 'self.pr_click()',
-            (5, 8): 'self.pr_click()',
-            (6, 8): 'self.pr_click()',
-            (7, 8): 'self.pr_click()',
-            (8, 8): 'self.pr_click()',
+            (4, 7): 'self.toggle_button(5)',
+            (5, 7): 'self.toggle_button(5)',
+            (6, 7): 'self.toggle_button(5)',
+            (7, 7): 'self.toggle_button(5)',
+            (8, 7): 'self.toggle_button(5)',
+            (4, 8): 'self.toggle_button(5)',
+            (5, 8): 'self.toggle_button(5)',
+            (6, 8): 'self.toggle_button(5)',
+            (7, 8): 'self.toggle_button(5)',
+            (8, 8): 'self.toggle_button(5)',
             # Click next button
             (6, 9): 'self.next_click()',
             (7, 9): 'self.next_click()',
@@ -128,6 +126,13 @@ class User_Department:
             (5, 10): 'self.cancel_click()',
         }
 
+    def first_check(self):
+        for x in range(len(self.department_button)):
+            if views.user_data.user_data['department'][x]:
+                self.department_button[x] = True
+            else:
+                 self.department_button[x] = False
+ 
     def do_shortcut(self, event):
         """Find the the key/mod combination in the dictionary and execute the cmd."""
         k = event.key
@@ -142,35 +147,21 @@ class User_Department:
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
-    def as1_click(self):
-        self.toggle_button("AS1")
-    
-    def as2_click(self):
-        self.toggle_button("AS2")
-
-    def mt1_click(self):
-        self.toggle_button("MT1")
-
-    def mt2_click(self):
-        self.toggle_button("MT2")
-
-    def pr_click(self):
-        self.toggle_button("PR")
-
     def next_click(self):
-        if self.as1_button:
-            self.department_value += 'AS1'
-        if self.as2_button:
-            self.department_value += 'AS2'
-        if self.mt1_button:
-            self.department_value += 'MT1'
-        if self.mt2_button:
-            self.department_value += 'MT2'
-        if self.pr_button:
-            self.department_value += 'PR'
+        if self.department_button[0]:
+            self.department_value[0] = 'AS1'
+        if self.department_button[1]:
+            self.department_value[1] = 'AS2'
+        if self.department_button[2]:
+            self.department_value[2] = 'MT1'
+        if self.department_button[3]:
+            self.department_value[3] = 'MT2'
+        if self.department_button[4]:
+            self.department_value[4] = 'PR'
 
         if self.department_value != '':
             views.user_data.user_data['department'] = self.department_value
+            views.User_Permission(False).run()
         else:
             print("Please select user deparment")
 
@@ -180,31 +171,10 @@ class User_Department:
         pygame.quit()
 
     def toggle_button(self, event):
-        if event == "AS1":
-            if self.as1_button:
-                self.as1_button = False
-            else:
-                self.as1_button = True
-        if event == "AS2":
-            if self.as2_button:
-                self.as2_button = False
-            else:
-                self.as2_button = True
-        if event == "MT1":
-            if self.mt1_button:
-                self.mt1_button = False
-            else:
-                self.mt1_button = True
-        if event == "MT2":
-            if self.mt2_button:
-                self.mt2_button = False
-            else:
-                self.mt2_button = True
-        if event == "PR":
-            if self.pr_button:
-                self.pr_button = False
-            else:
-                self.pr_button = True           
+        if self.department_button[event - 1]:
+            self.department_button[event - 1] = False
+        else:
+            self.department_button[event - 1] = True
 
     def run(self):
         """Initialize Caption and Valiable."""
@@ -226,31 +196,31 @@ class User_Department:
                         elements.Title(self.title, pos=(200, 67), app=(self.screen)).draw()  
                     """Initialize Button."""
                     if row == 3 and column == 1:
-                        if self.as1_button:
+                        if self.department_button[0]:
                             elements.Button(self.screen, config.green, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         else:
                             elements.Button(self.screen, config.blue, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         elements.Text_Button_Medium('   AS1', position3, app=(self.screen)).draw()
                     if row == 3 and column == 6:
-                        if self.as2_button:
+                        if self.department_button[1]:
                             elements.Button(self.screen, config.green, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         else:
                             elements.Button(self.screen, config.blue, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         elements.Text_Button_Medium('   AS2', position3, app=(self.screen)).draw()
                     if row == 5 and column == 1:
-                        if self.mt1_button:
+                        if self.department_button[2]:
                             elements.Button(self.screen, config.green, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         else:
                             elements.Button(self.screen, config.blue, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         elements.Text_Button_Medium('   MT1', position3, app=(self.screen)).draw()
                     if row == 5 and column == 6:
-                        if self.mt2_button:
+                        if self.department_button[3]:
                             elements.Button(self.screen, config.green, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         else:
                             elements.Button(self.screen, config.blue, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         elements.Text_Button_Medium('   MT2', position3, app=(self.screen)).draw()
                     if row == 7 and column == 4:
-                        if self.pr_button:
+                        if self.department_button[4]:
                             elements.Button(self.screen, config.green, x, y, config.bwidth + 321, config.bheight + 67).Rect()
                         else:
                             elements.Button(self.screen, config.blue, x, y, config.bwidth + 321, config.bheight + 67).Rect()

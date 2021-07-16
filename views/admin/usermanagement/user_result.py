@@ -10,7 +10,7 @@ import data_example
 
 
 
-class User_Id:
+class User_Result:
     """Create a single-window app with multiple scenes."""
 
     def __init__(self, editstage):
@@ -26,11 +26,11 @@ class User_Id:
         self.product_data = ""
         self.editstage = editstage
         if self.editstage:
-            self.caption = 'Edit user id'
-            self.title = 'EDIT USER ID'
+            self.caption = 'Update user information'
+            self.title = 'Update USER INFORMATION'
         else:
-            self.caption = 'Add user id'
-            self.title = 'ADD USER ID'
+            self.caption = 'Confirm user information'
+            self.title = 'CONFIRM USER INFORMATION'
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -42,17 +42,26 @@ class User_Id:
         }
 
         self.click = {
-            # Click next button
-            (8, 8): 'self.next_click()',
-            (9, 8): 'self.next_click()',
-            (10, 8): 'self.next_click()',
-            (8, 9): 'self.next_click()',
-            (9, 9): 'self.next_click()',
-            (10, 9): 'self.next_click()',
-            # Click cancel button
-            (8, 10): 'self.cancel_click()',
-            (9, 10): 'self.cancel_click()',
-            (10, 10): 'self.cancel_click()',
+            # Click confirm button
+            (8, 4): 'self.confirm_click()',
+            (9, 4): 'self.confirm_click()',
+            (10, 4): 'self.confirm_click()',
+            (8, 5): 'self.confirm_click()',
+            (9, 5): 'self.confirm_click()',
+            (10, 5): 'self.confirm_click()',
+            (8, 6): 'self.confirm_click()',
+            (9, 6): 'self.confirm_click()',
+            (10, 6): 'self.confirm_click()',
+            # Click back button
+            (8, 8): 'self.back_click()',
+            (9, 8): 'self.back_click()',
+            (10, 8): 'self.back_click()',
+            (8, 9): 'self.back_click()',
+            (9, 9): 'self.back_click()',
+            (10, 9): 'self.back_click()',
+            (8, 10): 'self.back_click()',
+            (9, 10): 'self.back_click()',
+            (10, 10): 'self.back_click()',    
         }
 
     def do_shortcut(self, event):
@@ -69,28 +78,23 @@ class User_Id:
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
-    def next_click(self):
-        if self.userid_value != '':
-            views.user_data.user_data['user_id'] = self.userid_value
-            views.User_Name(False).run()
-            pygame.quit()
-        else:
-            print("Please enter user id")
-
-    def cancel_click(self):
-        views.user_data.user_data['user_id'] = ''
+    def confirm_click(self):
+        views.user_data.userdata_reset()
+        print(views.user_data.user_data)
         views.User_Management().run()
         pygame.quit()
-        pass 
+
+    def back_click(self):
+        views.user_data.user_data['fingerid'] = ''
+        views.User_Finger(False).run()
+        pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
-        self.userid_input = elements.InputBox_Userid(1, 3, 10, 1, views.user_data.user_data['user_id'], app = (self.screen), active = True, numpad_active = True)
-        print("User_datt :", views.user_data.user_data)
+        print("User_data :", views.user_data.user_data)
         """Run the main event loop."""
         while self.running:
-            self.number = 1
             self.screen.fill(Color('white'))      
             """Initialize user interface."""
             for row in range(12):
@@ -99,40 +103,36 @@ class User_Id:
                     x = (config.margin + config.bwidth) * column + config.margin
                     position = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1), (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
                     position2 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1), (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
-                    position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 10, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
+                    position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 10, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 60)
                     position4 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 10, (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
                     if row == 0 and column == 0:
-                        elements.Title(self.title, pos=(400, 67), app=(self.screen)).draw()
-                        elements.Header_Table('MESSAGE', 1, 4, app=(self.screen)).draw()
-                        elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
-                        elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
-                        elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
-                        self.userid_input.draw()                  
-                    """Initialize Numpad."""
-                    if row >= 4 and row <= 7 and column >= 8 and column <= 10:
-                        if row == 7 and column == 8:
-                            elements.Button(self.screen, config.light_blue, x, y, config.bwidth, config.bheight).Rect()
-                            elements.Number('*', position, app=(self.screen)).draw()
-                        elif row == 7 and column == 9:
-                            elements.Button(self.screen, config.blue, x, y, config.bwidth, config.bheight).Rect()
-                            elements.Number(str(0), position, app=(self.screen)).draw()
-                        elif row == 7 and column == 10:
-                            elements.Button(self.screen, config.light_blue, x, y, config.bwidth, config.bheight).Rect()
-                            elements.Number('#', position, app=(self.screen)).draw()
-                        else:
-                            elements.Button(self.screen, config.blue, x, y, config.bwidth, config.bheight).Rect()
-                            elements.Number(str(self.number), position, app=(self.screen)).draw()
-                        self.number += 1
+                        elements.Title(self.title, pos=(110, 67), app=(self.screen)).draw()
+                        elements.Header_Table('USER INFORMATION', 1, 3, app=(self.screen)).draw()
+                        elements.Header_Result('  User id : ', 1, 4, app=(self.screen)).draw()
+                        elements.Header_Result('  User name : ', 1, 5, app=(self.screen)).draw()
+                        elements.Header_Result('  User lastname : ', 1, 6, app=(self.screen)).draw()
+                        elements.Header_Result('  User department : ', 1, 7, app=(self.screen)).draw()
+                        elements.Header_Result('  User permission : ', 1, 8, app=(self.screen)).draw()
+                        elements.Header_Result('  User locker access : ', 1, 9, app=(self.screen)).draw()
+                        elements.Header_Result('  User finger id : ', 1, 10, app=(self.screen)).draw()
+                        # User information
+                        elements.Header_Table(views.user_data.user_data['user_id'], 4, 4, app=(self.screen)).draw()
+                        elements.Header_Table(views.user_data.user_data['user_name'], 4, 5, app=(self.screen)).draw()
+                        elements.Header_Table(views.user_data.user_data['user_lname'], 4, 6, app=(self.screen)).draw()
+                        elements.Header_Table(views.user_data.department(), 4, 7, app=(self.screen)).draw()
+                        elements.Header_Table(views.user_data.user_data['permission'], 4, 8, app=(self.screen)).draw()
+                        elements.Header_Table(views.user_data.lengh_lockeraccess(), 4, 9, app=(self.screen)).draw()
+                        elements.Header_Table(views.user_data.user_data['fingerid'], 4, 10, app=(self.screen)).draw()
+                        elements.Rectangle(1, 4, 7, 7, app=(self.screen)).draw()
+                    """Initialize Button."""
+                    if row == 4 and column == 8:
+                        elements.Button(self.screen, config.green, x, y, config.bwidth + 214, config.bheight + 134).Rect()
+                        elements.Text_Button_Medium('  CONFIRM', position3, app=(self.screen)).draw()
                     if row == 8 and column == 8:
-                        elements.Button(self.screen, config.green, x, y, config.bwidth + 214, config.bheight + 67).Rect()
-                        elements.Text_Button_Medium('      NEXT', position3, app=(self.screen)).draw()
-                    if row == 10 and column == 8:
-                        elements.Button(self.screen, config.red, x, y, config.bwidth + 214, config.bheight).Rect()
-                        elements.Text_Button_Medium('    CANCEL', position4, app=(self.screen)).draw()
+                        elements.Button(self.screen, config.red, x, y, config.bwidth + 214, config.bheight + 134).Rect()
+                        elements.Text_Button_Medium('      BACK', position3, app=(self.screen)).draw()
                    
-
             for event in pygame.event.get():
-                self.userid_value = self.userid_input.handle_event(event)
                 if event.type == KEYDOWN:
                     self.do_shortcut(event)
                 if event.type == QUIT:

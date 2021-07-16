@@ -80,12 +80,8 @@ class Test:
         """Initialize Title and Image."""
         self.number = 1
         pygame.display.set_caption('ARM Medical Locker Firmware v1.9')
-        self.box = elements.InputBox(100, 100, 140, 32, "", app=(self.screen))
-        self.box2 = elements.InputBox(100, 400, 140, 32, "", app=(self.screen))
-
         """Run the main event loop."""
         while self.running:
-
             self.screen.fill(Color('white'))
             for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin
@@ -94,16 +90,12 @@ class Test:
                     if row == 0 and column == 0:
                         elements.Image('images/touchid.png', (200, 200), app=(self.screen)).draw()
                         elements.Title('PRODUCT REQUEST LIST', pos=(200, 67), app=(self.screen)).draw()
-                        self.box.update()
-                        self.box.draw()
-                        self.box2.update()
-                        self.box2.draw()
 
             for event in pygame.event.get():
-                self.text = self.box.handle_event(event)
-                self.text2 = self.box2.handle_event(event)
                 if event.type == KEYDOWN:
                     self.do_shortcut(event)
+                    if event.key == K_RETURN:
+                        print("Search")
                 if event.type == QUIT:
                     self.running = False
                 if event.type == MOUSEBUTTONDOWN:

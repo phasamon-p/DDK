@@ -160,6 +160,8 @@ class Search:
             for event in pygame.event.get():
                 self.search_value = self.search_input.handle_event(event)
                 if event.type == KEYDOWN:
+                    if event.key == K_RETURN:
+                        self.product_data = self.search_click()
                     self.do_shortcut(event)
                 if event.type == QUIT:
                     self.running = False

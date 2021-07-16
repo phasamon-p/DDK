@@ -170,3 +170,32 @@ class Header_Table():
     def draw(self):
         """Draw the text image to the screen."""
         self.app.blit(self.img, self.rect)    
+    
+class Header_Result():
+    """Create a text object."""
+
+    def __init__(self, text, column, row, app, **option):
+        self.text = text
+        self.fontname = 'fonts/SEGOEUI.TTF'
+        self.fontsize = 30
+        self.fontcolor = Color(config.blue)
+        self.set_font()
+        self.column = column
+        self.row = row
+        self.pos = ((self.column * config.bwidth) + config.margin + 5 ,(self.row * config.bheight) + (config.margin * (self.row - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+        self.app = app
+        self.render()
+
+    def set_font(self):
+        """Set the font from its name and size."""
+        self.font = pygame.font.Font(self.fontname, self.fontsize)
+
+    def render(self):
+        """Render the text into an image."""
+        self.img = self.font.render(self.text, True, self.fontcolor)
+        self.rect = self.img.get_rect()
+        self.rect.topleft = self.pos
+
+    def draw(self):
+        """Draw the text image to the screen."""
+        self.app.blit(self.img, self.rect)    

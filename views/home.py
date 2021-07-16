@@ -22,10 +22,6 @@ class Home:
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
 
-        # self.shortcuts = {
-        #     (K_x, KMOD_LALT): '',
-        # }
-
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
             (K_x, KMOD_LALT): 'self.exit_fullscreen()',
@@ -101,7 +97,7 @@ class Home:
                     column_click = column
                     position = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1), (config.margin + config.bheight) * row + (config.bheight / 3.5) + 5)
                     if row == 0 and column == 0:
-                        elements.Image('images/touchid.png', (200, 200), app=(self.screen)).draw()
+                        elements.Image('images/touchid.png', (100, 180), app=(self.screen)).draw()
                     if row == 2 and column == 7:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 321, config.bheight + 67).Rect()
                         elements.Text_Mainbutton('   SEARCH', position, app=(self.screen)).draw()
