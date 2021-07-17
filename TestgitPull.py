@@ -1,3 +1,3 @@
 #ทดสอบ Git pull
 
-#Git push Test
+print("Git pushing")
