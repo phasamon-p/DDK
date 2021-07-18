@@ -3,9 +3,9 @@ from pygame.locals import *
 
 db = {
     "host": "localhost",
-    "database": "medicallocker",
+    "database": "ddk_lockers",
     "user": "root",
-    "password": "1234",
+    "password": "",
 }
 
 bsize = bwidth, bheight = (102, 62)
