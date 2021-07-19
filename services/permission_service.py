@@ -19,40 +19,52 @@ def mysqlconnect():
     except Error as e:
         return e
 
-########################################### ABOUT FINGER PRINT ##########################################
+########################################### ABOUT PERMISSION ###########################################
 
-def getfingerid():
+def getpermission(id):
     try:
         connection = mysqlconnect()
-        sql_Select_Query = "select * from locker_count"
+        sql_select_Query = "SELECT * FROM person_locker WHERE pl_person = %s "
         cursor = connection.cursor()
-        cursor.execute(sql_Select_Query)
+        cursor.execute(sql_select_Query, (id,))
         # get all records
         records = cursor.fetchall()
-        return records[0][1]
+        rowcount = cursor.rowcount
 
-    except mysql.connector.Error as e:
-        print("Error reading data from MySQL table", e)
-    finally:
-        if connection.is_connected():
-            connection.close()
-            cursor.close()
-            print("MySQL connection is closed")
-
-            "UPDATE locker_count set count = %s where id = %s "
-
-def updatefinrgerprint(id):
-    try:
-        connection = mysqlconnect()
-        cursor = connection.cursor()
-        mySql_update_query = "UPDATE locker_count set count = %s where id = %s "
-        cursor.execute(mySql_update_query, (id, 1))
-        connection.commit()
-
-        return True
+        if cursor.rowcount:
+            return [True, records,rowcount]
+        else:
+            return [False, records,rowcount]
 
     except mysql.connector.Error as error:
-        print("Failed e record: ", format(error))
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            #print(records)
+            print("MySQL connection is closed")
+
+
+def getpermissionbylocker(id, locker):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM person_locker WHERE pl_person = %s and pl_locker = %s"
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (id, locker))
+        # get all records
+        records = cursor.fetchall()
+
+        print("rowcount :", cursor.rowcount)
+        if cursor.rowcount:
+            return True
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
         return False
 
     finally:
@@ -61,8 +73,74 @@ def updatefinrgerprint(id):
             connection.close()
             print("MySQL connection is closed")
 
-#insertperson("DDK02", "Moomud", "PP", "AS2", int(1000), "admin")
-#selectperson()
-#selectpersonbyid("DDK02")
-#getfingerid()
-#updatefinrgerprint(3)
+
+def checkpermission(person, medical):
+    try:
+        # print("person:", person)
+        # print("medical:", medical)
+        for x in range(len(medical)):
+            result = getmedicallocker2(medical[x][3])
+            if not getpermissionbylocker(person, result):
+                return False
+
+        return True
+
+    except Error as error:
+        print("Failed e record: ", error)
+        return False
+
+def insertpermission(id, permission):
+    try:
+        connection = mysqlconnect()
+        cursor = connection.cursor()
+        for x in range(len(permission)):
+            print("lengh of permission :", len(permission))
+            if permission[x]:
+                if not getpermissionbylocker(id, permission[x]):
+                    mySql_insert_query = """INSERT INTO person_locker (pl_person, pl_locker) VALUES ( %s, %s) """
+                    record = (id, permission[x])
+                    cursor.execute(mySql_insert_query, record)
+                    connection.commit()
+                    print("Insert permission : ", record)
+            else:
+                mySql_delete_query = "DELETE from person_locker where pl_person = %s and pl_locker = %s "
+                record = (id, x+1)
+                cursor.execute(mySql_delete_query, record)
+                connection.commit()
+                print("Delete permission : ", record)
+        return True
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+#getpermission("DDK01")
+
+def deletepermissionbyid(id):
+    try:
+        connection = mysqlconnect()
+
+        sql_Delete_Query = "Delete from person_locker where pl_person = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_Delete_Query, (id,))
+        connection.commit()
+
+        return True
+
+    except mysql.connector.Error as e:
+        print("Failed to update columns of table: {}".format(e))
+        return False
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+##insertpermission("DDK01",[1])
+#deletepermissionbyid("DDK01")
+
