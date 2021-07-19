@@ -19,6 +19,125 @@ def mysqlconnect():
     except Error as e:
         return e
 
+
+def selectperson():
+    try:
+        connection = mysqlconnect()
+
+        sql_Select_Query = "select * from person"
+        cursor = connection.cursor()
+        cursor.execute(sql_Select_Query)
+        # get all records
+        records = cursor.fetchall()
+        print("Total number of rows in table: ", cursor.rowcount)
+        rowcount = cursor.rowcount
+        return [records, rowcount]
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+
+def selectpersonbyid(id):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM person WHERE personid = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (id,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+        print("Total number of rows in table: ", cursor.rowcount)
+
+        if cursor.rowcount:
+            return [True, records, rowcount]
+        else:
+            return [False, records, rowcount]
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+
+def getpersonbyfingerid(fingerid):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM person WHERE fingerid = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (fingerid,))
+        # get all records
+        records = cursor.fetchall()
+        print("Total number of rows in table: ", cursor.rowcount)
+
+        if cursor.rowcount:
+            return [True, records]
+        else:
+            return [False, records]
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+
+def getpersoncount():
+    try:
+        connection = mysqlconnect()
+
+        sql_Select_Query = "select * from person"
+        cursor = connection.cursor()
+        cursor.execute(sql_Select_Query)
+        # get all records
+        print("Total number of rows in table: ", cursor.rowcount)
+        rowcount = cursor.rowcount
+        return rowcount
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+
+def getpersonbyid(id):
+    try:
+        connection = mysqlconnect()
+
+        sql_select_Query = "SELECT * FROM person WHERE personid = %s "
+
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (id,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+        print("Total number of rows in table: ", cursor.rowcount)
+
+        if cursor.rowcount:
+            return [True, [records, rowcount]]
+        else:
+            return [False, [records, rowcount]]
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
 def insertperson(personid, name, lname, department, fingerid, role):
     try:
         connection = mysqlconnect()
@@ -139,3 +258,79 @@ def getpermissionbylocker(id, locker):
             cursor.close()
             connection.close()
             print("MySQL connection is closed")
+
+
+########################################### ABOUT FINGER PRINT ###########################################
+
+def getfingerid():
+    try:
+        connection = mysqlconnect()
+        sql_Select_Query = "select * from locker_count"
+        cursor = connection.cursor()
+        cursor.execute(sql_Select_Query)
+        # get all records
+        records = cursor.fetchall()
+        return records[0][1]
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+            "UPDATE locker_count set count = %s where id = %s "
+
+def updatefinrgerprint(id):
+    try:
+        connection = mysqlconnect()
+        cursor = connection.cursor()
+        mySql_update_query = "UPDATE locker_count set count = %s where id = %s "
+        cursor.execute(mySql_update_query, (id, 1))
+        connection.commit()
+
+        return True
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", format(error))
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+########################################### ABOUT PERMISSION ###########################################
+
+def getpermission(id):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM person_locker WHERE pl_person = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (id,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+
+        if cursor.rowcount:
+            return [True, records,rowcount]
+        else:
+            return [False, records,rowcount]
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+#insertperson("DDK02", "Moomud", "PP", "AS2", int(1000), "admin")
+#selectperson()
+#selectpersonbyid("DDK02")
+#getfingerid()
+#updatefinrgerprint(3)
