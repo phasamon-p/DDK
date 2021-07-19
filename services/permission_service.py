@@ -1,6 +1,7 @@
 import config
 import mysql.connector
 from mysql.connector import Error
+from product_service import *
 from views.admin.usermanagement.user_data import *
 
 ########################################### ABOUT CONECTION ########################################### 
@@ -74,14 +75,16 @@ def getpermissionbylocker(id, locker):
             print("MySQL connection is closed")
 
 
-def checkpermission(person, medical):
+def checkpermission(person, product):
     try:
-        # print("person:", person)
-        # print("medical:", medical)
-        for x in range(len(medical)):
-            result = getmedicallocker2(medical[x][3])
+        print("person:", person)
+        print("product:", product)
+        for x in range(len(product)):
+            result = getproductlocker2(product[x][3])
             if not getpermissionbylocker(person, result):
+                print("F")
                 return False
+            else: print("T")
 
         return True
 
@@ -119,7 +122,6 @@ def insertpermission(id, permission):
             cursor.close()
             connection.close()
             print("MySQL connection is closed")
-#getpermission("DDK01")
 
 def deletepermissionbyid(id):
     try:
@@ -140,7 +142,3 @@ def deletepermissionbyid(id):
             connection.close()
             cursor.close()
             print("MySQL connection is closed")
-
-##insertpermission("DDK01",[1])
-#deletepermissionbyid("DDK01")
-

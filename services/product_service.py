@@ -31,7 +31,6 @@ def insertproduct(section, qr_code, item_no, product_name, part_no, part_name,dr
         connection.commit()
         return True
 
-
     except mysql.connector.Error as e:
 
         print("Error reading data from MySQL table", e)
@@ -45,5 +44,263 @@ def insertproduct(section, qr_code, item_no, product_name, part_no, part_name,dr
 
             print("MySQL connection is closed")
 
+def getproductlocker(qrcode):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM products_lockers WHERE pl_products = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (qrcode,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+        print(rowcount)
 
-insertproduct("AS1", "1001", "ITEM0001", "MOLAA", "P001", "PART","DRAW", "L1", 1, "AASA")
+        if cursor.rowcount:
+            return [True, records,rowcount]
+
+        else:
+            return [False, records,rowcount]
+
+
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+def getproductlocker2(qrcode):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM products_lockers WHERE pl_products = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (qrcode,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+        print(records)
+
+        if cursor.rowcount:
+            return records[0][2]
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+def getproductlockerbylocker(barcode, locker):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM products_lockers WHERE pl_products = %s and pl_locker = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (barcode, locker))
+        # get all records
+        records = cursor.fetchall()
+
+        print("rowcount :", cursor.rowcount)
+        if cursor.rowcount:
+            return True
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+def insertproductlocker(qrcode, permission):
+    try:
+        connection = mysqlconnect()
+        cursor = connection.cursor()
+        for x in range(len(permission)):
+#             print("lengh of ml_locker :", len(permission))
+            if permission[x]:
+                if not getproductlockerbylocker(qrcode, permission[x]):
+                    mySql_insert_query = """INSERT INTO products_lockers (pl_products, pl_locker) VALUES ( %s, %s) """
+                    record = (qrcode, permission[x])
+                    cursor.execute(mySql_insert_query, record)
+                    connection.commit()
+#                     print("Insert ml_locker : ", record)
+            else:
+                mySql_delete_query = "DELETE from products_lockers where pl_products = %s and pl_locker = %s "
+                record = (qrcode, x+1)
+                cursor.execute(mySql_delete_query, record)
+                connection.commit()
+#                 print("Delete ml_locker : ", record)
+        return True
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed ")
+
+
+def deleteproductlockerbybarcode(barcode):
+    try:
+        connection = mysqlconnect()
+
+        sql_Delete_Query = "Delete from products_lockers where pl_products = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_Delete_Query, (barcode,))
+        connection.commit()
+
+        return True
+
+    except mysql.connector.Error as e:
+        print("Failed to update columns of table: {}".format(e))
+        return False
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+
+def selectproduct():
+    try:
+        connection = mysqlconnect()
+
+        sql_select_Query = "select * from products"
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query)
+        # get all records
+        records = cursor.fetchall()
+        print("Total number of rows in table: ", cursor.rowcount)
+
+        print("\nPrinting each row")
+        rowcount = cursor.rowcount
+        print(rowcount)
+        return [records, rowcount]
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+
+def selectproductbybarcode(qrcode):
+    try:
+        connection = mysqlconnect()
+
+        sql_select_Query = "SELECT * FROM products WHERE qr_code = %s "
+
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (qrcode,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+        print("Total number of rows in table: ", cursor.rowcount)
+
+        if cursor.rowcount:
+            return [True, [records]]
+        else:
+            return [False, [records]]
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+def searchproduct(search): ##
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM products WHERE section = %s " \
+                           "OR qr_code = %s " \
+                           "OR item_no = %s " \
+                           "OR product_name = %s " \
+                           "OR part_no = %s " \
+                           "OR part_name = %s " \
+                           "OR drawing_no = %s"
+
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (search,search,search,search,search,search,search,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+        print("Total number of rows in table: ", cursor.rowcount)
+
+        if cursor.rowcount:
+            return [True, [records]]
+        else:
+            return [False, [records]]
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+
+def updateproductbyid(id, section, qr_code, item_no, product_name, part_no, part_name,drawing_no, locker, quantity, other):
+    try:
+        connection = mysqlconnect()
+
+        sql_Update_Query = "UPDATE products set section = %s, qr_code = %s , item_no = %s, product_name = %s, " \
+                           "part_no = %s, part_name = %s,drawing_no = %s, locker = %s, quantity = %s, " \
+                           "other = %s where id = %s "
+        cursor = connection.cursor()
+
+        input = (section, qr_code, item_no, product_name, part_no, part_name,drawing_no, locker, quantity, other ,id)
+
+        cursor.execute(sql_Update_Query, input)
+        connection.commit()
+        print("Multiple columns updated successfully ")
+        return True
+
+    except mysql.connector.Error as e:
+        print("Failed to update columns of table: {}".format(e))
+        return False
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+
+def deleteproductbyid(id):
+    try:
+        connection = mysqlconnect()
+
+        sql_Delete_Query = "Delete from products where id = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_Delete_Query, (id,))
+        connection.commit()
+        return True
+
+    except mysql.connector.Error:
+        return False
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+

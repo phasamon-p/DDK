@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aee2e6ee-34fc-4f88-b36d-383b4e5b8c11" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/DDK.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DDK.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/log_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/log_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/permission_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/permission_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/product_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/product_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,6 +23,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1vTxuTig4cBhi9K3xjZtEIQt4fG" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -30,7 +40,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Moomud/2-ตู้ยาธรรมศาสตร์" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Downloads/medicallocker-main/main.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -38,7 +48,7 @@
       <recent name="C:\Users\DELL\DDK\services" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.product_service">
+  <component name="RunManager" selected="Python.permission_service">
     <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="DDK" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -146,11 +156,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.permission_service" />
         <item itemvalue="Python.product_service" />
         <item itemvalue="Python.log_service" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.__init__" />
-        <item itemvalue="Python.permission_service" />
       </list>
     </recent_temporary>
   </component>
