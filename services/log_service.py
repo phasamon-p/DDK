@@ -4,9 +4,9 @@ from mysql.connector import Error
 from views.admin.usermanagement.user_data import *
 import time
 import datetime
+from product_service import getproductlocker
 
-########################################### ABOUT CONECTION ########################################### 
-
+########################################### ABOUT CONECTION ###########################################
 
 def mysqlconnect():
     try:
@@ -42,7 +42,6 @@ def getdate():
     except Error as e:
         print("Error : ", e)
 
-
 def getlog():
     try:
         connection = mysqlconnect()
@@ -57,6 +56,9 @@ def getlog():
         day = date.day
         print("log ", records[0][1])
         print("day ", day)
+
+        for row in records:
+            print(row)
         return
 
     except mysql.connector.Error as e:
@@ -66,7 +68,6 @@ def getlog():
             connection.close()
             cursor.close()
             print("MySQL connection is closed")
-
 
 def getlogbydate(date):
     try:
@@ -88,35 +89,25 @@ def getlogbydate(date):
             cursor.close()
             print("MySQL connection is closed")
 
-# request[part_no, part_name, drawing_no, quantity, locker, activity]
-def insertlog(employee, request, activity):
+def insertlog(employee,product,activity):
     try:
-
         connection = mysqlconnect()
-        mySql_insert_query = """INSERT INTO log (id, date, time, employeeid, name, lastname, part_no, part_name, drawing_no, quantity, locker, activity) 
-                                VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
-
-        for x in range(len(request)):
-            results = getmedicallocker(medical[x][3])
+        mySql_insert_query = """INSERT INTO log (date, time, employeeid, name, lastname, item_number, product_name, part_no, part_name, drawing_no, quantity, locker, activity) 
+                                                       VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
+        for x in range(len(product)):
+            results = getproductlocker(product[x][1])
             lockernumber = results[1]
             for y in range(len(lockernumber)):
                 locker = lockernumber[y][2]
                 record = (
                 datetime.datetime.now().date(), datetime.datetime.now().time(), employee[0], employee[1], employee[2],
-                medical[x][1], locker, activity)
+                product[x][2], product[x][3], product[x][4], product[x][5], product[x][6],product[x][7],
+                locker, activity)
                 cursor = connection.cursor()
                 cursor.execute(mySql_insert_query, record)
                 connection.commit()
-
-        return True
-
     except mysql.connector.Error as e:
         print("Failed to update columns of table: {}".format(e))
         return False
-    finally:
-        if connection.is_connected():
-            connection.close()
-            cursor.close()
-            print("MySQL connection is closed")
-#getlog()
-#getdate()
+
+getlog()
