@@ -6,7 +6,7 @@ from mysql.connector import Error
 
 def mysqlconnect():
     try:
-        return mysql.connector.connect(host=config.db["host"], database=config.db["database"], user=config.db["user"], password=config.db["password"])
+        return mysql.connector.connect(host = config.db["host"], database = config.db["database"], user = config.db["user"], password = config.db["password"])
         # if connection.is_connected():
         #     db_Info = connection.get_server_info()
         #     print("Connected to MySQL Server version ", db_Info)
@@ -18,14 +18,15 @@ def mysqlconnect():
     except Error as e:
         return e
 
-def insertproduct(section, qr_code, item_no, product_name, part_no, part_name,drawing_no, locker, quantity, other):
-
+# def insertproduct(section, qr_code, item_no, product_name, part_no, part_name,drawing_no, locker, quantity, other):
+def insertproduct(data):
     try:
         connection = mysqlconnect()
         cursor = connection.cursor()
         mySql_insert_query = """INSERT INTO products (section, qr_code, item_no, product_name, part_no, part_name, drawing_no, locker, quantity, other) 
                                                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
-        record = (section, qr_code, item_no, product_name, part_no, part_name, drawing_no, locker, quantity, other)
+        qrcode = data[1].replace("\r", "")
+        record = (data[0], qrcode, data[2], data[3], data[4], data[5], data[6], '', data[8], data[9])
         cursor.execute(mySql_insert_query, record)
         connection.commit()
         return True
@@ -35,12 +36,9 @@ def insertproduct(section, qr_code, item_no, product_name, part_no, part_name,dr
         print("Error reading data from MySQL table", e)
 
     finally:
-
         if connection.is_connected():
             connection.close()
-
             cursor.close()
-
             print("MySQL connection is closed")
 
 def getproductlocker(qrcode):
@@ -124,20 +122,22 @@ def getproductlockerbylocker(barcode, locker):
 
 def insertproductlocker(qrcode, permission):
     try:
+        print("permission:", permission)
         connection = mysqlconnect()
         cursor = connection.cursor()
         for x in range(len(permission)):
 #             print("lengh of ml_locker :", len(permission))
             if permission[x]:
                 if not getproductlockerbylocker(qrcode, permission[x]):
+                    print(x)
                     mySql_insert_query = """INSERT INTO products_lockers (pl_products, pl_locker) VALUES ( %s, %s) """
-                    record = (qrcode, permission[x])
+                    record = (qrcode, x + 1)
                     cursor.execute(mySql_insert_query, record)
                     connection.commit()
 #                     print("Insert ml_locker : ", record)
             else:
                 mySql_delete_query = "DELETE from products_lockers where pl_products = %s and pl_locker = %s "
-                record = (qrcode, x+1)
+                record = (qrcode, x + 1)
                 cursor.execute(mySql_delete_query, record)
                 connection.commit()
 #                 print("Delete ml_locker : ", record)

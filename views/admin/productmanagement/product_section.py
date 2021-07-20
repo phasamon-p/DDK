@@ -164,7 +164,7 @@ class Product_Section:
 
     def cancel_click(self):
         views.product_data.product_data['section'] = ''
-        views.Product_Management(False).run()
+        views.Product_Management().run()
         pygame.quit()
 
     def toggle_button(self, event):

@@ -5,6 +5,7 @@ import time
 import os
 import config 
 import elements
+import services
 import views
 import data_example
 
@@ -72,6 +73,7 @@ class Search:
             exec(self.click[column_click, row_click])
 
     def search_click(self):
+        print(services.selectproductbysearch(self.search_value.replace("\r", "")))
         x = data_example.product['product']
         return x
 

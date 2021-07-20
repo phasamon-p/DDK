@@ -6,6 +6,7 @@ import os
 import config 
 import elements
 import views
+import services
 import data_example
 
 
@@ -99,6 +100,9 @@ class Product_Result:
             self.previous_button = False
 
     def confirm_click(self):
+        self.set_data()
+        services.insertproduct(self.product_data) # Insert nmew product
+        services.insertproductlocker(self.product_data[1], self.product_data[7]) #insert product locker
         views.product_data.productdata_reset()
         views.Product_Management().run()
         pygame.quit()
@@ -106,6 +110,20 @@ class Product_Result:
     def back_click(self):
         views.Other(False).run()
         pygame.quit()
+
+    def set_data(self):
+        self.product_data = []
+        self.product_data.append(views.product_data.section())
+        self.product_data.append(views.product_data.product_data['qrcode'])
+        self.product_data.append(views.product_data.product_data['item_number'])
+        self.product_data.append(views.product_data.product_data['product_name'])
+        self.product_data.append(views.product_data.product_data['part_number'])
+        self.product_data.append(views.product_data.product_data['part_name'])
+        self.product_data.append(views.product_data.product_data['drawing_number'])
+        self.product_data.append(views.product_data.product_data['locker_number'])
+        self.product_data.append(views.product_data.product_data['quantity'])
+        self.product_data.append(views.product_data.product_data['other'])
+        return self.product_data 
 
     def run(self):
         """Initialize Caption and Valiable."""

@@ -82,7 +82,7 @@ class Quantity:
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
-        self.quantity_input = elements.InputBox_Userid(1, 3, 10, 1, views.product_data.product_data['quantity'], app = (self.screen), active = True, numpad_active = True)
+        self.quantity_input = elements.InputBox_Number(1, 3, 10, 1, views.product_data.product_data['quantity'], app = (self.screen), active = True, numpad_active = True)
         print("Product_data :", views.product_data.product_data)
         """Run the main event loop."""
         while self.running:

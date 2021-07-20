@@ -8,6 +8,7 @@ import os
 
 import config 
 import elements
+import services
 import views
 
 
@@ -22,7 +23,7 @@ class Test:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
-
+        print(services.mysqlconnect())
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
             (K_x, KMOD_LALT): 'print("alt+X")',

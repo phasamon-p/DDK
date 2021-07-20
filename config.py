@@ -7,7 +7,7 @@ db = {
     "host": "localhost",
     "database": "ddk_lockers",
     "user": "root",
-    "password": "",
+    "password": "1234",
 }
 
 bsize = bwidth, bheight = (102, 62)
