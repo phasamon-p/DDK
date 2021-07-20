@@ -8,7 +8,7 @@ import elements
 import views
 import data_example
 
-class User_Lockeraccess:
+class Product_Locker:
     """Create a single-window app with multiple scenes."""
     def __init__(self, editstage):
         """Initialize pygame and the application."""
@@ -19,15 +19,15 @@ class User_Lockeraccess:
         self.running = True 
         self.editstage = editstage
         self.locker_button = [False, False, False, False, False, False, False, False, False, False, False, False]
-        self.lockeraccess_value = [False, False, False, False, False, False, False, False, False, False, False, False]
+        self.productlocker_value = [False, False, False, False, False, False, False, False, False, False, False, False]
         self.first_check()
 
         if self.editstage:
-            self.caption = 'Edit user locker access'
-            self.title = 'EDIT USER LOCKER ACCESS'
+            self.caption = 'Edit product locker'
+            self.title = 'EDIT PRODUCT LOCKER'
         else:
-            self.caption = 'Add user locker access'
-            self.title = 'ADD USER LOCKER ACCESS'
+            self.caption = 'Add product locker'
+            self.title = 'ADD PRODUCT LOCKER'
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -124,8 +124,8 @@ class User_Lockeraccess:
         }
 
     def first_check(self):
-        for x in range(len(views.user_data.user_data['locker_access'])):
-            if views.user_data.user_data['locker_access'][x]:
+        for x in range(len(views.product_data.product_data['locker_number'])):
+            if views.product_data.product_data['locker_number'][x]:
                 self.locker_button[x] = True
 
     def do_shortcut(self, event):
@@ -145,20 +145,20 @@ class User_Lockeraccess:
     def next_click(self):
         for x in range(len(self.locker_button)):
             if self.locker_button[x]:
-                self.lockeraccess_value[x] = True
+                self.productlocker_value[x] = True
             else:
-                self.lockeraccess_value[x] = False
+                self.productlocker_value[x] = False
 
-        if self.lockeraccess_value != '':
-            views.user_data.user_data['locker_access'] = self.lockeraccess_value
-            views.User_Finger(False).run()
+        if self.productlocker_value != '':
+            views.product_data.product_data['locker_number'] = self.productlocker_value
+            views.Quantity(False).run()
             pygame.quit()
         else:
-            print("Please select user locker access")
+            print("Please select product locker")
 
     def cancel_click(self):
-        views.user_data.lockeraccess_reset()
-        views.User_Permission(False).run()
+        views.product_data.locker_reset()
+        views.Drawing_Number(False).run()
         pygame.quit()
 
     def toggle_button(self, event):
@@ -170,7 +170,7 @@ class User_Lockeraccess:
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
-        print("User_data :", views.user_data.user_data)
+        print("Product_Data :", views.product_data.product_data)
         """Run the main event loop."""
         while self.running:
             self.screen.fill(Color('white'))      
@@ -184,7 +184,7 @@ class User_Lockeraccess:
                     position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 40, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 25)
                     position4 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 150, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
                     if row == 0 and column == 0:
-                        elements.Title(self.title, pos=(150, 67), app=(self.screen)).draw()  
+                        elements.Title(self.title, pos=(230, 67), app=(self.screen)).draw()  
                     """Initialize Button."""
                     for index in range(5):
                         if row == 3 and column == index + (index + 1):

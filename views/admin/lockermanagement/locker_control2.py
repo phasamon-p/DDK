@@ -8,26 +8,22 @@ import elements
 import views
 import data_example
 
-class User_Lockeraccess:
+class Locker_Control2:
     """Create a single-window app with multiple scenes."""
-    def __init__(self, editstage):
+    def __init__(self):
         """Initialize pygame and the application."""
         pygame.init() # Initialize the pygame
         pygame.display.init()  # Initialize the display module
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
-        self.editstage = editstage
-        self.locker_button = [False, False, False, False, False, False, False, False, False, False, False, False]
-        self.lockeraccess_value = [False, False, False, False, False, False, False, False, False, False, False, False]
+        self.locker_button = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+        self.productlocker_value = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
         self.first_check()
 
-        if self.editstage:
-            self.caption = 'Edit user locker access'
-            self.title = 'EDIT USER LOCKER ACCESS'
-        else:
-            self.caption = 'Add user locker access'
-            self.title = 'ADD USER LOCKER ACCESS'
+      
+        self.caption = 'locker control'
+        self.title = 'LOCKER CONTROL'
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -90,42 +86,46 @@ class User_Lockeraccess:
             (9, 6): 'self.toggle_button(10)',
             (10, 6): 'self.toggle_button(10)',
             # Click 11 button
-            (4, 7): 'self.toggle_button(11)',
-            (5, 7): 'self.toggle_button(11)',
-            (4, 8): 'self.toggle_button(11)',
-            (5, 8): 'self.toggle_button(11)',
+            (1, 7): 'self.toggle_button(11)',
+            (2, 7): 'self.toggle_button(11)',
+            (1, 8): 'self.toggle_button(11)',
+            (2, 8): 'self.toggle_button(11)',
             # Click 12 button
-            (6, 7): 'self.toggle_button(12)',
-            (7, 7): 'self.toggle_button(12)',
-            (6, 8): 'self.toggle_button(12)',
-            (7, 8): 'self.toggle_button(12)',
-            # Click next button
-            (6, 9): 'self.next_click()',
-            (7, 9): 'self.next_click()',
-            (8, 9): 'self.next_click()',
-            (9, 9): 'self.next_click()',
-            (10, 9): 'self.next_click()',
-            (6, 10): 'self.next_click()',
-            (7, 10): 'self.next_click()',
-            (8, 10): 'self.next_click()',
-            (9, 10): 'self.next_click()',
-            (10, 10): 'self.next_click()',
+            (3, 7): 'self.toggle_button(12)',
+            (4, 7): 'self.toggle_button(12)',
+            (3, 8): 'self.toggle_button(12)',
+            (4, 8): 'self.toggle_button(12)',
+            # Click 13 button
+            (5, 7): 'self.toggle_button(13)',
+            (6, 7): 'self.toggle_button(13)',
+            (5, 8): 'self.toggle_button(13)',
+            (6, 8): 'self.toggle_button(13)',
+            # Click 14 button
+            (7, 7): 'self.toggle_button(14)',
+            (8, 7): 'self.toggle_button(14)',
+            (7, 8): 'self.toggle_button(14)',
+            (8, 8): 'self.toggle_button(14)',
+            # Click 15 button
+            (9, 7): 'self.toggle_button(15)',
+            (10, 7): 'self.toggle_button(15)',
+            (9, 8): 'self.toggle_button(15)',
+            (10, 8): 'self.toggle_button(15)',
+            # Click 16 button
+            (1, 9): 'self.toggle_button(16)',
+            (2, 9): 'self.toggle_button(16)',
+            (1, 10): 'self.toggle_button(16)',
+            (2, 10): 'self.toggle_button(16)',
+            # Click 12 button
             # Click cencel button
-            (1, 9): 'self.cancel_click()',
-            (2, 9): 'self.cancel_click()',
-            (3, 9): 'self.cancel_click()',
-            (4, 9): 'self.cancel_click()',
-            (5, 9): 'self.cancel_click()',
-            (1, 10): 'self.cancel_click()',
-            (2, 10): 'self.cancel_click()',
-            (3, 10): 'self.cancel_click()',
-            (4, 10): 'self.cancel_click()',
-            (5, 10): 'self.cancel_click()',
+            (9, 9): 'self.cancel_click()',
+            (10, 9): 'self.cancel_click()',
+            (9, 10): 'self.cancel_click()',
+            (10, 10): 'self.cancel_click()',
         }
 
     def first_check(self):
-        for x in range(len(views.user_data.user_data['locker_access'])):
-            if views.user_data.user_data['locker_access'][x]:
+        for x in range(len(views.product_data.product_data['locker_number'])):
+            if views.product_data.product_data['locker_number'][x]:
                 self.locker_button[x] = True
 
     def do_shortcut(self, event):
@@ -142,23 +142,8 @@ class User_Lockeraccess:
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
-    def next_click(self):
-        for x in range(len(self.locker_button)):
-            if self.locker_button[x]:
-                self.lockeraccess_value[x] = True
-            else:
-                self.lockeraccess_value[x] = False
-
-        if self.lockeraccess_value != '':
-            views.user_data.user_data['locker_access'] = self.lockeraccess_value
-            views.User_Finger(False).run()
-            pygame.quit()
-        else:
-            print("Please select user locker access")
-
     def cancel_click(self):
-        views.user_data.lockeraccess_reset()
-        views.User_Permission(False).run()
+        views.Locker_Management().run()
         pygame.quit()
 
     def toggle_button(self, event):
@@ -170,7 +155,6 @@ class User_Lockeraccess:
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
-        print("User_data :", views.user_data.user_data)
         """Run the main event loop."""
         while self.running:
             self.screen.fill(Color('white'))      
@@ -182,9 +166,9 @@ class User_Lockeraccess:
                     position = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1), (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
                     position2 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 50, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 25)
                     position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 40, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 25)
-                    position4 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 150, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
+                    position4 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 10, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
                     if row == 0 and column == 0:
-                        elements.Title(self.title, pos=(150, 67), app=(self.screen)).draw()  
+                        elements.Title(self.title, pos=(330, 67), app=(self.screen)).draw() 
                     """Initialize Button."""
                     for index in range(5):
                         if row == 3 and column == index + (index + 1):
@@ -206,8 +190,8 @@ class User_Lockeraccess:
                                 elements.Text_Button_Medium(str(index + 6), position3, app=(self.screen)).draw()
                             else:
                                 elements.Text_Button_Medium(str(index + 6), position2, app=(self.screen)).draw()
-                    for index in range(2):
-                        if row == 7 and column == index + (index + 4):
+                    for index in range(5):
+                        if row == 7 and column == index + (index + 1):
                             if self.locker_button[index + 10]:
                                 elements.Button(self.screen, config.green, x, y, config.bwidth + 107, config.bheight + 67).Rect()
                             else:
@@ -216,12 +200,19 @@ class User_Lockeraccess:
                                 elements.Text_Button_Medium(str(index + 11), position3, app=(self.screen)).draw()
                             else:
                                 elements.Text_Button_Medium(str(index + 11), position2, app=(self.screen)).draw()
-                    if row == 9 and column == 1:
-                        elements.Button(self.screen, config.red, x, y, config.bwidth + 428, config.bheight + 67).Rect()
-                        elements.Text_Button_Medium('CANCEL', position4, app=(self.screen)).draw()
-                    if row == 9 and column == 6:
-                        elements.Button(self.screen, config.green, x, y, config.bwidth + 428, config.bheight + 67).Rect()
-                        elements.Text_Button_Medium('   NEXT', position4, app=(self.screen)).draw()
+                    for index in range(1):
+                        if row == 9 and column == index + (index + 1):
+                            if self.locker_button[index + 15]:
+                                elements.Button(self.screen, config.green, x, y, config.bwidth + 107, config.bheight + 67).Rect()
+                            else:
+                                elements.Button(self.screen, config.blue, x, y, config.bwidth + 107, config.bheight + 67).Rect()
+                            if (index + 16) > 9:
+                                elements.Text_Button_Medium(str(index + 16), position3, app=(self.screen)).draw()
+                            else:
+                                elements.Text_Button_Medium(str(index + 16), position2, app=(self.screen)).draw()
+                    if row == 9 and column == 9:
+                        elements.Button(self.screen, config.red, x, y, config.bwidth + 107, config.bheight + 67).Rect()
+                        elements.Text_Button_Medium(' BACK', position4, app=(self.screen)).draw()
                    
             for event in pygame.event.get():
                 if event.type == KEYDOWN:

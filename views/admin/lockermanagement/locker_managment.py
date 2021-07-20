@@ -8,7 +8,7 @@ import config
 import elements
 import views
 
-class Product_Management:
+class Locker_Management:
     """Create a single-window app with multiple scenes."""
 
     def __init__(self):
@@ -30,45 +30,48 @@ class Product_Management:
         
         self.click = {
             # Click add button
-            (1, 3): 'self.add_click()',
-            (5, 3): 'self.add_click()',
-            (6, 3): 'self.add_click()',
-            (7, 3): 'self.add_click()',
-            (8, 3): 'self.add_click()',
-            (9, 3): 'self.add_click()',
-            (10, 3): 'self.add_click()',
-            (1, 4): 'self.add_click()',
-            (2, 4): 'self.add_click()',
-            (3, 4): 'self.add_click()',
-            (4, 4): 'self.add_click()',
-            (5, 4): 'self.add_click()',
-            (6, 4): 'self.add_click()',
-            (7, 4): 'self.add_click()',
-            (8, 4): 'self.add_click()',
-            (9, 4): 'self.add_click()',
-            (10, 4): 'self.add_click()',
+            (1, 3): 'self.locker_click()',
+            (2, 3): 'self.locker_click()',
+            (3, 3): 'self.locker_click()',
+            (4, 3): 'self.locker_click()',
+            (5, 3): 'self.locker_click()',
+            (6, 3): 'self.locker_click()',
+            (7, 3): 'self.locker_click()',
+            (8, 3): 'self.locker_click()',
+            (9, 3): 'self.locker_click()',
+            (10, 3): 'self.locker_click()',
+            (1, 4): 'self.locker_click()',
+            (2, 4): 'self.locker_click()',
+            (3, 4): 'self.locker_click()',
+            (4, 4): 'self.locker_click()',
+            (5, 4): 'self.locker_click()',
+            (6, 4): 'self.locker_click()',
+            (7, 4): 'self.locker_click()',
+            (8, 4): 'self.locker_click()',
+            (9, 4): 'self.locker_click()',
+            (10, 4): 'self.locker_click()',
 
             # Click edit or delete button
-            (1, 6): 'print("EDIT OR DELETE")',
-            (2, 6): 'print("EDIT OR DELETE")',
-            (3, 6): 'print("EDIT OR DELETE")',
-            (4, 6): 'print("EDIT OR DELETE")',
-            (5, 6): 'print("EDIT OR DELETE")',
-            (6, 6): 'print("EDIT OR DELETE")',
-            (7, 6): 'print("EDIT OR DELETE")',
-            (8, 6): 'print("EDIT OR DELETE")',
-            (9, 6): 'print("EDIT OR DELETE")',
-            (10, 6): 'print("EDIT OR DELETE")',
-            (1, 7): 'print("EDIT OR DELETE")',
-            (2, 7): 'print("EDIT OR DELETE")',
-            (3, 7): 'print("EDIT OR DELETE")',
-            (4, 7): 'print("EDIT OR DELETE")',
-            (5, 7): 'print("EDIT OR DELETE")',
-            (6, 7): 'print("EDIT OR DELETE")',
-            (7, 7): 'print("EDIT OR DELETE")',
-            (8, 7): 'print("EDIT OR DELETE")',
-            (9, 7): 'print("EDIT OR DELETE")',
-            (10, 7): 'print("EDIT OR DELETE")',
+            (1, 6): 'self.buzzer_click()',
+            (2, 6): 'self.buzzer_click()',
+            (3, 6): 'self.buzzer_click()',
+            (4, 6): 'self.buzzer_click()',
+            (5, 6): 'self.buzzer_click()',
+            (6, 6): 'self.buzzer_click()',
+            (7, 6): 'self.buzzer_click()',
+            (8, 6): 'self.buzzer_click()',
+            (9, 6): 'self.buzzer_click()',
+            (10, 6): 'self.buzzer_click()',
+            (1, 7): 'self.buzzer_click()',
+            (2, 7): 'self.buzzer_click()',
+            (3, 7): 'self.buzzer_click()',
+            (4, 7): 'self.buzzer_click()',
+            (5, 7): 'self.buzzer_click()',
+            (6, 7): 'self.buzzer_click()',
+            (7, 7): 'self.buzzer_click()',
+            (8, 7): 'self.buzzer_click()',
+            (9, 7): 'self.buzzer_click()',
+            (10, 7): 'self.buzzer_click()',
             
             # Click back button
             (1, 9): 'self.back_click()',
@@ -108,8 +111,16 @@ class Product_Management:
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
-    def add_click(self):
-        views.Product_Section(False).run()
+    def locker_click(self):
+        if config.locker_type == 0:
+            views.Locker_Control().run(); 
+            pygame.quit()
+        else:
+            views.Locker_Control2().run(); 
+            pygame.quit()
+
+    def buzzer_click(self):
+        views.Buzzer_Setting().run(); 
         pygame.quit()
 
     def back_click(self):
@@ -133,13 +144,13 @@ class Product_Management:
                     position = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 350, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
 
                     if row == 0 and column == 0:
-                        elements.Title('PRODUCT MANAGEMENT', pos=(210, 67), app=(self.screen)).draw()
+                        elements.Title('LOCKER MANAGEMENT', pos=(210, 67), app=(self.screen)).draw()
                     if row == 3 and column == 1:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 958, config.bheight + 67).Rect()
-                        elements.Text_Button_Medium('         ADD', position, app=(self.screen)).draw()
+                        elements.Text_Button_Medium('LOCKER CONTROL', position, app=(self.screen)).draw()
                     if row == 6 and column == 1:
                         elements.Button(self.screen, config.blue, x, y, config.bwidth + 958, config.bheight + 67).Rect()  
-                        elements.Text_Button_Medium('EDIT OR DELETE', position, app=(self.screen)).draw()
+                        elements.Text_Button_Medium('BUZZER SETTING', position, app=(self.screen)).draw()
                     if row == 9 and column == 1:
                         elements.Button(self.screen, config.red, x, y, config.bwidth + 958, config.bheight + 67).Rect()
                         elements.Text_Button_Medium('        BACK', position, app=(self.screen)).draw()   

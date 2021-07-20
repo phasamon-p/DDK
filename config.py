@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
 
+locker_type = 1 #Set default locker type (0 is 12 lockers, 1 is 16 lockers)
+
 db = {
     "host": "localhost",
     "database": "ddk_lockers",
@@ -36,4 +38,4 @@ pygame.display.init()  # Initialize the display module
 pygame.display.get_surface()
 # screensize = width, height = (pygame.display.Info().current_w, pygame.display.Info().current_h) 
 screensize = width, height = (1280,800) 
-flags = RESIZABLE
+flags = FULLSCREEN
