@@ -2,6 +2,7 @@ import config
 import mysql.connector
 from mysql.connector import Error
 from views.admin.usermanagement.user_data import *
+from permission_service import getpermissionbylocker
 
 ########################################### ABOUT CONECTION ########################################### 
 
@@ -18,7 +19,6 @@ def mysqlconnect():
         #     print("You're connected to database: ", record)
     except Error as e:
         return e
-
 
 def selectperson():
     try:
@@ -40,7 +40,6 @@ def selectperson():
             connection.close()
             cursor.close()
             print("MySQL connection is closed")
-
 
 def selectpersonbyid(id):
     try:
@@ -66,7 +65,6 @@ def selectpersonbyid(id):
             cursor.close()
             print("MySQL connection is closed")
 
-
 def getpersonbyfingerid(fingerid):
     try:
         connection = mysqlconnect()
@@ -90,7 +88,6 @@ def getpersonbyfingerid(fingerid):
             cursor.close()
             print("MySQL connection is closed")
 
-
 def getpersoncount():
     try:
         connection = mysqlconnect()
@@ -110,7 +107,6 @@ def getpersoncount():
             connection.close()
             cursor.close()
             print("MySQL connection is closed")
-
 
 def getpersonbyid(id):
     try:
@@ -160,7 +156,6 @@ def insertperson(personid, name, lname, department, fingerid, role):
             connection.close()
             print("MySQL connection is closed")
 
-
 def updatepersonbyid(id, name, lname, department, fingerid, role):
     try:
         connection = mysqlconnect()
@@ -182,7 +177,6 @@ def updatepersonbyid(id, name, lname, department, fingerid, role):
             connection.close()
             cursor.close()
             print("MySQL connection is closed")
-
 
 def deletepersonbyid(id):
     try:
@@ -223,31 +217,6 @@ def insertpermission(id, permission):
                 connection.commit()
                 print("Delete permission : ", record)
         return True
-
-    except mysql.connector.Error as error:
-        print("Failed e record: ", error)
-        return False
-
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
-            print("MySQL connection is closed")
-
-def getpermissionbylocker(id, locker):
-    try:
-        connection = mysqlconnect()
-        sql_select_Query = "SELECT * FROM person_locker WHERE pl_person = %s and pl_locker = %s"
-        cursor = connection.cursor()
-        cursor.execute(sql_select_Query, (id, locker))
-        # get all records
-        records = cursor.fetchall()
-
-        print("rowcount :", cursor.rowcount)
-        if cursor.rowcount:
-            return True
-        else:
-            return False
 
     except mysql.connector.Error as error:
         print("Failed e record: ", error)

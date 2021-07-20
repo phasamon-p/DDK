@@ -142,3 +142,5 @@ def deletepermissionbyid(id):
             connection.close()
             cursor.close()
             print("MySQL connection is closed")
+
+#getpermission("DDK01")

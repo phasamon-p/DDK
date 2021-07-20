@@ -21,7 +21,6 @@ def mysqlconnect():
 def insertproduct(section, qr_code, item_no, product_name, part_no, part_name,drawing_no, locker, quantity, other):
 
     try:
-        print("a")
         connection = mysqlconnect()
         cursor = connection.cursor()
         mySql_insert_query = """INSERT INTO products (section, qr_code, item_no, product_name, part_no, part_name, drawing_no, locker, quantity, other) 
@@ -53,15 +52,14 @@ def getproductlocker(qrcode):
         # get all records
         records = cursor.fetchall()
         rowcount = cursor.rowcount
-        print(rowcount)
 
         if cursor.rowcount:
             return [True, records,rowcount]
+            print(records)
 
         else:
             return [False, records,rowcount]
-
-
+            print(records)
 
     except mysql.connector.Error as error:
         print("Failed e record: ", error)
@@ -123,6 +121,7 @@ def getproductlockerbylocker(barcode, locker):
             cursor.close()
             connection.close()
             print("MySQL connection is closed")
+
 def insertproductlocker(qrcode, permission):
     try:
         connection = mysqlconnect()
@@ -154,7 +153,6 @@ def insertproductlocker(qrcode, permission):
             connection.close()
             print("MySQL connection is closed ")
 
-
 def deleteproductlockerbybarcode(barcode):
     try:
         connection = mysqlconnect()
@@ -174,7 +172,6 @@ def deleteproductlockerbybarcode(barcode):
             connection.close()
             cursor.close()
             print("MySQL connection is closed")
-
 
 def selectproduct():
     try:
@@ -199,7 +196,6 @@ def selectproduct():
             connection.close()
             cursor.close()
             print("MySQL connection is closed")
-
 
 def selectproductbybarcode(qrcode):
     try:
@@ -227,7 +223,7 @@ def selectproductbybarcode(qrcode):
             cursor.close()
             print("MySQL connection is closed")
 
-def searchproduct(search): ##
+def selectproductbysearch(search): ##
     try:
         connection = mysqlconnect()
         sql_select_Query = "SELECT * FROM products WHERE section = %s " \
@@ -237,7 +233,6 @@ def searchproduct(search): ##
                            "OR part_no = %s " \
                            "OR part_name = %s " \
                            "OR drawing_no = %s"
-
         cursor = connection.cursor()
         cursor.execute(sql_select_Query, (search,search,search,search,search,search,search,))
         # get all records
@@ -257,7 +252,6 @@ def searchproduct(search): ##
             connection.close()
             cursor.close()
             print("MySQL connection is closed")
-
 
 def updateproductbyid(id, section, qr_code, item_no, product_name, part_no, part_name,drawing_no, locker, quantity, other):
     try:
@@ -284,7 +278,6 @@ def updateproductbyid(id, section, qr_code, item_no, product_name, part_no, part
             cursor.close()
             print("MySQL connection is closed")
 
-
 def deleteproductbyid(id):
     try:
         connection = mysqlconnect()
@@ -302,5 +295,3 @@ def deleteproductbyid(id):
             connection.close()
             cursor.close()
             print("MySQL connection is closed")
-
-
