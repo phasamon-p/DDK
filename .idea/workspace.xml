@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aee2e6ee-34fc-4f88-b36d-383b4e5b8c11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/DDK.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DDK.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/log_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/log_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/permission_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/permission_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/product_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/product_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/user_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +44,7 @@
       <recent name="C:\Users\DELL\DDK\services" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.user_service">
+  <component name="RunManager" selected="Python.main">
     <configuration name="log_service" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="DDK" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -158,11 +152,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.user_service" />
         <item itemvalue="Python.product_service" />
         <item itemvalue="Python.log_service" />
         <item itemvalue="Python.permission_service" />
-        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>

@@ -109,3 +109,5 @@ def insertlog(employee,product,activity):
     except mysql.connector.Error as e:
         print("Failed to update columns of table: {}".format(e))
         return False
+
+getlog()
