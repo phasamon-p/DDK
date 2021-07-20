@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aee2e6ee-34fc-4f88-b36d-383b4e5b8c11" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/services/log_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/log_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/user_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
