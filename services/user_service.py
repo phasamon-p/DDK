@@ -258,36 +258,3 @@ def getpermissionbylocker(id, locker):
             cursor.close()
             connection.close()
             print("MySQL connection is closed")
-
-########################################### ABOUT PERMISSION ###########################################
-
-def getpermission(id):
-    try:
-        connection = mysqlconnect()
-        sql_select_Query = "SELECT * FROM person_locker WHERE pl_person = %s "
-        cursor = connection.cursor()
-        cursor.execute(sql_select_Query, (id,))
-        # get all records
-        records = cursor.fetchall()
-        rowcount = cursor.rowcount
-
-        if cursor.rowcount:
-            return [True, records,rowcount]
-        else:
-            return [False, records,rowcount]
-
-    except mysql.connector.Error as error:
-        print("Failed e record: ", error)
-        return False
-
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
-            print("MySQL connection is closed")
-
-#insertperson("DDK02", "Moomud", "PP", "AS2", int(1000), "admin")
-#selectperson()
-#selectpersonbyid("DDK02")
-#getfingerid()
-#updatefinrgerprint(3)
