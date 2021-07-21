@@ -98,7 +98,9 @@ def locker_open(relay, lockNo):
         try: 
             if relay >= 0 and pos >= 0 :
                 pin[relay][pos].value = False    # Set pin to HIGH (ON) (1)
-                # time.sleep(0.5)
+                time.sleep(0.5)
+                pin[relay][pos].value = True    # Set pin to Low (ON) (1)
+                time.sleep(0.5)
         except:
             print("Lock I2C error")
             

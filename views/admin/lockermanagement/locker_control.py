@@ -142,12 +142,26 @@ class Locker_Control:
                 self.locker_button[event - 1] = True
                 services.locker_open(0, event)
 
+    def checklocker_status(self):
+        if config.locker_type == 0:
+            for x in range(12):
+                if services.getStatus(x + 1):
+                    self.locker_button[x] = True
+                else:
+                    self.locker_button[x] = False
+        else:
+            for x in range(16):
+                if services.getStatus(x + 1):
+                    self.locker_button[x] = True
+                else:
+                    self.locker_button[x] = False
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
         """Run the main event loop."""
         while self.running:
-            self.screen.fill(Color('white'))      
+            self.screen.fill(Color('white'))  
+            self.checklocker_status()    
             """Initialize user interface."""
             for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin
