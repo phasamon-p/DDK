@@ -141,16 +141,25 @@ class User_Permission:
             self.permission_value += 'admin'
 
         if self.permission_value != '':
-            views.user_data.user_data['permission'] = self.permission_value
-            views.User_Lockeraccess(False).run()
+            if self.editstage:
+                views.user_data.user_data['permission'] = self.permission_value
+                views.User_Lockeraccess(True).run()
+                pygame.quit()
+            else:
+                views.user_data.user_data['permission'] = self.permission_value
+                views.User_Lockeraccess(False).run()
+                pygame.quit()
         else:
             print("Please select user permission")
 
     def cancel_click(self):
-        views.user_data.user_data['permission'] = ''
-        views.User_Department(False).run()
-        pygame.quit()
-
+        if self.editstage:
+            views.User_Department(True).run()
+            pygame.quit()
+        else:
+            views.user_data.user_data['permission'] = ''
+            views.User_Department(False).run()
+            pygame.quit()
     def toggle_button(self, event):
         if event == "GENERAL":
             if self.general_button:

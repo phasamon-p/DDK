@@ -74,15 +74,25 @@ class User_Name:
 
     def next_click(self):
         if self.username_value != '':
-            views.user_data.user_data['user_name'] = self.username_value
-            views.User_Lname(False).run()
+            if self.editstage:
+                views.user_data.user_data['user_name'] = self.username_value
+                views.User_Lname(True).run()
+                pygame.quit()
+            else:
+                views.user_data.user_data['user_name'] = self.username_value
+                views.User_Lname(False).run()
+                pygame.quit()
         else:
             print("Please enter user name")
 
     def cancel_click(self):
-        views.user_data.user_data['user_name'] = ''
-        views.User_Id(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.User_Id(True).run()
+            pygame.quit()
+        else:
+            views.user_data.user_data['user_name'] = ''
+            views.User_Id(False).run()
+            pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""

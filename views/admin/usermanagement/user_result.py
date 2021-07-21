@@ -24,7 +24,7 @@ class User_Result:
         self.editstage = editstage
         if self.editstage:
             self.caption = 'Update user information'
-            self.title = 'Update USER INFORMATION'
+            self.title = 'UPDATE USER INFORMATION'
         else:
             self.caption = 'Confirm user information'
             self.title = 'CONFIRM USER INFORMATION'
@@ -76,18 +76,25 @@ class User_Result:
             exec(self.click[column_click, row_click])
 
     def confirm_click(self):
-        self.set_data()
-        services.insertperson(self.user_data)
-        services.insertpermission(self.user_data[0], self.user_data[6])
-        views.user_data.userdata_reset()
-        print(views.user_data.user_data)
-        views.User_Management().run()
-        pygame.quit()
+        if self.editstage:
+            pass
+        else: 
+            self.set_data()
+            services.insertperson(self.user_data)
+            services.insertpermission(self.user_data[0], self.user_data[6])
+            views.user_data.userdata_reset()
+            print(views.user_data.user_data)
+            views.User_Management().run()
+            pygame.quit()
 
     def back_click(self):
-        views.user_data.user_data['fingerid'] = ''
-        views.User_Finger(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.User_Finger(True).run()
+            pygame.quit()
+        else:
+            views.user_data.user_data['fingerid'] = ''
+            views.User_Finger(False).run()
+            pygame.quit()
     
     def set_data(self):
         self.user_data = []

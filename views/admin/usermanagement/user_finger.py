@@ -120,17 +120,21 @@ class User_Finger:
     
     def update_click(self):
         views.user_data.user_data['fingerid'] = '1'
-        views.User_Result(False).run()
+        views.User_Result(True).run()
         pygame.quit()
 
     def next_click(self):
-        views.User_Result(False).run()
+        views.User_Result(True).run()
         pygame.quit()    
         
     def back_click(self):
-        views.user_data.user_data['fingerid'] = ''
-        views.User_Lockeraccess(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.User_Lockeraccess(True).run()
+            pygame.quit()
+        else:
+            views.user_data.user_data['fingerid'] = ''
+            views.User_Lockeraccess(False).run()
+            pygame.quit()
     
     def run(self):
         """Initialize Caption and Valiable."""

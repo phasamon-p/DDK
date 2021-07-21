@@ -6,6 +6,7 @@ import os
 import config 
 import elements
 import views
+import services
 import data_example
 
 class Locker_Control:
@@ -127,9 +128,19 @@ class Locker_Control:
 
     def toggle_button(self, event):
         if self.locker_button[event - 1]:
-            self.locker_button[event - 1] = False
+            if config.locker_type == 0:
+                self.locker_button[event - 1] = False
+                services.locker_close(0, event)
+            else:
+                self.locker_button[event - 1] = False
+                services.locker_close(0, event)
         else:
-            self.locker_button[event - 1] = True
+            if config.locker_type == 0:
+                self.locker_button[event - 1] = True
+                services.locker_open(0, event)
+            else:
+                self.locker_button[event - 1] = True
+                services.locker_open(0, event)
 
     def run(self):
         """Initialize Caption and Valiable."""

@@ -94,12 +94,11 @@ def getStatus(lockNo):
 def locker_open(relay, lockNo):
         relay = ((lockNo-1) // 16)+relay  #div get relay
         pos = ((lockNo-1) % 16)   #mod get pos
-        try:
+        print(relay, pos)
+        try: 
             if relay >= 0 and pos >= 0 :
                 pin[relay][pos].value = False    # Set pin to HIGH (ON) (1)
-                time.sleep(0.5)
-                pin[relay][pos].value = True    # Set pin to LOW (OFF) (1)
-                time.sleep(0.5)
+                # time.sleep(0.5)
         except:
             print("Lock I2C error")
             
@@ -140,32 +139,20 @@ def get_num():
 #     print("d) Exit Testing")
 #     print("----------------")
 #     c = input(" ")
-# 
+
 #     if c == "e":
 #         checkstatus()
+
 #     if c == "f":
 #         i = get_num()
-#         if i == 19:
-#             for x in range(18):
-#                 j = x+1
-#                 if j < 9:
-#                     open(0, j + 8)
-#                 elif j == 17:
-#                     open(1, j - 16)
-#                 elif j == 18:
-#                     open(1, j - 13)
-#                 else:
-#                     open(1, j)
-#         elif i < 9:
-#             open(0, i + 8)
-#         elif i == 17:
-#             open(1, i - 16)
-#         elif i == 18:
-#             open(1, i - 13)
-#         else:
-#             open(1, i)
+#         locker_open(0, i )
+
 #     if c == "d":
 #         status = False
+
+#     if c == "1":
+#         init()
+
 #     if c == "p":
 #         res = subprocess.call("ping 8.8.8.8 -c 1 | grep 'received' | awk -F',' '{ print $2}' | awk '{ print $1}'", shell=True)
 #         print("Res : ", res)

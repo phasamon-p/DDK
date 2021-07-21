@@ -150,16 +150,25 @@ class User_Lockeraccess:
                 self.lockeraccess_value[x] = False
 
         if self.lockeraccess_value != '':
-            views.user_data.user_data['locker_access'] = self.lockeraccess_value
-            views.User_Finger(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.user_data.user_data['locker_access'] = self.lockeraccess_value
+                views.User_Finger(True).run()
+                pygame.quit()
+            else:
+                views.user_data.user_data['locker_access'] = self.lockeraccess_value
+                views.User_Finger(False).run()
+                pygame.quit()
         else:
             print("Please select user locker access")
 
     def cancel_click(self):
-        views.user_data.lockeraccess_reset()
-        views.User_Permission(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.User_Permission(True).run()
+            pygame.quit()
+        else:
+            views.user_data.lockeraccess_reset()
+            views.User_Permission(False).run()
+            pygame.quit()
 
     def toggle_button(self, event):
         if self.locker_button[event - 1]:

@@ -48,6 +48,71 @@ def getpermission(id):
             #print(records)
             print("MySQL connection is closed")
 
+def getpermission_byid_string(id):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM person_locker WHERE pl_person = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (id,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+
+        if cursor.rowcount:
+            data = ''
+            for x in range(len(records)):
+                if len(data) > 0:
+                    data += "," + str(records[x][2])
+                else:
+                    data += str(records[x][2])
+            return data
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            #print(records)
+            print("MySQL connection is closed")
+
+def getpermission_byid_bool(id):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM person_locker WHERE pl_person = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (id,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+
+        if cursor.rowcount:
+            if config.locker_type > 0:
+                locker = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+            else:
+                locker = [False, False, False, False, False, False, False, False, False, False, False, False]
+            
+            for x in range(len(records)):
+                locker[records[x][2] - 1] = True
+
+            return locker
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            #print(records)
+            print("MySQL connection is closed")
 
 def getpermissionbylocker(id, locker):
     try:

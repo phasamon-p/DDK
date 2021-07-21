@@ -160,15 +160,25 @@ class User_Department:
             self.department_value[4] = 'PR'
 
         if self.department_value != '':
-            views.user_data.user_data['department'] = self.department_value
-            views.User_Permission(False).run()
+            if self.editstage:
+                views.user_data.user_data['department'] = self.department_value
+                views.User_Permission(True).run()
+                pygame.quit()
+            else:
+                views.user_data.user_data['department'] = self.department_value
+                views.User_Permission(False).run()
+                pygame.quit()
         else:
             print("Please select user deparment")
 
     def cancel_click(self):
-        views.user_data.user_data['department'] = ''
-        views.User_Lname(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.User_Lname(True).run()
+            pygame.quit()
+        else:
+            views.user_data.user_data['department'] = ''
+            views.User_Lname(False).run()
+            pygame.quit()
 
     def toggle_button(self, event):
         if self.department_button[event - 1]:

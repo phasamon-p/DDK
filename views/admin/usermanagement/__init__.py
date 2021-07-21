@@ -8,6 +8,7 @@ from views.admin.usermanagement.user_permission import User_Permission
 from views.admin.usermanagement.user_lockeraccess import User_Lockeraccess
 from views.admin.usermanagement.user_finger import User_Finger
 from views.admin.usermanagement.user_result import User_Result
+from views.admin.usermanagement.user_edit import User_Edit
 
 __all__ = { 'User_Management',
             'User_Id',
@@ -18,4 +19,5 @@ __all__ = { 'User_Management',
             'User_Permission',
             'User_Lockeraccess',
             'User_Finger',
-            'User_Result'}
+            'User_Result',
+            'User_Edit'}

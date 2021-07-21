@@ -49,48 +49,48 @@ class User_Management:
             (10, 4): 'self.add_click()',
 
             # Click edit or delete button
-            (1, 6): 'print("EDIT OR DELETE")',
-            (2, 6): 'print("EDIT OR DELETE")',
-            (3, 6): 'print("EDIT OR DELETE")',
-            (4, 6): 'print("EDIT OR DELETE")',
-            (5, 6): 'print("EDIT OR DELETE")',
-            (6, 6): 'print("EDIT OR DELETE")',
-            (7, 6): 'print("EDIT OR DELETE")',
-            (8, 6): 'print("EDIT OR DELETE")',
-            (9, 6): 'print("EDIT OR DELETE")',
-            (10, 6): 'print("EDIT OR DELETE")',
-            (1, 7): 'print("EDIT OR DELETE")',
-            (2, 7): 'print("EDIT OR DELETE")',
-            (3, 7): 'print("EDIT OR DELETE")',
-            (4, 7): 'print("EDIT OR DELETE")',
-            (5, 7): 'print("EDIT OR DELETE")',
-            (6, 7): 'print("EDIT OR DELETE")',
-            (7, 7): 'print("EDIT OR DELETE")',
-            (8, 7): 'print("EDIT OR DELETE")',
-            (9, 7): 'print("EDIT OR DELETE")',
-            (10, 7): 'print("EDIT OR DELETE")',
+            (1, 6): 'self.edit_click()',
+            (2, 6): 'self.edit_click()',
+            (3, 6): 'self.edit_click()',
+            (4, 6): 'self.edit_click()',
+            (5, 6): 'self.edit_click()',
+            (6, 6): 'self.edit_click()',
+            (7, 6): 'self.edit_click()',
+            (8, 6): 'self.edit_click()',
+            (9, 6): 'self.edit_click()',
+            (10, 6): 'self.edit_click()',
+            (1, 7): 'self.edit_click()',
+            (2, 7): 'self.edit_click()',
+            (3, 7): 'self.edit_click()',
+            (4, 7): 'self.edit_click()',
+            (5, 7): 'self.edit_click()',
+            (6, 7): 'self.edit_click()',
+            (7, 7): 'self.edit_click()',
+            (8, 7): 'self.edit_click()',
+            (9, 7): 'self.edit_click()',
+            (10, 7): 'self.edit_click()',
             
             # Click back button
-            (1, 9): 'views.System_Management().run(); pygame.quit()',
-            (2, 9): 'views.System_Management().run(); pygame.quit()',
-            (3, 9): 'views.System_Management().run(); pygame.quit()',
-            (4, 9): 'views.System_Management().run(); pygame.quit()',
-            (5, 9): 'views.System_Management().run(); pygame.quit()',
-            (6, 9): 'views.System_Management().run(); pygame.quit()',
-            (7, 9): 'views.System_Management().run(); pygame.quit()',
-            (8, 9): 'views.System_Management().run(); pygame.quit()',
-            (9, 9): 'views.System_Management().run(); pygame.quit()',
-            (10, 9): 'views.System_Management().run(); pygame.quit()',
-            (1, 10): 'views.System_Management().run(); pygame.quit()',
-            (2, 10): 'views.System_Management().run(); pygame.quit()',
-            (3, 10): 'views.System_Management().run(); pygame.quit()',
-            (4, 10): 'views.System_Management().run(); pygame.quit()',
-            (5, 10): 'views.System_Management().run(); pygame.quit()',
-            (6, 10): 'views.System_Management().run(); pygame.quit()',
-            (7, 10): 'views.System_Management().run(); pygame.quit()',
-            (8, 10): 'views.System_Management().run(); pygame.quit()',
-            (9, 10): 'views.System_Management().run(); pygame.quit()',
-            (10, 10): 'views.System_Management().run(); pygame.quit()',
+            (1, 9): 'self.back_click()',
+            (2, 9): 'self.back_click()',
+            (3, 9): 'self.back_click()',
+            (4, 9): 'self.back_click()',
+            (5, 9): 'self.back_click()',
+            (6, 9): 'self.back_click()',
+            (7, 9): 'self.back_click()',
+            (8, 9): 'self.back_click()',
+            (9, 9): 'self.back_click()',
+            (10, 9): 'self.back_click()',
+            (1, 10): 'self.back_click()',
+            (2, 10): 'self.back_click()',
+            (3, 10): 'self.back_click()',
+            (4, 10): 'self.back_click()',
+            (5, 10): 'self.back_click()',
+            (6, 10): 'self.back_click()',
+            (7, 10): 'self.back_click()',
+            (8, 10): 'self.back_click()',
+            (9, 10): 'self.back_click()',
+            (10, 10): 'self.back_click()',
            
         }
 
@@ -111,6 +111,15 @@ class User_Management:
     def add_click(self):
         views.User_Id(False).run()
         pygame.quit()
+
+    def edit_click(self):
+        views.User_Edit().run()
+        pygame.quit()
+    
+    def back_click(self):
+        views.System_Management().run()
+        pygame.quit()
+
 
     def run(self):
         """Initialize Caption and Valiable."""

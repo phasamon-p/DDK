@@ -135,6 +135,44 @@ def getpersonbyid(id):
             cursor.close()
             print("MySQL connection is closed")
 
+def getdepartmentbyid_bool(id):
+    try:
+        connection = mysqlconnect()
+
+        sql_select_Query = "SELECT * FROM person WHERE personid = %s "
+
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (id,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+
+        if cursor.rowcount:
+            data = records[0][3].split()
+            department = [False, False, False, False, False]
+            for x in range(len(data)):
+                if data[x] == 'AS1':
+                   department[0] = True
+                if data[x] == 'AS2':
+                   department[1] = True
+                if data[x] == 'MT1':
+                   department[2] = True
+                if data[x] == 'MT2':
+                   department[3] = True
+                if data[x] == 'PR':
+                   department[4] = True
+            return department
+        else:
+            return False
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
 def insertperson(data):
     try:
         connection = mysqlconnect()
