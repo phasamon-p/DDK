@@ -1,4 +1,5 @@
 """ Search"""
+from re import T
 import pygame
 from pygame.locals import *
 import time
@@ -70,17 +71,25 @@ class Part_Number:
 
     def next_click(self):
         if self.partnumber_value != '':
-            views.product_data.product_data['part_number'] = self.partnumber_value
-            views.Part_Name(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.product_data.product_data['part_number'] = self.partnumber_value
+                views.Part_Name(True).run()
+                pygame.quit()
+            else:
+                views.product_data.product_data['part_number'] = self.partnumber_value
+                views.Part_Name(False).run()
+                pygame.quit()
         else:
             print("Please enter part number")
 
     def cancel_click(self):
-        views.product_data.product_data['part_number'] = ''
-        views.Product_Name(False).run()
-        pygame.quit()
-        pass 
+        if self.editstage:
+            views.Product_Name(True).run()
+            pygame.quit() 
+        else:
+            views.product_data.product_data['part_number'] = ''
+            views.Product_Name(False).run()
+            pygame.quit() 
 
     def run(self):
         """Initialize Caption and Valiable."""

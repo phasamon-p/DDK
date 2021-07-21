@@ -46,7 +46,7 @@ def getproductlocker(qrcode):
         connection = mysqlconnect()
         sql_select_Query = "SELECT * FROM products_lockers WHERE pl_products = %s "
         cursor = connection.cursor()
-        cursor.execute(sql_select_Query, (qrcode,))
+        cursor.execute(sql_select_Query, (qrcode.replace("\r", ""),))
         # get all records
         records = cursor.fetchall()
         rowcount = cursor.rowcount
@@ -74,7 +74,8 @@ def getproductlocker2(qrcode):
         connection = mysqlconnect()
         sql_select_Query = "SELECT * FROM products_lockers WHERE pl_products = %s "
         cursor = connection.cursor()
-        cursor.execute(sql_select_Query, (qrcode,))
+        print(qrcode.replace("\r", ""))
+        cursor.execute(sql_select_Query, (qrcode.replace("\r", ""),))
         # get all records
         records = cursor.fetchall()
         rowcount = cursor.rowcount
@@ -82,6 +83,78 @@ def getproductlocker2(qrcode):
 
         if cursor.rowcount:
             return records[0][2]
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+def getproductlocker_string(qrcode):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM products_lockers WHERE pl_products = %s "
+        cursor = connection.cursor()
+        print(qrcode.replace("\r", ""))
+        cursor.execute(sql_select_Query, (qrcode.replace("\r", ""),))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+        print(records)
+
+        if cursor.rowcount:
+            data = ''
+            for x in range(len(records)):
+                if len(data) > 0:
+                    data += "," + str(records[x][2])
+                else:
+                    data += str(records[x][2])
+            return data
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+def getsection_bool(qrcode):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM products WHERE qr_code = %s "
+        cursor = connection.cursor()
+        print(qrcode.replace("\r", ""))
+        cursor.execute(sql_select_Query, (qrcode.replace("\r", ""),))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+
+        if cursor.rowcount:
+            data = records[0][1].split()
+            section = [False, False, False, False, False]
+            for x in range(len(data)):
+                if data[x] == 'AS1':
+                   section[0] = True
+                if data[x] == 'AS2':
+                   section[1] = True
+                if data[x] == 'MT1':
+                   section[2] = True
+                if data[x] == 'MT2':
+                   section[3] = True
+                if data[x] == 'PR':
+                   section[4] = True
+            return section
         else:
             return False
 
@@ -120,6 +193,38 @@ def getproductlockerbylocker(barcode, locker):
             connection.close()
             print("MySQL connection is closed")
 
+def getproductlocker_byqrcode_bool(barcode):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM products_lockers WHERE pl_products = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (barcode.replace("\r",""),))
+        # get all records
+        records = cursor.fetchall()
+        print(records)
+        if cursor.rowcount:
+            if config.locker_type > 0:
+                locker = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+            else:
+                locker = [False, False, False, False, False, False, False, False, False, False, False, False]
+            
+            for x in range(len(records)):
+                locker[records[x][2] - 1] = True
+
+            return locker
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
 def insertproductlocker(qrcode, permission):
     try:
         print("permission:", permission)
@@ -128,16 +233,15 @@ def insertproductlocker(qrcode, permission):
         for x in range(len(permission)):
 #             print("lengh of ml_locker :", len(permission))
             if permission[x]:
-                if not getproductlockerbylocker(qrcode, permission[x]):
-                    print(x)
+                if not getproductlockerbylocker(qrcode.replace("\r", ""), x + 1):
                     mySql_insert_query = """INSERT INTO products_lockers (pl_products, pl_locker) VALUES ( %s, %s) """
-                    record = (qrcode, x + 1)
+                    record = (qrcode.replace("\r", ""), x + 1)
                     cursor.execute(mySql_insert_query, record)
                     connection.commit()
 #                     print("Insert ml_locker : ", record)
             else:
                 mySql_delete_query = "DELETE from products_lockers where pl_products = %s and pl_locker = %s "
-                record = (qrcode, x + 1)
+                record = (qrcode.replace("\r", ""), x + 1)
                 cursor.execute(mySql_delete_query, record)
                 connection.commit()
 #                 print("Delete ml_locker : ", record)
@@ -159,7 +263,7 @@ def deleteproductlockerbybarcode(barcode):
 
         sql_Delete_Query = "Delete from products_lockers where pl_products = %s "
         cursor = connection.cursor()
-        cursor.execute(sql_Delete_Query, (barcode,))
+        cursor.execute(sql_Delete_Query, (barcode.replace("\r",""),))
         connection.commit()
 
         return True
@@ -253,7 +357,8 @@ def selectproductbysearch(search): ##
             cursor.close()
             print("MySQL connection is closed")
 
-def updateproductbyid(id, section, qr_code, item_no, product_name, part_no, part_name,drawing_no, locker, quantity, other):
+# def updateproductbyid(id, section, qr_code, item_no, product_name, part_no, part_name,drawing_no, locker, quantity, other):
+def updateproductbyid(qrcode, data):
     try:
         connection = mysqlconnect()
 
@@ -262,7 +367,7 @@ def updateproductbyid(id, section, qr_code, item_no, product_name, part_no, part
                            "other = %s where id = %s "
         cursor = connection.cursor()
 
-        input = (section, qr_code, item_no, product_name, part_no, part_name,drawing_no, locker, quantity, other ,id)
+        input = (data[0], data[1].replace("\r", ""), data[2], data[3], data[4], data[5], data[6],'', data[8], data[9] ,qrcode.replace("\r", ""))
 
         cursor.execute(sql_Update_Query, input)
         connection.commit()

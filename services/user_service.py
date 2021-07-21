@@ -2,7 +2,7 @@ import config
 import mysql.connector
 from mysql.connector import Error
 from views.admin.usermanagement.user_data import *
-from permission_service import getpermissionbylocker
+import services
 
 ########################################### ABOUT CONECTION ########################################### 
 
@@ -135,13 +135,12 @@ def getpersonbyid(id):
             cursor.close()
             print("MySQL connection is closed")
 
-def insertperson(personid, name, lname, department, fingerid, role):
+def insertperson(data):
     try:
         connection = mysqlconnect()
         cursor = connection.cursor()
         mySql_insert_query = """INSERT INTO person (personid, name, lname, department ,fingerid, permission) VALUES ( %s, %s, %s, %s, %s, %s) """
-        permission = role
-        record = (personid, name, lname, department, fingerid, permission)
+        record = (data[0], data[1], data[2], data[3], data[4], data[5])
         cursor.execute(mySql_insert_query, record)
         connection.commit()
 
@@ -205,15 +204,15 @@ def insertpermission(id, permission):
         for x in range(len(permission)):
             print("lengh of permission :", len(permission))
             if permission[x]:
-                if not getpermissionbylocker(id, permission[x]):
+                if not services.getpermissionbylocker(id, permission[x]):
                     mySql_insert_query = """INSERT INTO person_locker (pl_person, pl_locker) VALUES ( %s, %s) """
-                    record = (id, permission[x])
+                    record = (id, x + 1)
                     cursor.execute(mySql_insert_query, record)
                     connection.commit()
                     print("Insert permission : ", record)
             else:
                 mySql_delete_query = "DELETE from person_locker where pl_person = %s and pl_locker = %s "
-                record = (id, x+1)
+                record = (id, x + 1)
                 cursor.execute(mySql_delete_query, record)
                 connection.commit()
                 print("Delete permission : ", record)

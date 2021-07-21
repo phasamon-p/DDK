@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-locker_type = 1 #Set default locker type (0 is 12 lockers, 1 is 16 lockers)
+locker_type = 0 #Set default locker type (0 is 12 lockers, 1 is 16 lockers)
 
 db = {
     "host": "localhost",

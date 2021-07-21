@@ -150,16 +150,25 @@ class Product_Locker:
                 self.productlocker_value[x] = False
 
         if self.productlocker_value != '':
-            views.product_data.product_data['locker_number'] = self.productlocker_value
-            views.Quantity(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.product_data.product_data['locker_number'] = self.productlocker_value
+                views.Quantity(True).run()
+                pygame.quit()
+            else:
+                views.product_data.product_data['locker_number'] = self.productlocker_value
+                views.Quantity(False).run()
+                pygame.quit()
         else:
             print("Please select product locker")
 
     def cancel_click(self):
-        views.product_data.locker_reset()
-        views.Drawing_Number(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.Drawing_Number(True).run()
+            pygame.quit() 
+        else:
+            views.product_data.locker_reset()
+            views.Drawing_Number(False).run()
+            pygame.quit()
 
     def toggle_button(self, event):
         if self.locker_button[event - 1]:

@@ -69,16 +69,25 @@ class Drawing_Number:
 
     def next_click(self):
         if self.drawing_value != '':
-            views.product_data.product_data['drawing_number'] = self.drawing_value
-            views.Product_Locker(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.product_data.product_data['drawing_number'] = self.drawing_value
+                views.Product_Locker(True).run()
+                pygame.quit()
+            else:
+                views.product_data.product_data['drawing_number'] = self.drawing_value
+                views.Product_Locker(False).run()
+                pygame.quit()
         else:
             print("Please enter drawing number")
 
     def cancel_click(self):
-        views.product_data.product_data['drawing_number'] = ''
-        views.Part_Name(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.Part_Name(True).run()
+            pygame.quit() 
+        else:
+            views.product_data.product_data['drawing_number'] = ''
+            views.Part_Name(False).run()
+            pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""

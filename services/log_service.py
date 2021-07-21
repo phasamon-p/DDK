@@ -4,7 +4,7 @@ from mysql.connector import Error
 from views.admin.usermanagement.user_data import *
 import time
 import datetime
-from product_service import getproductlocker
+import services
 
 ########################################### ABOUT CONECTION ###########################################
 
@@ -95,7 +95,7 @@ def insertlog(employee,product,activity):
         mySql_insert_query = """INSERT INTO log (date, time, employeeid, name, lastname, item_number, product_name, part_no, part_name, drawing_no, quantity, locker, activity) 
                                                        VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
         for x in range(len(product)):
-            results = getproductlocker(product[x][1])
+            results = services.getproductlocker(product[x][1])
             lockernumber = results[1]
             for y in range(len(lockernumber)):
                 locker = lockernumber[y][2]
@@ -109,5 +109,3 @@ def insertlog(employee,product,activity):
     except mysql.connector.Error as e:
         print("Failed to update columns of table: {}".format(e))
         return False
-
-getlog()

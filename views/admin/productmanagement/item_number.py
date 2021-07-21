@@ -70,16 +70,25 @@ class Item_Number:
 
     def next_click(self):
         if self.itemnumber_value != '':
-            views.product_data.product_data['item_number'] = self.itemnumber_value
-            views.Product_Name(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.product_data.product_data['item_number'] = self.itemnumber_value
+                views.Product_Name(True).run()
+                pygame.quit()
+            else:
+                views.product_data.product_data['item_number'] = self.itemnumber_value
+                views.Product_Name(False).run()
+                pygame.quit()
         else:
             print("Please enter item number")
 
     def cancel_click(self):
-        views.product_data.product_data['item_number'] = ''
-        views.Product_Management().run()
-        pygame.quit()
+        if self.editstage:
+            views.Product_Qrcode(True).run()
+            pygame.quit()
+        else:
+            views.product_data.product_data['item_number'] = ''
+            views.Product_Qrcode(False).run()
+            pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""

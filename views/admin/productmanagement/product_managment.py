@@ -49,26 +49,26 @@ class Product_Management:
             (10, 4): 'self.add_click()',
 
             # Click edit or delete button
-            (1, 6): 'print("EDIT OR DELETE")',
-            (2, 6): 'print("EDIT OR DELETE")',
-            (3, 6): 'print("EDIT OR DELETE")',
-            (4, 6): 'print("EDIT OR DELETE")',
-            (5, 6): 'print("EDIT OR DELETE")',
-            (6, 6): 'print("EDIT OR DELETE")',
-            (7, 6): 'print("EDIT OR DELETE")',
-            (8, 6): 'print("EDIT OR DELETE")',
-            (9, 6): 'print("EDIT OR DELETE")',
-            (10, 6): 'print("EDIT OR DELETE")',
-            (1, 7): 'print("EDIT OR DELETE")',
-            (2, 7): 'print("EDIT OR DELETE")',
-            (3, 7): 'print("EDIT OR DELETE")',
-            (4, 7): 'print("EDIT OR DELETE")',
-            (5, 7): 'print("EDIT OR DELETE")',
-            (6, 7): 'print("EDIT OR DELETE")',
-            (7, 7): 'print("EDIT OR DELETE")',
-            (8, 7): 'print("EDIT OR DELETE")',
-            (9, 7): 'print("EDIT OR DELETE")',
-            (10, 7): 'print("EDIT OR DELETE")',
+            (1, 6): 'self.edit_click()',
+            (2, 6): 'self.edit_click()',
+            (3, 6): 'self.edit_click()',
+            (4, 6): 'self.edit_click()',
+            (5, 6): 'self.edit_click()',
+            (6, 6): 'self.edit_click()',
+            (7, 6): 'self.edit_click()',
+            (8, 6): 'self.edit_click()',
+            (9, 6): 'self.edit_click()',
+            (10, 6): 'self.edit_click()',
+            (1, 7): 'self.edit_click()',
+            (2, 7): 'self.edit_click()',
+            (3, 7): 'self.edit_click()',
+            (4, 7): 'self.edit_click()',
+            (5, 7): 'self.edit_click()',
+            (6, 7): 'self.edit_click()',
+            (7, 7): 'self.edit_click()',
+            (8, 7): 'self.edit_click()',
+            (9, 7): 'self.edit_click()',
+            (10, 7): 'self.edit_click()',
             
             # Click back button
             (1, 9): 'self.back_click()',
@@ -109,7 +109,13 @@ class Product_Management:
             exec(self.click[column_click, row_click])
 
     def add_click(self):
+        views.product_data.productdata_reset()
+        views.product_data.list_reset()
         views.Product_Section(False).run()
+        pygame.quit()
+
+    def edit_click(self):
+        views.Product_Edit().run()
         pygame.quit()
 
     def back_click(self):

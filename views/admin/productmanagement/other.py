@@ -73,18 +73,32 @@ class Other:
 
     def next_click(self):
         if self.other_value != '':
-            views.product_data.product_data['other'] = self.other_value
-            views.Product_Result(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.product_data.product_data['other'] = self.other_value
+                views.Product_Result(True).run()
+                pygame.quit()
+            else:
+                views.product_data.product_data['other'] = self.other_value
+                views.Product_Result(False).run()
+                pygame.quit()
         else:
-            views.product_data.product_data['other'] = self.other_value
-            views.Product_Result(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.product_data.product_data['other'] = self.other_value
+                views.Product_Result(True).run()
+                pygame.quit()
+            else:
+                views.product_data.product_data['other'] = self.other_value
+                views.Product_Result(False).run()
+                pygame.quit()
 
     def cancel_click(self):
-        views.product_data.product_data['other'] = ''
-        views.Quantity(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.Quantity(True).run()
+            pygame.quit() 
+        else:
+            views.product_data.product_data['other'] = ''
+            views.Quantity(False).run()
+            pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""

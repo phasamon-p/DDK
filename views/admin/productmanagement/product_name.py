@@ -73,16 +73,25 @@ class Product_Name:
 
     def next_click(self):
         if self.productname_value != '':
-            views.product_data.product_data['product_name'] = self.productname_value
-            views.Part_Number(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.product_data.product_data['product_name'] = self.productname_value
+                views.Part_Number(True).run()
+                pygame.quit()
+            else:
+                views.product_data.product_data['product_name'] = self.productname_value
+                views.Part_Number(False).run()
+                pygame.quit()
         else:
             print("Please enter product name")
 
     def cancel_click(self):
-        views.product_data.product_data['product_name'] = ''
-        views.Item_Number(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.Item_Number(True).run()
+            pygame.quit()
+        else:
+            views.product_data.product_data['product_name'] = ''
+            views.Item_Number(False).run()
+            pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""

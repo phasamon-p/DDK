@@ -156,16 +156,27 @@ class Product_Section:
             self.section_value[4] = 'PR'
 
         if self.section_value != '':
-            views.product_data.product_data['section'] = self.section_value
-            views.Product_Qrcode(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.product_data.product_data['section'] = self.section_value
+                views.Product_Qrcode(True).run()
+                pygame.quit()
+            else:
+                views.product_data.product_data['section'] = self.section_value
+                views.Product_Qrcode(False).run()
+                pygame.quit()
         else:
             print("Please select product section")
 
     def cancel_click(self):
-        views.product_data.product_data['section'] = ''
-        views.Product_Management().run()
-        pygame.quit()
+        if self.editstage:
+            views.product_data.productdata_reset()
+            views.product_data.list_reset()
+            views.Product_Edit().run()
+            pygame.quit()
+        else:
+            views.product_data.product_data['section'] = ''
+            views.Product_Management().run()
+            pygame.quit()
 
     def toggle_button(self, event):
         if self.section_button[event - 1]:

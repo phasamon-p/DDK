@@ -11,6 +11,8 @@ from views.admin.productmanagement.other import Other
 from views.admin.productmanagement.product_result import Product_Result
 from views.admin.productmanagement.product_section import Product_Section
 from views.admin.productmanagement.product_qrcode import Product_Qrcode
+from views.admin.productmanagement.product_edit import Product_Edit
+
 __all__ = { 'Product_Management',
             'Item_Number',
             'product_data',
@@ -24,4 +26,5 @@ __all__ = { 'Product_Management',
             'Other',
             'Product_Result',
             'Product_Section',
-            'Product_Qrcode'}
+            'Product_Qrcode',
+            'Product_Edit'}

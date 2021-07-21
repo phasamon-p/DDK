@@ -100,16 +100,30 @@ class Product_Result:
             self.previous_button = False
 
     def confirm_click(self):
-        self.set_data()
-        services.insertproduct(self.product_data) # Insert nmew product
-        services.insertproductlocker(self.product_data[1], self.product_data[7]) #insert product locker
-        views.product_data.productdata_reset()
-        views.Product_Management().run()
-        pygame.quit()
+        if self.editstage:
+            self.set_data()
+            services.updateproductbyid(views.product_data.old_qrcode, self.product_data)
+            services.insertproductlocker(self.product_data[1], self.product_data[7]) #insert product locker
+            views.product_data.productdata_reset()
+            views.product_data.list_reset()
+            views.Product_Management().run()
+            pygame.quit() 
+        else:
+            self.set_data()
+            services.insertproduct(self.product_data) # Insert nmew product
+            services.insertproductlocker(self.product_data[1], self.product_data[7]) #insert product locker
+            views.product_data.productdata_reset()
+            views.product_data.list_reset()
+            views.Product_Management().run()
+            pygame.quit()
 
     def back_click(self):
-        views.Other(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.Other(True).run()
+            pygame.quit() 
+        else:
+            views.Other(False).run()
+            pygame.quit()
 
     def set_data(self):
         self.product_data = []

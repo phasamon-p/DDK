@@ -1,6 +1,19 @@
 import pygame
 from pygame.locals import *
 
+# Valiable and function of request product
+request_list = []
+old_qrcode = ''
+
+def list_add(object):
+    request_list.append(object)
+
+def list_delete():
+    request_list.pop()
+
+def list_reset():
+    request_list.clear()
+
 product_data = {    'section' : [False, False, False, False, False],
                     'qrcode' : "",
                     'item_number' : "",
@@ -54,5 +67,18 @@ def productdata_reset():
     product_data['quantity'] = ''
     product_data['other'] = ''
 
-        
+def productdata_setedit(data):
+ 
+    product_data['section'] =  data.section
+    product_data['qrcode'] =  data.qrcode
+    product_data['item_number'] =  data.item_number
+    product_data['product_name'] =  data.product_name
+    product_data['part_number'] =  data.part_number
+    product_data['part_name'] =  data.part_name
+    product_data['drawing_number'] =  data.drawing_number
+    product_data['locker_number'] =  data.locker_number
+    product_data['quantity'] =  data.quantity
+    product_data['other'] =  data.other
+
+    old_qrcode = data.qrcode
 

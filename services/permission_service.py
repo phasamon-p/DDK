@@ -1,8 +1,8 @@
 import config
 import mysql.connector
 from mysql.connector import Error
-from product_service import *
 from views.admin.usermanagement.user_data import *
+import services
 
 ########################################### ABOUT CONECTION ########################################### 
 
@@ -57,8 +57,6 @@ def getpermissionbylocker(id, locker):
         cursor.execute(sql_select_Query, (id, locker))
         # get all records
         records = cursor.fetchall()
-
-        print("rowcount :", cursor.rowcount)
         if cursor.rowcount:
             return True
         else:
@@ -80,8 +78,8 @@ def checkpermission(person, product):
         print("person:", person)
         print("product:", product)
         for x in range(len(product)):
-            result = getproductlocker2(product[x][3])
-            if not getpermissionbylocker(person, result):
+            result = services.getproductlocker2(product[x][3])
+            if not services.getpermissionbylocker(person, result):
                 print("F")
                 return False
             else: print("T")
@@ -99,15 +97,15 @@ def insertpermission(id, permission):
         for x in range(len(permission)):
             print("lengh of permission :", len(permission))
             if permission[x]:
-                if not getpermissionbylocker(id, permission[x]):
+                if not services.getpermissionbylocker(id, x + 1):
                     mySql_insert_query = """INSERT INTO person_locker (pl_person, pl_locker) VALUES ( %s, %s) """
-                    record = (id, permission[x])
+                    record = (id, x + 1)
                     cursor.execute(mySql_insert_query, record)
                     connection.commit()
                     print("Insert permission : ", record)
             else:
                 mySql_delete_query = "DELETE from person_locker where pl_person = %s and pl_locker = %s "
-                record = (id, x+1)
+                record = (id, x + 1)
                 cursor.execute(mySql_delete_query, record)
                 connection.commit()
                 print("Delete permission : ", record)

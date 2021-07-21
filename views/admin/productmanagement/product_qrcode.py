@@ -67,16 +67,25 @@ class Product_Qrcode:
 
     def next_click(self):
         if self.qrcode_value != '':
-            views.product_data.product_data['qrcode'] = self.qrcode_value
-            views.Item_Number(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.product_data.product_data['qrcode'] = self.qrcode_value
+                views.Item_Number(True).run()
+                pygame.quit()
+            else:
+                views.product_data.product_data['qrcode'] = self.qrcode_value
+                views.Item_Number(False).run()
+                pygame.quit()
         else:
             print("Please enter part number")
 
     def cancel_click(self):
-        views.product_data.product_data['qrcode'] = ''
-        views.Product_Section(False).run()
-        pygame.quit()
+        if self.editstage:
+            views.Product_Section(True).run()
+            pygame.quit() 
+        else:
+            views.product_data.product_data['qrcode'] = ''
+            views.Product_Section(False).run()
+            pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""

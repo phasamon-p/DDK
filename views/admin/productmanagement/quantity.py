@@ -67,17 +67,26 @@ class Quantity:
 
     def next_click(self):
         if self.quantity_value != '':
-            views.product_data.product_data['quantity'] = self.quantity_value
-            views.Other(False).run()
-            pygame.quit()
+            if self.editstage:
+                views.product_data.product_data['quantity'] = self.quantity_value
+                views.Other(True).run()
+                pygame.quit()
+            else:
+                views.product_data.product_data['quantity'] = self.quantity_value
+                views.Other(False).run()
+                pygame.quit()
         else:
             print("Please enter product quantity")
 
     def cancel_click(self):
-        views.product_data.product_data['quantity'] = ''
-        views.Product_Locker(False).run()
-        pygame.quit()
-        pass 
+        if self.editstage:
+            views.Product_Locker(True).run()
+            pygame.quit() 
+        else:
+            views.product_data.product_data['quantity'] = ''
+            views.Product_Locker(False).run()
+            pygame.quit()
+             
 
     def run(self):
         """Initialize Caption and Valiable."""

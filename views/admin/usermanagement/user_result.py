@@ -6,6 +6,7 @@ import os
 import config 
 import elements
 import views
+import services
 import data_example
 
 
@@ -20,10 +21,6 @@ class User_Result:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
-        self.next_button = False # Set default avtivation status of next button
-        self.previous_button = False # Set default avtivation status of previous button
-        self.index = 0 # Set default index value of listview page
-        self.product_data = ""
         self.editstage = editstage
         if self.editstage:
             self.caption = 'Update user information'
@@ -79,6 +76,9 @@ class User_Result:
             exec(self.click[column_click, row_click])
 
     def confirm_click(self):
+        self.set_data()
+        services.insertperson(self.user_data)
+        services.insertpermission(self.user_data[0], self.user_data[6])
         views.user_data.userdata_reset()
         print(views.user_data.user_data)
         views.User_Management().run()
@@ -88,6 +88,17 @@ class User_Result:
         views.user_data.user_data['fingerid'] = ''
         views.User_Finger(False).run()
         pygame.quit()
+    
+    def set_data(self):
+        self.user_data = []
+        self.user_data.append(views.user_data.user_data['user_id'])
+        self.user_data.append(views.user_data.user_data['user_name'])
+        self.user_data.append(views.user_data.user_data['user_lname'])
+        self.user_data.append(views.user_data.department())
+        self.user_data.append(views.user_data.user_data['fingerid'])
+        self.user_data.append(views.user_data.user_data['permission'])
+        self.user_data.append(views.user_data.user_data['locker_access'])
+        return self.user_data 
 
     def run(self):
         """Initialize Caption and Valiable."""
