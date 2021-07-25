@@ -76,7 +76,7 @@ class Request_Add:
 
     def add(self):
         if self.data != '':
-            if self.quantity_value != "":
+            if self.quantity_value != "" and int(self.quantity_value) < int(self.product_list.quantity):
                 self.product_list.section = self.data[1][0][0][1]
                 self.product_list.qrcode = self.data[1][0][0][2]
                 self.product_list.item_number = self.data[1][0][0][3]
@@ -88,10 +88,11 @@ class Request_Add:
                 self.product_list.quantity = str(self.quantity_value)
                 self.product_list.other = self.data[1][0][0][10]
                 views.request_data.list_reset()
+                views.request_data.list_check_add(False)
                 views.request_data.add(self.product_list)
                 views.Request().run(); pygame.quit()
             else:
-                print("Quantity is invalid")
+                print("Quantity is invalid or quantity much more")
         else:
             self.product_list.product_name = self.search_value
             print("Product request is invalid")
@@ -111,8 +112,10 @@ class Request_Add:
             self.product_list.other = self.data[1][0][0][10]
             views.request_data.list_reset()
             views.request_data.list_add(self.product_list)
+            self.search_input.update('*')
         else:
             views.request_data.list_reset()
+            self.search_input.update('*')
             print("don't have product")
 
     def cancel(self):

@@ -33,6 +33,10 @@ class Request_Check:
         self.index = 0 # Set default index value of listview page
         self.product_data = views.request_data.request_list2
         self.data = ''
+        if config.locker_type == 0:
+            self.check = [False, False, False, False, False, False, False, False, False, False, False, False]
+        else:
+            self.check = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
             (K_x, KMOD_LALT): 'print("alt+X")',
@@ -99,6 +103,7 @@ class Request_Check:
             self.index -= 1
 
     def confirm_click(self):
+        views.request_data.list_check_reset()
         views.request_data.list_reset()
         views.request_data.reset()
         views.request_data.requester_reset()
@@ -106,17 +111,21 @@ class Request_Check:
         pygame.quit()
 
     def check_click(self):
-        print("check")
+        for x in range(len(views.request_data.request_list2)):
+            if views.request_data.request_list2[x].qrcode == self.search_value.replace("\r", ""):
+                views.request_data.request_list2_check[x] = True
+                self.search_input.update('*')
 
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption('Requestion check' + config.VERSION)
-        self.search_input = elements.InputBox_Text(1, 3, 7, 1, "", app = (self.screen), active = True, numpad_active = True)
+        self.search_input = elements.InputBox_Request_Check(1, 3, 7, 1, "", app = (self.screen), active = True, numpad_active = True)
+        print(views.request_data.request_list2_check)
         """Run the main event loop."""
         while self.running:
             self.number = 1
             self.screen.fill(Color('white'))
-            self.productadd_listview = elements.Request_Listview(1, 5, 7, 5, app=(self.screen),data = self.product_data, index = self.index)
+            self.requestcheck_listview = elements.Request_Check_Listview(1, 5, 7, 5, check = views.request_data.request_list2_check, app = (self.screen),data = self.product_data, index = self.index)
             self.active_button()
             """Initialize user interface."""
             for row in range(12):
@@ -136,7 +145,7 @@ class Request_Check:
                         elements.Header_Table('QTY.', 5, 4, app=(self.screen)).draw()
                         elements.Header_Table('Locker', 6, 4, app=(self.screen)).draw()
                         self.search_input.draw()
-                        self.productadd_listview.draw()                     
+                        self.requestcheck_listview.draw()                     
                     if row == 3 and column == 8:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 214, config.bheight).Rect()
                         elements.Text_Button_Medium('      CHECK', position, app=(self.screen)).draw()

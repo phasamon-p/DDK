@@ -7,7 +7,5 @@ import services
 import config
 
 if __name__ == '__main__':
+    services.init()
     views.Home().run()
-    
-    # views.User_Lockeraccess(False).run()
-    

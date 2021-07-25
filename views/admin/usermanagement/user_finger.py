@@ -124,7 +124,7 @@ class User_Finger:
             print("Can't created finger print")
     
     def update_click(self):
-        views.user_data.user_data['fingerid'] = '1'
+        services.enroll_finger(int(views.user_data.user_data['fingerid']))
         views.User_Result(True).run()
         pygame.quit()
 
@@ -144,11 +144,9 @@ class User_Finger:
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
-        
         while self.running:
             """Refresh surface."""
-            self.screen.fill(Color('white')) 
-
+            self.screen.fill(Color('white'))
             """Initialize user interface."""
             for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin
@@ -180,9 +178,6 @@ class User_Finger:
                         if row == 8 and column == 7:
                             elements.Button(self.screen, config.red, x, y, config.bwidth + 321, config.bheight + 67).Rect()
                             elements.Text_Mainbutton('    BACK', position, app=(self.screen)).draw()
-                        
-                        
-            
             """Run the main event loop."""
             for event in pygame.event.get():
                 if event.type == FINGERDOWN:

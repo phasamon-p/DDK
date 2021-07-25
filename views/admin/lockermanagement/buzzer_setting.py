@@ -1,4 +1,5 @@
 """ Search"""
+import services
 import pygame
 from pygame.locals import *
 import time
@@ -20,9 +21,10 @@ class Buzzer_Setting:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
-       
         self.caption = 'Buzzer setting'
         self.title = 'BUZZER SETTING'
+
+        self.buzzer = services.getbuzzer()
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -63,8 +65,7 @@ class Buzzer_Setting:
 
     def next_click(self):
         if self.buzzer_value != '':
-            views.locker_data.buzzer_time = self.buzzer_value
-            print(views.locker_data.buzzer_time)
+            services.updatebuzzer(int(self.buzzer_value))
             views.Locker_Management().run()
             pygame.quit()
         else:
@@ -77,8 +78,7 @@ class Buzzer_Setting:
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
-        self.buzzer_input = elements.InputBox_Userid(1, 3, 10, 1, str(views.locker_data.buzzer_time), app = (self.screen), active = True, numpad_active = True)
-        print("Product_data :", views.product_data.product_data)
+        self.buzzer_input = elements.InputBox_Userid(1, 3, 10, 1, str(self.buzzer), app = (self.screen), active = True, numpad_active = True)
         """Run the main event loop."""
         while self.running:
             self.number = 1

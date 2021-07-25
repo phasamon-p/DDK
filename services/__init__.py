@@ -1,9 +1,10 @@
-from services.product_service import mysqlconnect, insertproduct, getproductlocker, getproductlocker2, getproductlockerbylocker, insertproductlocker, deleteproductlockerbybarcode, selectproduct, selectproductbybarcode, selectproductbysearch, updateproductbyid, deleteproductbyid, getproductlocker_string, getsection_bool, getproductlocker_byqrcode_bool
+from services.product_service import mysqlconnect, insertproduct, getproductlocker, getproductlocker2, getproductlockerbylocker, insertproductlocker, deleteproductlockerbybarcode, selectproduct, selectproductbybarcode, selectproductbysearch, updateproductbyid, deleteproductbyid, getproductlocker_string, getsection_bool, getproductlocker_byqrcode_bool, updatequantity_byqrcode, getquantity_byqrcode, qrcode_check, updateinventory_byqrcode
 from services.controller_service import init, uninit, lockertimeout, alarmOff, alarmOn, getStatus, locker_open, locker_close, checkstatus, lockerrequest_open
 from services.user_service import selectperson, selectpersonbyid, getpersonbyfingerid, getpersoncount, getpersonbyid, insertperson, updatepersonbyid, deletepersonbyid, getdepartmentbyid_bool
 from services.permission_service import getpermission, getpermissionbylocker, checkpermission, insertpermission, deletepermissionbyid, getpermission_byid_string, getpermission_byid_bool
 from services.fingerprint_service import getfingerid, updatefinrgerprint, get_fingerprint, enroll_finger, delete_fingerprint
 from services.log_service import getdate, getlog, getlogbydate, insertlog
+from services.buzzer_service import getbuzzer, updatebuzzer, insertbuzzer
 
 __all__ = { 'mysqlconnect',
             'insertproduct', 
@@ -47,4 +48,11 @@ __all__ = { 'mysqlconnect',
             'getpermission_byid_string',
             'getpermission_byid_bool',
             'getdepartmentbyid_bool',
-            'lockerrequest_open'}
+            'lockerrequest_open',
+            'updatequantity_byqrcode',
+            'getquantity_byqrcode',
+            'qrcode_check',
+            'updateinventory_byqrcode',
+            'getbuzzer',
+            'updatebuzzer',
+            'insertbuzzer'}

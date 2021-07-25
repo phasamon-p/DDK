@@ -79,6 +79,5 @@ def productdata_setedit(data):
     product_data['locker_number'] =  data.locker_number
     product_data['quantity'] =  data.quantity
     product_data['other'] =  data.other
-
     old_qrcode = data.qrcode
 

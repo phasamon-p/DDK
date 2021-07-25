@@ -4,6 +4,16 @@ import config
 # Valiable and function of request product
 request_list = []
 request_list2 = []
+request_list2_check = []
+
+def list_check_add(object):
+    request_list2_check.append(object)
+
+def llist_check_delete():
+    request_list2_check.pop()
+
+def list_check_reset():
+    request_list2_check.clear()
 
 def list_add(object):
     request_list.append(object)

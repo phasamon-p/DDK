@@ -15,8 +15,8 @@ error = False
 mux_out = [0,1,2,3]
 mux_in = [4,5,6,7]
 IR = [0,7,6,5,4,3,2,0,0,0,0,0,0,0]
-buzzer = [1,3]
-on_circuit = [1,2]
+buzzer = [0,14]
+on_circuit = [0,13]
 on_sensor = [1,3]
 tout = 1800
 

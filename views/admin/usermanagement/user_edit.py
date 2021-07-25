@@ -114,6 +114,7 @@ class User_Edit:
             self.user_list.locker = services.getpermission_byid_string(self.data[1][0][0])
             views.user_data.list_reset()
             views.user_data.list_add(self.user_list)
+            views.user_data.old_id = self.data[1][0][0]
         else:
             views.user_data.userdata_reset()
             views.user_data.list_reset()
@@ -157,7 +158,7 @@ class User_Edit:
 
     def run(self):
         """Initialize Caption and Valiable."""
-        pygame.display.set_caption('Product search' + config.VERSION)
+        pygame.display.set_caption('Uer id search' + config.VERSION)
         self.search_input = elements.User_Search(1, 3, 7, 1, app = (self.screen), active = True, numpad_active = True)
 
         """Run the main event loop."""
@@ -176,7 +177,7 @@ class User_Edit:
                     position4 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 20, (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
                     position5 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) - 15, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
                     if row == 0 and column == 0:
-                        elements.Title('PRODUCT SEARCH', pos=(320, 67), app=(self.screen)).draw()
+                        elements.Title('USER ID SEARCH', pos=(350, 67), app=(self.screen)).draw()
                         elements.Header_Table('ID', 1, 4, app=(self.screen)).draw()
                         elements.Header_Table('Name', 3, 4, app=(self.screen)).draw()
                         elements.Header_Table('Lastname', 5, 4, app=(self.screen)).draw()

@@ -69,6 +69,32 @@ def getproductlocker(qrcode):
             connection.close()
             print("MySQL connection is closed")
 
+def qrcode_check(qrcode):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT qr_code FROM products WHERE qr_code = %s "
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (qrcode.replace("\r", ""),))
+        # get all records
+        records = cursor.fetchall()
+
+
+        if cursor.rowcount:
+            return records
+        else: 
+            return False
+     
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
 def getproductlocker2(qrcode):
     try:
         connection = mysqlconnect()
@@ -101,12 +127,11 @@ def getproductlocker_string(qrcode):
         connection = mysqlconnect()
         sql_select_Query = "SELECT * FROM products_lockers WHERE pl_products = %s "
         cursor = connection.cursor()
-        print(qrcode.replace("\r", ""))
+        # print(qrcode.replace("\r", ""))
         cursor.execute(sql_select_Query, (qrcode.replace("\r", ""),))
         # get all records
         records = cursor.fetchall()
         rowcount = cursor.rowcount
-        print(records)
 
         if cursor.rowcount:
             data = ''
@@ -180,6 +205,29 @@ def getproductlockerbylocker(barcode, locker):
         print("rowcount :", cursor.rowcount)
         if cursor.rowcount:
             return True
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+def getquantity_byqrcode(qrcode):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT quantity FROM products WHERE qr_code = %s"
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, (qrcode,))
+        # get all records
+        records = cursor.fetchall()
+        if cursor.rowcount:
+            return records[0][0]
         else:
             return False
 
@@ -362,14 +410,61 @@ def selectproductbysearch(search): ##
 def updateproductbyid(qrcode, data):
     try:
         connection = mysqlconnect()
-
+        cursor = connection.cursor()
+        # sql_Update_Query = "UPDATE products set section = %s, qr_code = %s , item_no = %s, product_name = %s, " \
+        #                    "part_no = %s, part_name = %s,drawing_no = %s, locker = %s, quantity = %s, " \
+        #                    "other = %s where qr_code = %s "
+        # input = (data[0], data[1].replace("\r", ""), data[2], data[3], data[4], data[5], data[6],'', data[8], data[9] ,qrcode.replace("\r", ""))
+        print(data, qrcode)
         sql_Update_Query = "UPDATE products set section = %s, qr_code = %s , item_no = %s, product_name = %s, " \
                            "part_no = %s, part_name = %s,drawing_no = %s, locker = %s, quantity = %s, " \
-                           "other = %s where id = %s "
-        cursor = connection.cursor()
-
+                           "other = %s where qr_code = %s "
         input = (data[0], data[1].replace("\r", ""), data[2], data[3], data[4], data[5], data[6],'', data[8], data[9] ,qrcode.replace("\r", ""))
 
+        print(cursor.execute(sql_Update_Query, input))
+        connection.commit()
+        print("Multiple columns updated successfully ")
+        return True
+
+    except mysql.connector.Error as e:
+        print("Failed to update columns of table: {}".format(e))
+        return False
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+def updatequantity_byqrcode(data):
+    try:
+        connection = mysqlconnect()
+        cursor = connection.cursor()
+        for x in range(len(data)):
+            old_quantity = getquantity_byqrcode(data[x].qrcode)
+            value = old_quantity - int(data[x].quantity)
+            sql_Update_Query = "UPDATE products set quantity = %s where qr_code = %s"
+            input = (value, data[x].qrcode.replace("\r",""))
+            cursor.execute(sql_Update_Query, input)
+            connection.commit()
+
+        print("Multiple columns updated successfully ")
+        return True
+
+    except mysql.connector.Error as e:
+        print("Failed to update columns of table: {}".format(e))
+        return False
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+def updateinventory_byqrcode(qrcode, data):
+    try:
+        connection = mysqlconnect()
+        cursor = connection.cursor()    
+        sql_Update_Query = "UPDATE products set quantity = %s where qr_code = %s"
+        input = (int(data), qrcode.replace("\r",""))
         cursor.execute(sql_Update_Query, input)
         connection.commit()
         print("Multiple columns updated successfully ")
@@ -387,7 +482,6 @@ def updateproductbyid(qrcode, data):
 def deleteproductbyid(id):
     try:
         connection = mysqlconnect()
-
         sql_Delete_Query = "Delete from products where id = %s "
         cursor = connection.cursor()
         cursor.execute(sql_Delete_Query, (id,))

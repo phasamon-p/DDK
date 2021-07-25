@@ -11,7 +11,7 @@ import data_example
 
 
 
-class Product_Qrcode:
+class Inventory_Edit:
     """Create a single-window app with multiple scenes."""
 
     def __init__(self, editstage):
@@ -23,11 +23,11 @@ class Product_Qrcode:
         self.running = True 
         self.editstage = editstage
         if self.editstage:
-            self.caption = 'Edit product qr code'
-            self.title = 'EDIT PRODUCT QR CODE'
+            self.caption = 'Edit product quantity'
+            self.title = 'EDIT PRODUCT QUANTITY'
         else:
-            self.caption = 'Add product qr code'
-            self.title = 'ADD PRODUCT QR CODE'
+            self.caption = 'Add product quantity'
+            self.title = 'ADD PRODUCT QUANTITY'
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -67,44 +67,31 @@ class Product_Qrcode:
             exec(self.click[column_click, row_click])
 
     def next_click(self):
-        if self.qrcode_value != '':
-            if self.editstage:
-                if not services.qrcode_check(self.qrcode_value):
-                    views.product_data.product_data['qrcode'] = self.qrcode_value
-                    views.Item_Number(True).run()
-                    pygame.quit()
-                else:
-                    if self.qrcode_value == views.product_data.old_qrcode:
-                        views.product_data.product_data['qrcode'] = self.qrcode_value
-                        views.Item_Number(True).run()
-                        pygame.quit()
-                    else:
-                        self.qrcode_input.update('*')
-                        print("This qrcode already")
+        if self.quantity_value != '':
+            if services.updateinventory_byqrcode(views.product_data.product_data['qrcode'], self.quantity_value):
+                views.product_data.productdata_reset()
+                views.product_data.list_reset()
+                views.Product_Edit().run()
+                pygame.quit() 
             else:
-                if not services.qrcode_check(self.qrcode_value):
-                    views.product_data.product_data['qrcode'] = self.qrcode_value
-                    views.Item_Number(False).run()
-                    pygame.quit()
-                else:
-                    self.qrcode_input.update('*')
-                    print("This qrcode already")
+                print("Can not update inventory")
         else:
-            print("Please enter part number")
+            print("Please enter product quantity")
 
     def cancel_click(self):
         if self.editstage:
-            views.Product_Section(True).run()
+            views.Product_Edit().run()
             pygame.quit() 
         else:
-            views.product_data.product_data['qrcode'] = ''
-            views.Product_Section(False).run()
+            views.product_data.product_data['quantity'] = ''
+            views.Product_Locker(False).run()
             pygame.quit()
+             
 
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
-        self.qrcode_input = elements.InputBox_Qrcode(1, 3, 10, 1, views.product_data.product_data['qrcode'], app = (self.screen), active = True, numpad_active = True)
+        self.quantity_input = elements.InputBox_Number(1, 3, 10, 1, views.product_data.product_data['quantity'], app = (self.screen), active = True, numpad_active = True)
         print("Product_data :", views.product_data.product_data)
         """Run the main event loop."""
         while self.running:
@@ -120,12 +107,12 @@ class Product_Qrcode:
                     position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 10, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
                     position4 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 10, (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
                     if row == 0 and column == 0:
-                        elements.Title(self.title, pos=(230, 67), app=(self.screen)).draw()
+                        elements.Title(self.title, pos=(200, 67), app=(self.screen)).draw()
                         elements.Header_Table('MESSAGE', 1, 4, app=(self.screen)).draw()
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
-                        self.qrcode_input.draw()                  
+                        self.quantity_input.draw()                  
                     """Initialize Numpad."""
                     if row >= 4 and row <= 7 and column >= 8 and column <= 10:
                         if row == 7 and column == 8:
@@ -143,14 +130,14 @@ class Product_Qrcode:
                         self.number += 1
                     if row == 8 and column == 8:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 214, config.bheight + 67).Rect()
-                        elements.Text_Button_Medium('      NEXT', position3, app=(self.screen)).draw()
+                        elements.Text_Button_Medium('    CONFIRM', position3, app=(self.screen)).draw()
                     if row == 10 and column == 8:
                         elements.Button(self.screen, config.red, x, y, config.bwidth + 214, config.bheight).Rect()
                         elements.Text_Button_Medium('    CANCEL', position4, app=(self.screen)).draw()
                    
 
             for event in pygame.event.get():
-                self.qrcode_value = self.qrcode_input.handle_event(event)
+                self.quantity_value = self.quantity_input.handle_event(event)
                 if event.type == KEYDOWN:
                     self.do_shortcut(event)
                 if event.type == QUIT:

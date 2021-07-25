@@ -6,6 +6,7 @@ import os
 import config 
 import elements
 import views
+import services
 import data_example
 
 
@@ -72,13 +73,26 @@ class User_Id:
     def next_click(self):
         if self.userid_value != '':
             if self.editstage:
-                views.user_data.user_data['user_id'] = self.userid_value
-                views.User_Name(True).run()
-                pygame.quit()
+                if not services.selectpersonbyid(self.userid_value)[0]:
+                    views.user_data.user_data['user_id'] = self.userid_value
+                    views.User_Name(True).run()
+                    pygame.quit()
+                else:
+                    if self.userid_value == views.user_data.old_id:
+                        views.user_data.user_data['user_id'] = self.userid_value
+                        views.User_Name(True).run()
+                        pygame.quit()
+                    else:
+                        self.userid_input.update('*')
+                        print("This user id already")
             else:
-                views.user_data.user_data['user_id'] = self.userid_value
-                views.User_Name(False).run()
-                pygame.quit()
+                if not services.selectpersonbyid(self.userid_value)[0]:
+                    views.user_data.user_data['user_id'] = self.userid_value
+                    views.User_Name(False).run()
+                    pygame.quit()
+                else:
+                    self.userid_input.update('*')
+                    print("This user id already")
         else:
             print("Please enter user id")
 

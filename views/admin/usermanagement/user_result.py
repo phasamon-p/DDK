@@ -77,14 +77,19 @@ class User_Result:
 
     def confirm_click(self):
         if self.editstage:
-            pass
+            self.set_data()
+            services.updatepersonbyid(views.user_data.old_id, self.user_data)
+            services.insertpermission(self.user_data[0], self.user_data[6])
+            views.user_data.userdata_reset()
+            views.user_data.list_reset()
+            views.User_Edit().run()
+            pygame.quit()
         else: 
             self.set_data()
             services.insertperson(self.user_data)
             services.updatefinrgerprint(self.user_data[4])
             services.insertpermission(self.user_data[0], self.user_data[6])
             views.user_data.userdata_reset()
-            print(views.user_data.user_data)
             views.User_Management().run()
             pygame.quit()
 

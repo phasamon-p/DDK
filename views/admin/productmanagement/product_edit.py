@@ -107,7 +107,6 @@ class Product_Edit:
 
     def search_click(self):
         self.data = services.selectproductbysearch(self.search_value.replace("\r", ""))
-        print(self.data)
         if self.data[0]:
             self.product_list.section = self.data[1][0][0][1]
             self.product_list.qrcode = self.data[1][0][0][2]
@@ -121,6 +120,7 @@ class Product_Edit:
             self.product_list.other = self.data[1][0][0][10]
             views.product_data.list_reset()
             views.product_data.list_add(self.product_list)
+            views.product_data.old_qrcode = self.data[1][0][0][2]
         else:
             views.product_data.productdata_reset()
             views.product_data.list_reset()
@@ -139,6 +139,8 @@ class Product_Edit:
             print("Please searching product")
 
     def cancel_click(self):
+        views.product_data.productdata_reset()
+        views.product_data.list_reset()
         views.Product_Management().run() 
         pygame.quit()
 
@@ -151,7 +153,12 @@ class Product_Edit:
             print("Please searching product")
 
     def editinventory_click(self):
-        print("inventory")
+        if len(views.product_data.request_list) > 0:
+            self.setdata()
+            views.Inventory_Edit(True).run() 
+            pygame.quit()
+        else:
+            print("Please searching product")
     
     def setdata(self):
         if self.data[0]:

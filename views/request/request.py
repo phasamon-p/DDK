@@ -106,8 +106,11 @@ class Request:
         pygame.quit()
 
     def confirm_click(self):
-        views.Request_Finger().run()
-        pygame.quit()
+        if len(self.product_data) > 0:
+            views.Request_Finger().run()
+            pygame.quit()
+        else:
+            print("Please enter you request")
 
     def delete_list(self):
         if len(self.product_data) > 0:

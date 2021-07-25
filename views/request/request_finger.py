@@ -90,6 +90,7 @@ class Request_Finger:
             self.dataaccess = views.request_data.check_lockeraccess()
             if self.dataaccess:
                 if services.lockerrequest_open(self.dataaccess):
+                    services.updatequantity_byqrcode(views.request_data.request_list2)
                     views.Request_Check().run()
                     pygame.quit()
             else:
@@ -101,9 +102,9 @@ class Request_Finger:
             print("Do not have your finger print")
         
     def back_click(self):
-        views.request_data.reset()
-        views.request_data.list_reset()
-        views.request_data.requesterdata_reset()
+        # views.request_data.reset()
+        # views.request_data.list_reset()
+        # views.request_data.requesterdata_reset()
         views.Request().run()
         pygame.quit()
 

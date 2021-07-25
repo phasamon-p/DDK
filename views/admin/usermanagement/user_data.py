@@ -68,7 +68,6 @@ def userdata_setedit(data):
     user_data['fingerid'] = data.fingerid   
     user_data['permission'] = data.permission   
     user_data['locker_access'] = data.locker   
-
     old_id = data.user_id   
 
         

@@ -51,8 +51,6 @@ def selectpersonbyid(id):
         # get all records
         records = cursor.fetchall()
         rowcount = cursor.rowcount
-        print("Total number of rows in table: ", cursor.rowcount)
-
         if cursor.rowcount:
             return [True, records, rowcount]
         else:
@@ -194,14 +192,14 @@ def insertperson(data):
             connection.close()
             print("MySQL connection is closed")
 
-def updatepersonbyid(id, name, lname, department, fingerid, role):
+def updatepersonbyid(id, data):
     try:
         connection = mysqlconnect()
 
         sql_Update_Query = "UPDATE person set personid = %s, name = %s, lname = %s, department = %s, fingerid = %s, permission = %s where personid = %s "
         cursor = connection.cursor()
         # print(" role:", role)
-        record = (id, name, lname, department, fingerid, role, id)
+        record = (data[0], data[1], data[2], data[3], data[4], data[5], id)
 
         cursor.execute(sql_Update_Query, record)
         connection.commit()
