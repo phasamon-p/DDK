@@ -146,6 +146,7 @@ class System_Management:
   
 
     def logout_click(self):
+        views.admin_data.admindata_reset()
         views.Home().run(); 
         pygame.quit()
 
@@ -153,11 +154,9 @@ class System_Management:
         """Initialize Caption and Valiable."""
         self.number = 1
         pygame.display.set_caption('Product request' + config.VERSION)
-       
         while self.running:
             """Refresh surface."""
             self.screen.fill(Color('white')) 
-
             """Initialize user interface."""
             for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin

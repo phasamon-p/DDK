@@ -4,7 +4,7 @@ from pygame.locals import *
 
 import time
 import os
-
+import services
 import config 
 import elements
 import views
@@ -109,14 +109,19 @@ class User_Finger:
                 exec(self.click[column_click, row_click])
 
     def exit_fullscreen(self):
+        services.getfingerid()
         print("alt+X")
         config.flags = RESIZABLE
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
 
     def scan_click(self):
-        views.user_data.user_data['fingerid'] = '1'
-        views.User_Result(False).run()
-        pygame.quit()
+        self.index = services.getfingerid()
+        if services.enroll_finger(self.index):
+            views.user_data.user_data['fingerid'] = str(self.index)
+            views.User_Result(False).run()
+            pygame.quit()
+        else:
+            print("Can't created finger print")
     
     def update_click(self):
         views.user_data.user_data['fingerid'] = '1'

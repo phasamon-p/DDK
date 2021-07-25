@@ -328,6 +328,7 @@ def selectproductbybarcode(qrcode):
             print("MySQL connection is closed")
 
 def selectproductbysearch(search): ##
+    print(str(search))
     try:
         connection = mysqlconnect()
         sql_select_Query = "SELECT * FROM products WHERE section = %s " \

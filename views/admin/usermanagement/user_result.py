@@ -81,6 +81,7 @@ class User_Result:
         else: 
             self.set_data()
             services.insertperson(self.user_data)
+            services.updatefinrgerprint(self.user_data[4])
             services.insertpermission(self.user_data[0], self.user_data[6])
             views.user_data.userdata_reset()
             print(views.user_data.user_data)
@@ -92,6 +93,7 @@ class User_Result:
             views.User_Finger(True).run()
             pygame.quit()
         else:
+            services.delete_fingerprint(int(views.user_data.user_data['fingerid']))
             views.user_data.user_data['fingerid'] = ''
             views.User_Finger(False).run()
             pygame.quit()

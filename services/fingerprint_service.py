@@ -1,5 +1,5 @@
 import config
-import mysql.connector
+import mysql.connector 
 from mysql.connector import Error
 from views.admin.usermanagement.user_data import *
 import time
@@ -43,7 +43,7 @@ def getfingerid():
         cursor.execute(sql_Select_Query)
         # get all records
         records = cursor.fetchall()
-        return records[0][1]
+        return records[0][1] + 1
 
     except mysql.connector.Error as e:
         print("Error reading data from MySQL table", e)
@@ -181,7 +181,6 @@ def delete_fingerprint(location):
         print("Failed to delete")
         return False
 
-
 # while True:
 #     print("----------------")
 #     if finger.read_templates() != adafruit_fingerprint.OK:
@@ -192,7 +191,7 @@ def delete_fingerprint(location):
 #     print("d) delete print")
 #     print("----------------")
 #     c = input(" ")
-# 
+
 #     if c == "e":
 #         enroll_finger(get_num())
 #     if c == "f":

@@ -1,7 +1,9 @@
+from views.admin.usermanagement.user_data import reset
 import board
 import busio
 import time
 import digitalio
+import config
 from adafruit_mcp230xx.mcp23017 import MCP23017
 
 import subprocess
@@ -91,8 +93,29 @@ def getStatus(lockNo):
         except:
             print("I2C error")
 
+def lockerrequest_open(data):
+        if config.locker_type == 0:
+                relay = 0
+        else:
+                relay = 0 
+
+        for x in range(len(data)):
+                if data[x]:
+                        relay = (((x + 1) - 1) // 16) + relay  #div get relay
+                        pos = (((x + 1) - 1) % 16)   #mod get pos
+                        try: 
+                                if relay >= 0 and pos >= 0 :
+                                        pin[relay][pos].value = False    # Set pin to HIGH (ON) (1)
+                                        time.sleep(0.5)
+                                        pin[relay][pos].value = True    # Set pin to Low (ON) (1)
+                                        time.sleep(0.5)
+                        except:
+                                print("Lock I2C error")
+                                return False
+        return True
+
 def locker_open(relay, lockNo):
-        relay = ((lockNo-1) // 16)+relay  #div get relay
+        relay = ((lockNo-1) // 16) + relay  #div get relay
         pos = ((lockNo-1) % 16)   #mod get pos
         print(relay, pos)
         try: 

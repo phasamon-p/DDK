@@ -6,19 +6,19 @@ import os
 import config 
 import elements
 import views
+import services
 
 class product_list():
     section = ""
     qrcode = ""
     item_number = ""
     product_name = ""
-    part_numbe = ""
+    part_number = ""
     part_name = ""
     drawing_number = ""
     locker_number = ""
     quantity = ""
     other = ""
-
 class Request_Add:
     """Create a single-window app with multiple scenes."""
     def __init__(self):
@@ -30,6 +30,9 @@ class Request_Add:
         self.running = True 
         views.request_data.inbox_active[0] = True # Set default input box activation
         views.request_data.inbox_active[1] = False # Set default input box activation
+        self.index = 0 # Set default index value of listview page
+        self.data = ''
+        self.product_data = views.request_data.request_list
         self.product_list = product_list()
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -41,9 +44,9 @@ class Request_Add:
         }
         self.click = {
             # Click search button
-            (8, 3): 'print("SEARCH");',
-            (9, 3): 'print("SEARCH");',
-            (10, 3): 'print("SEARCH");',
+            (8, 3): 'self.search_click()',
+            (9, 3): 'self.search_click()',
+            (10, 3): 'self.search_click()',
             # Click add button
             (8, 8): 'self.add()',
             (9, 8): 'self.add()',
@@ -72,18 +75,45 @@ class Request_Add:
             exec(self.click[column_click, row_click])
 
     def add(self):
-        if self.search_value != "":
-            self.product_list.product_name = self.search_value
+        if self.data != '':
             if self.quantity_value != "":
-                self.product_list.quantity = self.quantity_value
+                self.product_list.section = self.data[1][0][0][1]
+                self.product_list.qrcode = self.data[1][0][0][2]
+                self.product_list.item_number = self.data[1][0][0][3]
+                self.product_list.product_name = self.data[1][0][0][4]
+                self.product_list.part_number = self.data[1][0][0][5]
+                self.product_list.part_name = self.data[1][0][0][6]
+                self.product_list.drawing_number = self.data[1][0][0][7]
+                self.product_list.locker_number = services.getproductlocker_string(self.data[1][0][0][2])
+                self.product_list.quantity = str(self.quantity_value)
+                self.product_list.other = self.data[1][0][0][10]
+                views.request_data.list_reset()
                 views.request_data.add(self.product_list)
                 views.Request().run(); pygame.quit()
             else:
-                self.product_list.quantity = ""
                 print("Quantity is invalid")
         else:
             self.product_list.product_name = self.search_value
             print("Product request is invalid")
+
+    def search_click(self):
+        self.data = services.selectproductbysearch(self.search_value.replace("\r", ""))
+        if self.data[0]:
+            self.product_list.section = self.data[1][0][0][1]
+            self.product_list.qrcode = self.data[1][0][0][2]
+            self.product_list.item_number = self.data[1][0][0][3]
+            self.product_list.product_name = self.data[1][0][0][4]
+            self.product_list.part_number = self.data[1][0][0][5]
+            self.product_list.part_name = self.data[1][0][0][6]
+            self.product_list.drawing_number = self.data[1][0][0][7]
+            self.product_list.locker_number = services.getproductlocker_string(self.data[1][0][0][2])
+            self.product_list.quantity = str(self.data[1][0][0][9])
+            self.product_list.other = self.data[1][0][0][10]
+            views.request_data.list_reset()
+            views.request_data.list_add(self.product_list)
+        else:
+            views.request_data.list_reset()
+            print("don't have product")
 
     def cancel(self):
         views.Request().run()
@@ -102,7 +132,7 @@ class Request_Add:
             self.screen.fill(Color('white'))
             self.search_input.active = views.request_data.inbox_active[0]
             self.quantity_input.active = views.request_data.inbox_active[1]
-
+            self.productadd_listview = elements.Productadd_Listview(1, 5, 7, 4, app=(self.screen),data = self.product_data, index = self.index)
             """Initialize user interface."""
             for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin
@@ -116,12 +146,13 @@ class Request_Add:
                         elements.Title('ADD PRODUCT REQUEST', pos=(230, 67), app=(self.screen)).draw()
                         elements.Header_Table('No.', 1, 4, app=(self.screen)).draw()
                         elements.Header_Table('Product name', 2, 4, app=(self.screen)).draw()
-                        elements.Header_Table('QTY.', 6, 4, app=(self.screen)).draw()
-                        elements.Header_Table('Locker', 7, 4, app=(self.screen)).draw()
+                        elements.Header_Table('QTY.', 5, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Locker', 6, 4, app=(self.screen)).draw()
                         elements.Header_Table('Quantity Requesition', 1, 9, app=(self.screen)).draw()
-                        elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
+                        # elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         self.search_input.draw()
-                        self.quantity_input.draw()                       
+                        self.quantity_input.draw()  
+                        self.productadd_listview.draw()                     
                     if row == 3 and column == 8:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 214, config.bheight).Rect()
                         elements.Text_Button_Medium('     SEARCH', position, app=(self.screen)).draw()
@@ -151,6 +182,8 @@ class Request_Add:
                 self.search_value = self.search_input.handle_event(event, 1)
                 self.quantity_value = self.quantity_input.handle_event(event, 2)
                 if event.type == KEYDOWN:
+                    if event.key == K_RETURN:
+                        self.search_click()
                     self.do_shortcut(event)
                 if event.type == QUIT:
                     self.running = False

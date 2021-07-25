@@ -1,53 +1,60 @@
 import pygame
 from pygame.locals import *
 
-user_data = {   'user_id' : "",
-                'user_name' : "",
-                'user_lname' : "",
+admin_data = {   'admin_id' : "",
+                'admin_name' : "",
+                'admin_lname' : "",
                 'department' : [False, False, False, False, False],
                 'fingerid' : "",
                 'permission' : "",
                 'locker_access' : [False, False, False, False, False, False, False, False, False, False, False, False]}
 
 def add(object):
-    user_data.append(object)
+    admin_data.append(object)
 
 def delete():
-    user_data.pop()
+    admin_data.pop()
 
 def reset():
-    user_data.clear()
+    admin_data.clear()
 
 def lockeraccess_reset():
-    for x in range(len(user_data['locker_access'])):
-        user_data['locker_access'][x] = False
+    for x in range(len(admin_data['locker_access'])):
+        admin_data['locker_access'][x] = False
 
 def lengh_lockeraccess():
     y = 0
-    for x in range(len(user_data['locker_access'])):
-        if user_data['locker_access'][x]:
+    for x in range(len(admin_data['locker_access'])):
+        if admin_data['locker_access'][x]:
             y += 1
     return str(y)
 
 def department():
     text = ''
-    for x in range(len(user_data['department'])):
-        if user_data['department'][x]:
+    for x in range(len(admin_data['department'])):
+        if admin_data['department'][x]:
             if text == '':
-                text += user_data['department'][x]
+                text += admin_data['department'][x]
             else: 
-                text += ' ' + user_data['department'][x]
+                text += ' ' + admin_data['department'][x]
     return str(text)
 
-def userdata_reset():
-    user_data['user_id'] = ''
-    user_data['user_name'] = ''
-    user_data['user_lname'] = ''
-    user_data['department'] = [False, False, False, False, False]
-    user_data['fingerid'] = ''
-    user_data['permission'] = ''
-    user_data['locker_access'] = [False, False, False, False, False, False, False, False, False, False, False, False]
+def admindata_reset():
+    admin_data['admin_id'] = ''
+    admin_data['admin_name'] = ''
+    admin_data['admin_lname'] = ''
+    admin_data['department'] = [False, False, False, False, False]
+    admin_data['fingerid'] = ''
+    admin_data['permission'] = ''
+    admin_data['locker_access'] = [False, False, False, False, False, False, False, False, False, False, False, False]
     
-
+def admindata_setedit(data):
+    admin_data['admin_id'] = data.admin_id   
+    admin_data['admin_name'] = data.admin_name   
+    admin_data['admin_lname'] = data.admin_lname   
+    admin_data['department'] = data.department   
+    admin_data['fingerid'] = data.fingerid   
+    admin_data['permission'] = data.permission   
+    admin_data['locker_access'] = data.locker 
         
 
