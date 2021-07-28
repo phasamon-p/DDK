@@ -84,7 +84,7 @@ class Home:
         pygame.quit()
 
     def admin_click(self):
-        views.Admin_Finger().run()
+        views.System_Management().run()
         pygame.quit()
 
     def exit_fullscreen(self):

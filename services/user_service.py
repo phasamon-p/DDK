@@ -17,7 +17,7 @@ def mysqlconnect():
         #     cursor.execute("select database();")
         #     record = cursor.fetchone()
         #     print("You're connected to database: ", record)
-    
+        #     return connection
     except Error as e:
         return e
 
@@ -45,6 +45,7 @@ def selectperson():
 def selectpersonbyid(id):
     try:
         connection = mysqlconnect()
+        print("connection ", connection)
         sql_select_Query = "SELECT * FROM person WHERE personid = %s "
         cursor = connection.cursor()
         cursor.execute(sql_select_Query, (id,))
@@ -90,7 +91,7 @@ def getpersonbyfingerid(fingerid):
 def getpersoncount():
     try:
         connection = mysqlconnect()
-
+        print("connection ", connection)
         sql_Select_Query = "select * from person"
         cursor = connection.cursor()
         cursor.execute(sql_Select_Query)
