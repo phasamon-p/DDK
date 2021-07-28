@@ -91,7 +91,6 @@ class InputBox:
     def update(self, data):
         # Resize the box if the text is too long.
         if data == '*':
-            print(self.text)
             self.text = ''
             self.text_render()
         elif data == '#':

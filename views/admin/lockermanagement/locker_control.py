@@ -22,7 +22,6 @@ class Locker_Control:
         self.productlocker_value = [False, False, False, False, False, False, False, False, False, False, False, False]
         self.first_check()
 
-      
         self.caption = 'locker control'
         self.title = 'LOCKER CONTROL'
 
@@ -144,17 +143,147 @@ class Locker_Control:
 
     def checklocker_status(self):
         if config.locker_type == 0:
-            for x in range(12):
-                if services.getStatus(x + 1):
-                    self.locker_button[x] = True
-                else:
-                    self.locker_button[x] = False
+            # Check status locker 8
+            if services.getStatus(1):
+                    self.locker_button[7] = True 
+            else:
+                    self.locker_button[7] = False
+            # Check status locker 7
+            if services.getStatus(2):
+                    self.locker_button[6] = True 
+            else:
+                    self.locker_button[6] = False
+            # Check status locker 6
+            if services.getStatus(3):
+                    self.locker_button[5] = True 
+            else:
+                    self.locker_button[5] = False
+            # Check status locker 5
+            if services.getStatus(4):
+                    self.locker_button[4] = True 
+            else:
+                    self.locker_button[4] = False
+            # Check status locker 4
+            if services.getStatus(5):
+                    self.locker_button[3] = True 
+            else:
+                    self.locker_button[3] = False
+            # Check status locker 3
+            if services.getStatus(6):
+                    self.locker_button[2] = True 
+            else:
+                    self.locker_button[2] = False
+            # Check status locker 2
+            if services.getStatus(7):
+                    self.locker_button[1] = True 
+            else:
+                    self.locker_button[1] = False
+            # Check status locker 1
+            if services.getStatus(8):
+                    self.locker_button[0] = True 
+            else:
+                    self.locker_button[0] = False
+            # Check status locker 12
+            if services.getStatus(13):
+                    self.locker_button[11] = True 
+            else:
+                    self.locker_button[11] = False
+            # Check status locker 11
+            if services.getStatus(14):
+                    self.locker_button[10] = True 
+            else:
+                    self.locker_button[10] = False
+            # Check status locker 10
+            if services.getStatus(15):
+                    self.locker_button[9] = True 
+            else:
+                    self.locker_button[9] = False
+            # Check status locker 9
+            if services.getStatus(16):
+                    self.locker_button[8] = True 
+            else:
+                    self.locker_button[8] = False
         else:
-            for x in range(16):
-                if services.getStatus(x + 1):
-                    self.locker_button[x] = True
-                else:
-                    self.locker_button[x] = False
+            # Check status locker 8
+            if services.getStatus(1):
+                    self.locker_button[7] = True 
+            else:
+                    self.locker_button[7] = False
+            # Check status locker 7
+            if services.getStatus(2):
+                    self.locker_button[6] = True 
+            else:
+                    self.locker_button[6] = False
+            # Check status locker 6
+            if services.getStatus(3):
+                    self.locker_button[5] = True 
+            else:
+                    self.locker_button[5] = False
+            # Check status locker 5
+            if services.getStatus(4):
+                    self.locker_button[4] = True 
+            else:
+                    self.locker_button[4] = False
+            # Check status locker 4
+            if services.getStatus(5):
+                    self.locker_button[3] = True 
+            else:
+                    self.locker_button[3] = False
+            # Check status locker 3
+            if services.getStatus(6):
+                    self.locker_button[2] = True 
+            else:
+                    self.locker_button[2] = False
+            # Check status locker 2
+            if services.getStatus(7):
+                    self.locker_button[1] = True 
+            else:
+                    self.locker_button[1] = False
+            # Check status locker 1
+            if services.getStatus(8):
+                    self.locker_button[0] = True 
+            else:
+                    self.locker_button[0] = False
+            # Check status locker 16
+            if services.getStatus(9):
+                    self.locker_button[15] = True 
+            else:
+                    self.locker_button[15] = False
+            # Check status locker 15
+            if services.getStatus(10):
+                    self.locker_button[14] = True 
+            else:
+                    self.locker_button[14] = False
+            # Check status locker 14
+            if services.getStatus(11):
+                    self.locker_button[13] = True 
+            else:
+                    self.locker_button[13] = False
+            # Check status locker 13
+            if services.getStatus(12):
+                    self.locker_button[12] = True 
+            else:
+                    self.locker_button[12] = False
+            # Check status locker 12
+            if services.getStatus(13):
+                    self.locker_button[11] = True 
+            else:
+                    self.locker_button[11] = False
+            # Check status locker 11
+            if services.getStatus(14):
+                    self.locker_button[10] = True 
+            else:
+                    self.locker_button[10] = False
+            # Check status locker 10
+            if services.getStatus(15):
+                    self.locker_button[9] = True 
+            else:
+                    self.locker_button[9] = False
+            # Check status locker 9
+            if services.getStatus(16):
+                    self.locker_button[8] = True 
+            else:
+                    self.locker_button[8] = False
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)

@@ -76,7 +76,7 @@ class Request_Add:
 
     def add(self):
         if self.data != '':
-            if self.quantity_value != "" and int(self.quantity_value) < int(self.product_list.quantity):
+            if self.quantity_value != "" and int(self.quantity_value) <= int(self.product_list.quantity) and int(self.quantity_value) > 0:
                 self.product_list.section = self.data[1][0][0][1]
                 self.product_list.qrcode = self.data[1][0][0][2]
                 self.product_list.item_number = self.data[1][0][0][3]
@@ -112,6 +112,8 @@ class Request_Add:
             self.product_list.other = self.data[1][0][0][10]
             views.request_data.list_reset()
             views.request_data.list_add(self.product_list)
+            views.request_data.inbox_active[0] = False # Set default input box activation
+            views.request_data.inbox_active[1] = True # Set default input box activation
             self.search_input.update('*')
         else:
             views.request_data.list_reset()

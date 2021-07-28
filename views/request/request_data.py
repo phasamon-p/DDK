@@ -6,6 +6,11 @@ request_list = []
 request_list2 = []
 request_list2_check = []
 
+if config.locker_type > 0:
+    locker_time = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+else:
+    locker_time = [False, False, False, False, False, False, False, False, False, False, False, False]
+
 def list_check_add(object):
     request_list2_check.append(object)
 

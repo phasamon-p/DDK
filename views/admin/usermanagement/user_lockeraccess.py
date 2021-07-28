@@ -21,6 +21,7 @@ class User_Lockeraccess:
         self.locker_button = [False, False, False, False, False, False, False, False, False, False, False, False]
         self.lockeraccess_value = [False, False, False, False, False, False, False, False, False, False, False, False]
         self.first_check()
+        self.check = False
 
         if self.editstage:
             self.caption = 'Edit user locker access'
@@ -146,18 +147,25 @@ class User_Lockeraccess:
         for x in range(len(self.locker_button)):
             if self.locker_button[x]:
                 self.lockeraccess_value[x] = True
+                self.check = True
             else:
                 self.lockeraccess_value[x] = False
 
         if self.lockeraccess_value != '':
             if self.editstage:
-                views.user_data.user_data['locker_access'] = self.lockeraccess_value
-                views.User_Finger(True).run()
-                pygame.quit()
+                if self.check:
+                    views.user_data.user_data['locker_access'] = self.lockeraccess_value
+                    views.User_Finger(True).run()
+                    pygame.quit()
+                else:
+                    print("Please select user locker access")
             else:
-                views.user_data.user_data['locker_access'] = self.lockeraccess_value
-                views.User_Finger(False).run()
-                pygame.quit()
+                if self.check:
+                    views.user_data.user_data['locker_access'] = self.lockeraccess_value
+                    views.User_Finger(False).run()
+                    pygame.quit()
+                else:
+                    print("Please select user locker access")
         else:
             print("Please select user locker access")
 

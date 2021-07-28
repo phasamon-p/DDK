@@ -4,6 +4,9 @@ import busio
 import time
 import digitalio
 import config
+import time
+import views
+import services
 from adafruit_mcp230xx.mcp23017 import MCP23017
 
 import subprocess
@@ -15,10 +18,10 @@ error = False
 mux_out = [0,1,2,3]
 mux_in = [4,5,6,7]
 IR = [0,7,6,5,4,3,2,0,0,0,0,0,0,0]
-buzzer = [0,14]
+buzzer = [0,10]
 on_circuit = [0,12]
 on_sensor = [1,3]
-tout = 1800
+
 
 status = True 
 
@@ -60,17 +63,32 @@ def uninit():
         except:
                 print("Init I2C error")
 
-def lockertimeout(lockNo, now): # function check timeout after touch
-        if (getStatus(lockNo)):
-            if (time.time() - now) > tout: 
-                alarmOn()
-                return False
-#             else:
-#                 alarmOff()
-#                 return True
-        else:
-            alarmOff()
-            return True
+# def lockertimeout(lockNo, now): # function check timeout after touch\
+#         if (getStatus(lockNo)):
+#             if (time.time() - now) > tout: 
+#                 alarmOn()
+#                 return False
+# #             else:
+# #                 alarmOff()
+# #                 return True
+#         else:
+#             alarmOff()
+#             return True
+
+def lockertimeout(): # function check timeout after touch
+        status = getAllStatus()
+        tout = services.getbuzzer()
+        print("time out :", tout)
+        for x in range(len(status)):
+                if config.locker_type > 0:
+                        pass
+                else:
+                        if status[x]:
+                           if (time.time() - views.request_data.locker_time[x]) > tout:  
+                                alarmOn()
+                                return False
+        alarmOff()
+        return True
 
 def alarmOn():
         try:
@@ -93,6 +111,22 @@ def getStatus(lockNo):
         except:
             print("I2C error")
 
+def getAllStatus():
+        if config.locker_type > 0:
+                locker = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+        else:
+                locker = [False, False, False, False, False, False, False, False, False, False, False, False]
+        
+        for x in range(len(locker)):
+                try:
+                        relay = ((x + 1) // 16) + 4 #div get status
+                        pos = ((x + 1) % 16)   #mod get pos
+                        if not pin[relay][pos].value:
+                                locker[x] = True
+                except:
+                        print("I2C error")
+        return locker
+
 def lockerrequest_open(data):
         if config.locker_type == 0:
                 relay = 0
@@ -109,6 +143,7 @@ def lockerrequest_open(data):
                                         time.sleep(0.5)
                                         pin[relay][pos].value = True    # Set pin to Low (ON) (1)
                                         time.sleep(0.5)
+                                        views.request_data.locker_time[x] = time.time()
                         except:
                                 print("Lock I2C error")
                                 return False

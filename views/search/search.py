@@ -9,7 +9,17 @@ import services
 import views
 import data_example
 
-
+class product_list():
+    section = ""
+    qrcode = ""
+    item_number = ""
+    product_name = ""
+    part_number = ""
+    part_name = ""
+    drawing_number = ""
+    locker_number = ""
+    quantity = ""
+    other = ""
 
 class Search:
     """Create a single-window app with multiple scenes."""
@@ -24,7 +34,8 @@ class Search:
         self.next_button = False # Set default avtivation status of next button
         self.previous_button = False # Set default avtivation status of previous button
         self.index = 0 # Set default index value of listview page
-        self.product_data = ""
+        self.product_data = views.search_data.request_list
+        self.product_list = product_list()
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -37,12 +48,12 @@ class Search:
 
         self.click = {
             # Click search button
-            (8, 3): 'self.product_data = self.search_click()',
-            (9, 3): 'self.product_data = self.search_click()',
-            (10, 3): 'self.product_data = self.search_click()',
-            (8, 4): 'self.product_data = self.search_click()',
-            (9, 4): 'self.product_data = self.search_click()',
-            (10, 4): 'self.product_data = self.search_click()',
+            (8, 3): 'self.search_click()',
+            (9, 3): 'self.search_click()',
+            (10, 3): 'self.search_click()',
+            (8, 4): 'self.search_click()',
+            (9, 4): 'self.search_click()',
+            (10, 4): 'self.search_click()',
             # Click cancel button
             (8, 9): 'views.Home().run(); pygame.quit()',
             (9, 9): 'views.Home().run(); pygame.quit()',
@@ -72,10 +83,64 @@ class Search:
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
+    def reset(self):
+        self.product_list.section = ""
+        self.product_list.qrcode = ""
+        self.product_list.item_number = ""
+        self.product_list.product_name = ""
+        self.product_list.part_number = ""
+        self.product_list.part_name = ""
+        self.product_list.drawing_number = ""
+        self.product_list.locker_number = ""
+        self.product_list.quantity = ""
+        self.product_list.other = ""
+
     def search_click(self):
-        print(services.selectproductbysearch(self.search_value.replace("\r", "")))
-        x = data_example.product['product']
-        return x
+        views.search_data.list_reset()
+        if self.search_value != '':
+            self.data = services.selectproductbysearch_2(self.search_value.replace("\r", ""))
+            if self.data:
+                
+                for x in range(len(self.data)):
+                    self.reset()
+                    self.product_list.section = self.data[x][1]
+                    self.product_list.qrcode = self.data[x][2]
+                    self.product_list.item_number = self.data[x][3]
+                    self.product_list.product_name = self.data[x][4]
+                    self.product_list.part_number = self.data[x][5]
+                    self.product_list.part_name = self.data[x][6]
+                    self.product_list.drawing_number = self.data[x][7]
+                    self.product_list.locker_number = services.getproductlocker_string(self.data[x][2])
+                    self.product_list.quantity = str(self.data[x][9])
+                    self.product_list.other = self.data[x][10]
+                    views.search_data.list_add(self.product_list)
+                self.search_input.update('*')
+            else:
+                views.search_data.list_reset()
+                self.search_input.update('*')
+                print("don't have product")
+        else:
+            self.data = services.selectproduct()
+            if self.data:
+                
+                for x in range(len(self.data)):
+                    self.reset()
+                    self.product_list.section = self.data[x][1]
+                    self.product_list.qrcode = self.data[x][2]
+                    self.product_list.item_number = self.data[x][3]
+                    self.product_list.product_name = self.data[x][4]
+                    self.product_list.part_number = self.data[x][5]
+                    self.product_list.part_name = self.data[x][6]
+                    self.product_list.drawing_number = self.data[x][7]
+                    self.product_list.locker_number = services.getproductlocker_string(self.data[x][2])
+                    self.product_list.quantity = str(self.data[x][9])
+                    self.product_list.other = self.data[x][10]
+                    views.search_data.list_add(self.product_list)
+                self.search_input.update('*')
+            else:
+                views.search_data.list_reset()
+                self.search_input.update('*')
+                print("don't have product")
 
     def active_button(self):
         """Check activation next button."""
@@ -120,8 +185,8 @@ class Search:
                         elements.Title('PRODUCT SEARCH', pos=(320, 67), app=(self.screen)).draw()
                         elements.Header_Table('No.', 1, 4, app=(self.screen)).draw()
                         elements.Header_Table('Product name', 2, 4, app=(self.screen)).draw()
-                        elements.Header_Table('QTY.', 6, 4, app=(self.screen)).draw()
-                        elements.Header_Table('Locker', 7, 4, app=(self.screen)).draw()
+                        elements.Header_Table('QTY.', 5, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Locker', 6, 4, app=(self.screen)).draw()
                         # elements.Rectangle(1, 5, 7, 5, app=(self.screen)).draw()
                         self.search_input.draw() 
                         self.product_listview.draw()                     
@@ -163,7 +228,7 @@ class Search:
                 self.search_value = self.search_input.handle_event(event)
                 if event.type == KEYDOWN:
                     if event.key == K_RETURN:
-                        self.product_data = self.search_click()
+                        self.search_click()
                     self.do_shortcut(event)
                 if event.type == QUIT:
                     self.running = False

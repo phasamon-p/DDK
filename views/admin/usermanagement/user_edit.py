@@ -70,20 +70,6 @@ class User_Edit:
             (8, 10): 'self.cancel_click()',
             (9, 10): 'self.cancel_click()',
             (10, 10): 'self.cancel_click()',
-            # # Click edit information button
-            # (1, 9): 'self.editinformation_click()',
-            # (2, 9): 'self.editinformation_click()',
-            # (3, 9): 'self.editinformation_click()',
-            # (1, 10): 'self.editinformation_click()',
-            # (2, 10): 'self.editinformation_click()',
-            # (3, 10): 'self.editinformation_click()',
-            # # Click next button
-            # (5, 9): 'self.editinventory_click()',
-            # (6, 9): 'self.editinventory_click()',
-            # (7, 9): 'self.editinventory_click()',
-            # (5, 10): 'self.editinventory_click()',
-            # (6, 10): 'self.editinventory_click()',
-            # (7, 10): 'self.editinventory_click()',
         }
 
     def do_shortcut(self, event):
@@ -102,7 +88,6 @@ class User_Edit:
 
     def search_click(self):
         self.data = services.selectpersonbyid(self.search_value.replace("\r", ""))
-        
         if self.data[0]:
             print(self.data)
             self.user_list.user_id = self.data[1][0][0]
@@ -123,8 +108,9 @@ class User_Edit:
     def delete_click(self):
         if len(views.user_data.request_list) > 0:
             print("delete")
-            services.deletepersonbyid(self.data[1][0][0])
             services.deletepermissionbyid(self.data[1][0][0])
+            services.deletepersonbyid(self.data[1][0][0])
+            services.delete_fingerprint(self.data[1][0][4])
             self.search_input.update("*")
             views.user_data.userdata_reset()
             views.user_data.list_reset()
@@ -158,7 +144,7 @@ class User_Edit:
 
     def run(self):
         """Initialize Caption and Valiable."""
-        pygame.display.set_caption('Uer id search' + config.VERSION)
+        pygame.display.set_caption('User id search' + config.VERSION)
         self.search_input = elements.User_Search(1, 3, 7, 1, app = (self.screen), active = True, numpad_active = True)
 
         """Run the main event loop."""
@@ -181,7 +167,7 @@ class User_Edit:
                         elements.Header_Table('ID', 1, 4, app=(self.screen)).draw()
                         elements.Header_Table('Name', 3, 4, app=(self.screen)).draw()
                         elements.Header_Table('Lastname', 5, 4, app=(self.screen)).draw()
-                        elements.Header_Table('Permis..', 7, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Permission', 7, 4, app=(self.screen)).draw()
                         # elements.Header_Table('Locker', 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('Output', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()

@@ -148,7 +148,7 @@ class Header_Table():
     def __init__(self, text, column, row, app, **option):
         self.text = text
         self.fontname = 'fonts/SEGOEUI.TTF'
-        self.fontsize = 30
+        self.fontsize = 25
         self.fontcolor = Color(config.black)
         self.set_font()
         self.column = column

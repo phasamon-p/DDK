@@ -85,15 +85,20 @@ class Admin_Finger:
     def scan_click(self):
         self.fingerid = services.get_fingerprint()
         if self.fingerid:
+            # print("finger id", self.fingerid[1])
             self.admin_data = services.getpersonbyfingerid(self.fingerid[1])
-            if self.admin_data[1][0][5]:
-                self.setdata()
-                views.System_Management().run()
-                pygame.quit()
+            # print(self.admin_data)
+            if self.admin_data[0]:
+                if self.admin_data[1][0][5]:
+                    self.setdata()
+                    views.System_Management().run()
+                    pygame.quit()
+                else:
+                    print("You don't have permission to admin management")
+                    views.Home().run()
+                    pygame.quit()
             else:
-                print("You don't have permission to admin management")
-                views.Home().run()
-                pygame.quit()
+                print("Do not have your finger print")
         else:
             print("Do not have your finger print")
         

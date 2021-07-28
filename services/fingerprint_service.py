@@ -1,7 +1,7 @@
 import config
 import mysql.connector 
 from mysql.connector import Error
-from views.admin.usermanagement.user_data import *
+# from views.admin.usermanagement.user_data import *
 import time
 import adafruit_fingerprint
 #If using with a computer such as Linux/RaspberryPi, Mac, Windows with USB/serial converter:

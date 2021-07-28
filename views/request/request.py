@@ -119,6 +119,7 @@ class Request:
             print("Can not delete request list because list is emty")
 
     def cancel_click(self):
+        views.request_data.list_reset()
         views.request_data.reset()
         views.Home().run()
         pygame.quit()

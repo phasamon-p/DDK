@@ -34,6 +34,7 @@ class User_Department:
             self.caption = 'Edit user department'
             self.title = 'EDIT USER DEPARTMENT'
         else:
+            self.department_button = [True, False, False, False, False]
             self.caption = 'Add user department'
             self.title = 'ADD USER DEPARTMENT'
 
@@ -181,10 +182,11 @@ class User_Department:
             pygame.quit()
 
     def toggle_button(self, event):
-        if self.department_button[event - 1]:
-            self.department_button[event - 1] = False
-        else:
-            self.department_button[event - 1] = True
+        for x in range(len(self.department_button)):
+            if x == event - 1:
+                self.department_button[x] = True
+            else:
+                self.department_button[x] = False
 
     def run(self):
         """Initialize Caption and Valiable."""

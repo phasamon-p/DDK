@@ -116,6 +116,7 @@ class User_Finger:
 
     def scan_click(self):
         self.index = services.getfingerid()
+        print(self.index)
         if services.enroll_finger(self.index):
             views.user_data.user_data['fingerid'] = str(self.index)
             views.User_Result(False).run()

@@ -2,6 +2,8 @@
 import pygame
 from pygame.locals import *
 import json
+
+import serial
 import views
 import services
 import config
