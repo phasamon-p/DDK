@@ -122,8 +122,11 @@ class Locker_Control:
             exec(self.click[column_click, row_click])
 
     def cancel_click(self):
-        views.Locker_Management().run()
-        pygame.quit()
+        if services.lockertimeout():
+                views.Locker_Management().run()
+                pygame.quit()
+        else: 
+                print("Plese close door")
 
     def toggle_button(self, event):
         if self.locker_button[event - 1]:

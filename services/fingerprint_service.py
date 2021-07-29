@@ -28,7 +28,7 @@ def mysqlconnect():
         #     print("Connected to MySQL Server version ", db_Info)
         #     cursor = connection.cursor()
         #     cursor.execute("select database();")
-        #     record = cursor.fetchone()
+        #     record = cursor.fetchone() 
         #     print("You're connected to database: ", record)
     except Error as e:
         return e

@@ -103,12 +103,15 @@ class Request_Check:
             self.index -= 1
 
     def confirm_click(self):
-        views.request_data.list_check_reset()
-        views.request_data.list_reset()
-        views.request_data.reset()
-        views.request_data.requester_reset()
-        views.Request().run()
-        pygame.quit()
+        if services.lockertimeout():
+            views.request_data.list_check_reset()
+            views.request_data.list_reset()
+            views.request_data.reset()
+            views.request_data.requester_reset()
+            views.Request().run()
+            pygame.quit()
+        else:
+            print("Please close door")
 
     def check_click(self):
         for x in range(len(views.request_data.request_list2)):

@@ -134,7 +134,6 @@ class Locker_Management:
         pygame.display.set_caption('Product management' + config.VERSION)
        
         while self.running:
-            services.lockertimeout() # Check door opening
             """Refresh surface."""
             self.screen.fill(Color('white')) 
             """Initialize user interface."""

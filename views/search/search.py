@@ -55,12 +55,12 @@ class Search:
             (9, 4): 'self.search_click()',
             (10, 4): 'self.search_click()',
             # Click cancel button
-            (8, 9): 'views.Home().run(); pygame.quit()',
-            (9, 9): 'views.Home().run(); pygame.quit()',
-            (10, 9): 'views.Home().run(); pygame.quit()',
-            (8, 10): 'views.Home().run(); pygame.quit()',
-            (9, 10): 'views.Home().run(); pygame.quit()',
-            (10, 10): 'views.Home().run(); pygame.quit()',
+            (8, 9): 'self.cancel_click()',
+            (9, 9): 'self.cancel_click()',
+            (10, 9): 'self.cancel_click()',
+            (8, 10): 'self.cancel_click()',
+            (9, 10): 'self.cancel_click()',
+            (10, 10): 'self.cancel_click()',
             # Click previous button
             (1, 10): 'self.previousbutton_click()',
             (2, 10): 'self.previousbutton_click()',
@@ -158,6 +158,11 @@ class Search:
     def previousbutton_click(self):
         if self.previous_button:
             self.index -= 1
+    
+    def cancel_click(self):
+        views.search_data.list_reset()
+        views.Home().run()
+        pygame.quit()
 
     def run(self):
         """Initialize Caption and Valiable."""
@@ -165,7 +170,6 @@ class Search:
         self.search_input = elements.InputBox(1, 3, 7, 1, app = (self.screen), active = True, numpad_active = True)
         """Run the main event loop."""
         while self.running:
-            services.lockertimeout() # Check door opening
             self.number = 1
             self.screen.fill(Color('white'))
             self.product_listview = elements.Search_Listview(1, 5, 7, 5, app=(self.screen),data = self.product_data, index = self.index)

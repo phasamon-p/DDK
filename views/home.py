@@ -84,7 +84,7 @@ class Home:
         pygame.quit()
 
     def admin_click(self):
-        views.System_Management().run()
+        views.Admin_Finger().run()
         pygame.quit()
 
     def exit_fullscreen(self):
@@ -97,7 +97,6 @@ class Home:
         pygame.display.set_caption('Home' + config.VERSION)
         
         while self.running:
-            services.lockertimeout() # Check door opening
             """Refresh surface."""
             self.screen.fill(Color('white')) 
             """Initialize user interface."""

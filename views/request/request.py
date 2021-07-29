@@ -130,7 +130,6 @@ class Request:
         self.number = 1
         pygame.display.set_caption('Product request' + config.VERSION)
         while self.running:
-            services.lockertimeout() # Check door opening
             """Refresh surface."""
             self.screen.fill(Color('white')) 
             self.product_listview = elements.Request_Listview(1, 4, 7, 6, app=(self.screen),data = self.product_data, index = self.index)

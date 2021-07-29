@@ -132,7 +132,6 @@ class Request_Add:
         self.quantity_input = elements.InputBox_2(1, 10, 7, 1, app = (self.screen), active = views.request_data.inbox_active[1], numpad_active = True)
         """Run the main event loop."""
         while self.running:
-            services.lockertimeout() # Check door opening
             self.number = 1
             self.screen.fill(Color('white'))
             self.search_input.active = views.request_data.inbox_active[0]

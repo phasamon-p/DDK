@@ -153,7 +153,6 @@ def lockertimeout(): # function check timeout after touch
                 config.time_extention = 0
                 return True
         alarmOff()
-        return True
 
 def alarmOn():
         try:

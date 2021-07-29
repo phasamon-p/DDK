@@ -123,7 +123,6 @@ class Request_Finger:
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
         while self.running:
-            services.lockertimeout() # Check door opening
             """Refresh surface."""
             self.screen.fill(Color('white'))
             """Initialize user interface."""
