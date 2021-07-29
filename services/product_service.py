@@ -23,10 +23,10 @@ def insertproduct(data):
     try:
         connection = mysqlconnect()
         cursor = connection.cursor()
-        mySql_insert_query = """INSERT INTO products (section, qr_code, item_no, product_name, part_no, part_name, drawing_no, locker, quantity, other) 
-                                                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
+        mySql_insert_query = """INSERT INTO products (section, qr_code, item_no, product_name, part_no, part_name, drawing_no, locker, quantity, other, status) 
+                                                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
         qrcode = data[1].replace("\r", "")
-        record = (data[0], qrcode, data[2], data[3], data[4], data[5], data[6], '', data[8], data[9])
+        record = (data[0], qrcode, data[2], data[3], data[4], data[5], data[6], '', data[8], data[9], 1)
         cursor.execute(mySql_insert_query, record)
         connection.commit()
         return True
@@ -282,8 +282,8 @@ def insertproductlocker(qrcode, permission):
 #             print("lengh of ml_locker :", len(permission))
             if permission[x]:
                 if not getproductlockerbylocker(qrcode.replace("\r", ""), x + 1):
-                    mySql_insert_query = """INSERT INTO products_lockers (pl_products, pl_locker) VALUES ( %s, %s) """
-                    record = (qrcode.replace("\r", ""), x + 1)
+                    mySql_insert_query = """INSERT INTO products_lockers (pl_products, pl_locker, status) VALUES ( %s, %s, %s) """
+                    record = (qrcode.replace("\r", ""), x + 1, 1)
                     cursor.execute(mySql_insert_query, record)
                     connection.commit()
 #                     print("Insert ml_locker : ", record)
