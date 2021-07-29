@@ -68,17 +68,14 @@ class Drawing_Number:
             exec(self.click[column_click, row_click])
 
     def next_click(self):
-        if self.drawing_value != '':
-            if self.editstage:
-                views.product_data.product_data['drawing_number'] = self.drawing_value
-                views.Product_Locker(True).run()
-                pygame.quit()
-            else:
-                views.product_data.product_data['drawing_number'] = self.drawing_value
-                views.Product_Locker(False).run()
-                pygame.quit()
+        if self.editstage:
+            views.product_data.product_data['drawing_number'] = self.drawing_value
+            views.Product_Locker(True).run()
+            pygame.quit()
         else:
-            print("Please enter drawing number")
+            views.product_data.product_data['drawing_number'] = self.drawing_value
+            views.Product_Locker(False).run()
+            pygame.quit()
 
     def cancel_click(self):
         if self.editstage:

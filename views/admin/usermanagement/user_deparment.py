@@ -177,7 +177,7 @@ class User_Department:
             views.User_Lname(True).run()
             pygame.quit()
         else:
-            views.user_data.user_data['department'] = ''
+            views.user_data.user_data['department'] = [True, False, False, False, False]
             views.User_Lname(False).run()
             pygame.quit()
 
