@@ -4,7 +4,7 @@ from pygame.locals import *
 
 import time
 import os
-# import services 
+import services 
 import config 
 import elements
 import views
@@ -84,7 +84,7 @@ class Home:
         pygame.quit()
 
     def admin_click(self):
-        views.Admin_Finger().run()
+        views.System_Management().run()
         pygame.quit()
 
     def exit_fullscreen(self):
@@ -97,9 +97,9 @@ class Home:
         pygame.display.set_caption('Home' + config.VERSION)
         
         while self.running:
+            services.lockertimeout() # Check door opening
             """Refresh surface."""
             self.screen.fill(Color('white')) 
-
             """Initialize user interface."""
             for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin

@@ -7,6 +7,7 @@ import os
 import config 
 import elements
 import views
+import services
 
 class System_Management:
     """Create a single-window app with multiple scenes."""
@@ -17,7 +18,6 @@ class System_Management:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
-
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
             (K_x, KMOD_LALT): 'print("alt+X")',
@@ -26,7 +26,6 @@ class System_Management:
             (K_x, KMOD_LMETA + KMOD_LALT): 'print("cmd+alt+X")',
             (K_x, KMOD_LMETA + KMOD_LALT + KMOD_LSHIFT): 'print("cmd+alt+shift+X")',
         }
-        
         self.click = {
             # Click user managment button
             (1, 3): 'self.user_click()',
@@ -49,7 +48,6 @@ class System_Management:
             (8, 4): 'self.user_click()',
             (9, 4): 'self.user_click()',
             (10, 4): 'self.user_click()',
-
             # Click product managment button
             (1, 5): 'self.product_click()',
             (2, 5): 'self.product_click()',
@@ -71,7 +69,6 @@ class System_Management:
             (8, 6): 'self.product_click()',
             (9, 6): 'self.product_click()',
             (10, 6): 'self.product_click()',
-
             # Click locker managment button
             (1, 7): 'self.locker_click()',
             (2, 7): 'self.locker_click()',
@@ -93,7 +90,6 @@ class System_Management:
             (8, 8): 'self.locker_click()',
             (9, 8): 'self.locker_click()',
             (10, 8): 'self.locker_click()',
-
             # Click logout button
             (1, 9): 'self.logout_click()',
             (2, 9): 'self.logout_click()',
@@ -115,7 +111,6 @@ class System_Management:
             (8, 10): 'self.logout_click()',
             (9, 10): 'self.logout_click()',
             (10, 10): 'self.logout_click()',
-           
         }
 
     def do_shortcut(self, event):
@@ -144,7 +139,6 @@ class System_Management:
         views.Locker_Management().run(); 
         pygame.quit()
   
-
     def logout_click(self):
         views.admin_data.admindata_reset()
         views.Home().run(); 
@@ -155,6 +149,7 @@ class System_Management:
         self.number = 1
         pygame.display.set_caption('Product request' + config.VERSION)
         while self.running:
+            services.lockertimeout() # Check door opening
             """Refresh surface."""
             self.screen.fill(Color('white')) 
             """Initialize user interface."""

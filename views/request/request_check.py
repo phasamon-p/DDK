@@ -123,7 +123,7 @@ class Request_Check:
         print(views.request_data.request_list2_check)
         """Run the main event loop."""
         while self.running:
-            services.lockertimeout()
+            services.lockertimeout() # Check door opening
             self.number = 1
             self.screen.fill(Color('white'))
             self.requestcheck_listview = elements.Request_Check_Listview(1, 5, 7, 5, check = views.request_data.request_list2_check, app = (self.screen),data = self.product_data, index = self.index)

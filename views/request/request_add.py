@@ -130,9 +130,9 @@ class Request_Add:
         pygame.display.set_caption('Add product requestion' + config.VERSION)
         self.search_input = elements.InputBox_2(1, 3, 7, 1, app = (self.screen), active = views.request_data.inbox_active[0], numpad_active = True)
         self.quantity_input = elements.InputBox_2(1, 10, 7, 1, app = (self.screen), active = views.request_data.inbox_active[1], numpad_active = True)
-        
         """Run the main event loop."""
         while self.running:
+            services.lockertimeout() # Check door opening
             self.number = 1
             self.screen.fill(Color('white'))
             self.search_input.active = views.request_data.inbox_active[0]

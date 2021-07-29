@@ -10,4 +10,5 @@ import config
 
 if __name__ == '__main__':
     services.init()
-    views.Locker_Control().run()
+    views.Home().run()
+    pygame.quit()

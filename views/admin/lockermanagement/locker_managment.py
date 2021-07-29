@@ -7,6 +7,7 @@ import os
 import config 
 import elements
 import views
+import services
 
 class Locker_Management:
     """Create a single-window app with multiple scenes."""
@@ -133,9 +134,9 @@ class Locker_Management:
         pygame.display.set_caption('Product management' + config.VERSION)
        
         while self.running:
+            services.lockertimeout() # Check door opening
             """Refresh surface."""
             self.screen.fill(Color('white')) 
-
             """Initialize user interface."""
             for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin

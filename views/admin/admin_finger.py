@@ -20,7 +20,6 @@ class admin_data():
 
 class Admin_Finger:
     """Create a single-window app with multiple scenes."""
-
     def __init__(self):
         """Initialize pygame and the application."""
         pygame.init() # Initialize the pygame
@@ -31,7 +30,6 @@ class Admin_Finger:
         self.admin_information = admin_data()
         self.caption = 'Admin finger scan'
         self.title = 'ADMIN FINGER SCAN'
-
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
             (K_x, KMOD_LALT): 'self.exit_fullscreen()',
@@ -40,7 +38,6 @@ class Admin_Finger:
             (K_x, KMOD_LMETA + KMOD_LALT): 'print("cmd+alt+X")',
             (K_x, KMOD_LMETA + KMOD_LALT + KMOD_LSHIFT): 'print("cmd+alt+shift+X")',
         }
-    
         self.click = {
             # Click scan button
             (7, 4): 'self.scan_click()',
@@ -121,6 +118,7 @@ class Admin_Finger:
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
         while self.running:
+            services.lockertimeout() # Check door opening
             """Refresh surface."""
             self.screen.fill(Color('white'))
             """Initialize user interface."""

@@ -81,6 +81,7 @@ class Buzzer_Setting:
         self.buzzer_input = elements.InputBox_Userid(1, 3, 10, 1, str(self.buzzer), app = (self.screen), active = True, numpad_active = True)
         """Run the main event loop."""
         while self.running:
+            services.lockertimeout() # Check door opening
             self.number = 1
             self.screen.fill(Color('white'))      
             """Initialize user interface."""

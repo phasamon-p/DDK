@@ -100,7 +100,6 @@ class Search:
         if self.search_value != '':
             self.data = services.selectproductbysearch_2(self.search_value.replace("\r", ""))
             if self.data:
-                
                 for x in range(len(self.data)):
                     self.reset()
                     self.product_list.section = self.data[x][1]
@@ -122,7 +121,6 @@ class Search:
         else:
             self.data = services.selectproduct()
             if self.data:
-                
                 for x in range(len(self.data)):
                     self.reset()
                     self.product_list.section = self.data[x][1]
@@ -165,9 +163,9 @@ class Search:
         """Initialize Caption and Valiable."""
         pygame.display.set_caption('Product search' + config.VERSION)
         self.search_input = elements.InputBox(1, 3, 7, 1, app = (self.screen), active = True, numpad_active = True)
-
         """Run the main event loop."""
         while self.running:
+            services.lockertimeout() # Check door opening
             self.number = 1
             self.screen.fill(Color('white'))
             self.product_listview = elements.Search_Listview(1, 5, 7, 5, app=(self.screen),data = self.product_data, index = self.index)
