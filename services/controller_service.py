@@ -79,28 +79,137 @@ def uninit():
 def lockertimeout(): # function check timeout after touch
         status = getAllStatus()
         tout = services.getbuzzer() * 60
-        for x in range(len(status)):
-                if config.locker_type > 0:
+        if config.locker_type > 0:
                         pass
-                else:
-                        if status[x]:
-                                config.door_status = True
-                                if getStatus(12):
-                                           config.time_extention += 60
-                                # print("Door stats :", status)
-                                # print("x :", x)
-                                # print("time now :", time.time())              
-                                # print("time open :", views.request_data.locker_time[0])
-                                # print(views.request_data.locker_time)
-                                print(time.time() - views.request_data.locker_time[0]) 
-                                print("time out :", str(tout + config.time_extention))
+        else:
+                # Check status locker 8
+                if services.getStatus(1):
+                        if (time.time() - views.request_data.locker_time[7]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False
+                # Check status locker 7
+                if services.getStatus(2):
+                        if (time.time() - views.request_data.locker_time[6]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False 
+                # Check status locker 6
+                if services.getStatus(3):
+                        if (time.time() - views.request_data.locker_time[5]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False 
+                # Check status locker 5
+                if services.getStatus(4):
+                        if (time.time() - views.request_data.locker_time[4]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False 
+                # Check status locker 4
+                if services.getStatus(5):
+                        if (time.time() - views.request_data.locker_time[3]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False 
+                # Check status locker 3
+                if services.getStatus(6):
+                        if (time.time() - views.request_data.locker_time[2]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False 
+                # Check status locker 2
+                if services.getStatus(7):
+                        if (time.time() - views.request_data.locker_time[1]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False 
+                # Check status locker 1
+                if services.getStatus(8):
+                        if (time.time() - views.request_data.locker_time[0]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False
+                # Check status locker 12
+                if services.getStatus(13):
+                        if (time.time() - views.request_data.locker_time[11]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False 
+                # Check status locker 11
+                if services.getStatus(14):
+                        if (time.time() - views.request_data.locker_time[10]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False 
+                # Check status locker 10
+                if services.getStatus(15):
+                        if (time.time() - views.request_data.locker_time[9]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False
+                # Check status locker 9
+                if services.getStatus(16):
+                        if (time.time() - views.request_data.locker_time[8]) > (tout + config.time_extention):
+                                alarmOn()
+                                return False 
+        # for x in range(len(status)):
+        #         if config.locker_type > 0:
+        #                 pass
+        #         else:
+        #                 if status[x]:
+        #                         config.door_status = True
+        #                         if getStatus(12):
+        #                                    config.time_extention += 60
+        #                         # print("Door stats :", status)
+        #                         # print("x :", x)
+        #                         # print("time now :", time.time())              
+        #                         # print("time open :", views.request_data.locker_time[0])
+        #                         # print(views.request_data.locker_time)
+        #                         print(time.time() - views.request_data.locker_time[0]) 
+        #                         print("time out :", str(tout + config.time_extention))
 
-                                if x == 7: # Check ocker 1
-                                        if (time.time() - views.request_data.locker_time[0]) > (tout + config.time_extention):
-                                                alarmOn()
-                                                return False
-                        else:
-                                config.door_status = False
+        #                         if x == 7: # Check ocker 1
+        #                                 if (time.time() - views.request_data.locker_time[0]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 6: # Check ocker 2
+        #                                 if (time.time() - views.request_data.locker_time[1]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 5: # Check ocker 3
+        #                                 if (time.time() - views.request_data.locker_time[2]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 4: # Check ocker 4
+        #                                 if (time.time() - views.request_data.locker_time[3]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 3: # Check ocker 5
+        #                                 if (time.time() - views.request_data.locker_time[4]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 2: # Check ocker 6
+        #                                 if (time.time() - views.request_data.locker_time[5]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 1: # Check ocker 7
+        #                                 if (time.time() - views.request_data.locker_time[6]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 0: # Check ocker 8
+        #                                 if (time.time() - views.request_data.locker_time[7]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 7: # Check ocker 9
+        #                                 if (time.time() - views.request_data.locker_time[8]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 7: # Check ocker 10
+        #                                 if (time.time() - views.request_data.locker_time[9]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 7: # Check ocker 11
+        #                                 if (time.time() - views.request_data.locker_time[10]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+        #                         if x == 7: # Check ocker 12
+        #                                 if (time.time() - views.request_data.locker_time[11]) > (tout + config.time_extention):
+        #                                         alarmOn()
+        #                                         return False
+                                
+
+        #                 else:
+        #                         config.door_status = False
 
         alarmOff()
         return True
@@ -147,7 +256,7 @@ def lockerrequest_open(data):
                 relay = 0
         else:
                 relay = 0 
-
+        print("Data request : ", data)
         for x in range(len(data)):
                 if data[x]:
                         relay = (((x + 1) - 1) // 16) + relay  #div get relay
