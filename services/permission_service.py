@@ -163,8 +163,8 @@ def insertpermission(id, permission):
             print("lengh of permission :", len(permission))
             if permission[x]:
                 if not services.getpermissionbylocker(id, x + 1):
-                    mySql_insert_query = """INSERT INTO person_locker (pl_person, pl_locker) VALUES ( %s, %s) """
-                    record = (id, x + 1)
+                    mySql_insert_query = """INSERT INTO person_locker (pl_person, pl_locker, status) VALUES ( %s, %s, %s) """
+                    record = (id, x + 1, 1)
                     cursor.execute(mySql_insert_query, record)
                     connection.commit()
                     print("Insert permission : ", record)

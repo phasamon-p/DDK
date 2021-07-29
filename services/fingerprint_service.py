@@ -59,8 +59,8 @@ def updatefinrgerprint(id):
     try:
         connection = mysqlconnect()
         cursor = connection.cursor()
-        mySql_update_query = "UPDATE locker_count set count = %s where id = %s "
-        cursor.execute(mySql_update_query, (id, 1))
+        mySql_update_query = "UPDATE locker_count set count = %s, status = %s where id = %s "
+        cursor.execute(mySql_update_query, (id, 2, 1))
         connection.commit()
 
         return True

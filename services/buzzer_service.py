@@ -42,8 +42,8 @@ def updatebuzzer(data):
     try:
         connection = mysqlconnect()
         cursor = connection.cursor()
-        mySql_insert_query = "UPDATE locker_count set count = %s where id = 2"
-        cursor.execute(mySql_insert_query, (data,))
+        mySql_insert_query = "UPDATE locker_count set count = %s, status = %s where id = 2"
+        cursor.execute(mySql_insert_query, (data, 2,))
         connection.commit()
         return True
 

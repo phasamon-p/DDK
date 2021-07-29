@@ -176,8 +176,8 @@ def insertperson(data):
     try:
         connection = mysqlconnect()
         cursor = connection.cursor()
-        mySql_insert_query = """INSERT INTO person (personid, name, lname, department ,fingerid, permission) VALUES ( %s, %s, %s, %s, %s, %s) """
-        record = (data[0], data[1], data[2], data[3], data[4], data[5])
+        mySql_insert_query = """INSERT INTO person (personid, name, lname, department ,fingerid, permission, status) VALUES ( %s, %s, %s, %s, %s, %s, %s) """
+        record = (data[0], data[1], data[2], data[3], data[4], data[5], 1)
         cursor.execute(mySql_insert_query, record)
         connection.commit()
 
@@ -197,10 +197,10 @@ def updatepersonbyid(id, data):
     try:
         connection = mysqlconnect()
 
-        sql_Update_Query = "UPDATE person set personid = %s, name = %s, lname = %s, department = %s, fingerid = %s, permission = %s where personid = %s "
+        sql_Update_Query = "UPDATE person set personid = %s, name = %s, lname = %s, department = %s, fingerid = %s, permission = %s, status = %s where personid = %s "
         cursor = connection.cursor()
         # print(" role:", role)
-        record = (data[0], data[1], data[2], data[3], data[4], data[5], id)
+        record = (data[0], data[1], data[2], data[3], data[4], data[5], 2, id)
 
         cursor.execute(sql_Update_Query, record)
         connection.commit()

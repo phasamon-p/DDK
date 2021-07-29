@@ -149,9 +149,9 @@ class Product_Section:
         if self.section_button[1]:
             self.section_value[1] = 'AS2'
         if self.section_button[2]:
-            self.section_value[2] = 'MT1'
+            self.section_value[2] = 'MO1'
         if self.section_button[3]:
-            self.section_value[3] = 'MT2'
+            self.section_value[3] = 'MO2'
         if self.section_button[4]:
             self.section_value[4] = 'PR'
 
@@ -220,13 +220,13 @@ class Product_Section:
                             elements.Button(self.screen, config.green, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         else:
                             elements.Button(self.screen, config.blue, x, y, config.bwidth + 428, config.bheight + 67).Rect()
-                        elements.Text_Button_Medium('   MT1', position3, app=(self.screen)).draw()
+                        elements.Text_Button_Medium('   MO1', position3, app=(self.screen)).draw()
                     if row == 5 and column == 6:
                         if self.section_button[3]:
                             elements.Button(self.screen, config.green, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         else:
                             elements.Button(self.screen, config.blue, x, y, config.bwidth + 428, config.bheight + 67).Rect()
-                        elements.Text_Button_Medium('   MT2', position3, app=(self.screen)).draw()
+                        elements.Text_Button_Medium('   MO2', position3, app=(self.screen)).draw()
                     if row == 7 and column == 4:
                         if self.section_button[4]:
                             elements.Button(self.screen, config.green, x, y, config.bwidth + 321, config.bheight + 67).Rect()

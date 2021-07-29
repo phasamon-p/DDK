@@ -449,8 +449,8 @@ def updateproductbyid(qrcode, data):
         print(data, qrcode)
         sql_Update_Query = "UPDATE products set section = %s, qr_code = %s , item_no = %s, product_name = %s, " \
                            "part_no = %s, part_name = %s,drawing_no = %s, locker = %s, quantity = %s, " \
-                           "other = %s where qr_code = %s "
-        input = (data[0], data[1].replace("\r", ""), data[2], data[3], data[4], data[5], data[6],'', data[8], data[9] ,qrcode.replace("\r", ""))
+                           "other = %s, status = %s where qr_code = %s "
+        input = (data[0], data[1].replace("\r", ""), data[2], data[3], data[4], data[5], data[6],'', data[8], data[9], 2,qrcode.replace("\r", ""))
 
         print(cursor.execute(sql_Update_Query, input))
         connection.commit()
