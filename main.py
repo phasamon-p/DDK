@@ -10,4 +10,4 @@ import config
 
 if __name__ == '__main__':
     services.init()
-    views.Home().run()
+    views.Locker_Control().run()

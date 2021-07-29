@@ -18,10 +18,11 @@ error = False
 mux_out = [0,1,2,3]
 mux_in = [4,5,6,7]
 IR = [0,7,6,5,4,3,2,0,0,0,0,0,0,0]
-buzzer = [0,10]
+buzzer = [0,15]
 on_circuit = [0,12]
 on_sensor = [1,3]
 
+extention_time = 0
 
 status = True 
 
@@ -77,16 +78,30 @@ def uninit():
 
 def lockertimeout(): # function check timeout after touch
         status = getAllStatus()
-        tout = services.getbuzzer()
-        print("time out :", tout)
+        tout = services.getbuzzer() * 60
         for x in range(len(status)):
                 if config.locker_type > 0:
                         pass
                 else:
                         if status[x]:
-                           if (time.time() - views.request_data.locker_time[x]) > tout:  
-                                alarmOn()
-                                return False
+                                config.door_status = True
+                                if getStatus(12):
+                                           config.time_extention += 60
+                                # print("Door stats :", status)
+                                # print("x :", x)
+                                # print("time now :", time.time())              
+                                # print("time open :", views.request_data.locker_time[0])
+                                # print(views.request_data.locker_time)
+                                print(time.time() - views.request_data.locker_time[0]) 
+                                print("time out :", str(tout + config.time_extention))
+
+                                if x == 7: # Check ocker 1
+                                        if (time.time() - views.request_data.locker_time[0]) > (tout + config.time_extention):
+                                                alarmOn()
+                                                return False
+                        else:
+                                config.door_status = False
+
         alarmOff()
         return True
 
@@ -122,7 +137,7 @@ def getAllStatus():
                         relay = ((x + 1) // 16) + 4 #div get status
                         pos = ((x + 1) % 16)   #mod get pos
                         if not pin[relay][pos].value:
-                                locker[x] = True
+                                locker[x + 1] = True
                 except:
                         print("I2C error")
         return locker
@@ -159,6 +174,7 @@ def locker_open(relay, lockNo):
                 time.sleep(0.5)
                 pin[relay][pos].value = True    # Set pin to Low (ON) (1)
                 time.sleep(0.5)
+                views.request_data.locker_time[lockNo - 1] = time.time()
         except:
             print("Lock I2C error")
             

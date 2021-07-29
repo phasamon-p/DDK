@@ -289,6 +289,7 @@ class Locker_Control:
         pygame.display.set_caption(self.caption + config.VERSION)
         """Run the main event loop."""
         while self.running:
+            services.lockertimeout()
             self.screen.fill(Color('white'))  
             self.checklocker_status()    
             """Initialize user interface."""
