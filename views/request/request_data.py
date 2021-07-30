@@ -107,7 +107,8 @@ def check_lockeraccess():
     
     for x in range(len(request_list2)):
         locker = request_list2[x].locker_number.split(",")
-        # print(locker)
+        # print("locker", locker)
+        # print("request_list2[x].locker_number", request_list2[x].locker_number)
         for y in range(len(locker)):
             # print(requester_data['locker_access'])
             # print(x, int(locker[y]) +1)
@@ -116,71 +117,3 @@ def check_lockeraccess():
             else:
                 return False
     return access_list
-
-# product_data = {    'section' : [False, False, False, False, False],
-#                     'qrcode' : "",
-#                     'item_number' : "",
-#                     'product_name' : "",
-#                     'part_number' : "",
-#                     'part_name' : "",
-#                     'drawing_number' : "",
-#                     'locker_number' : [False, False, False, False, False, False, False, False, False, False, False, False],
-#                     'quantity' : "",
-#                     'other' : ""}
-
-# def add(object):
-#     product_data.append(object)
-
-# def delete():
-#     product_data.pop()
-
-# def reset():
-#     product_data.clear()
-
-# def locker_reset():
-#     for x in range(len(product_data['locker_number'])):
-#         product_data['locker_number'][x] = False
-
-# def lengh_lockeraccess():
-#     y = 0
-#     for x in range(len(product_data['locker_number'])):
-#         if product_data['locker_number'][x]:
-#             y += 1
-#     return str(y)
-
-# def section():
-#     text = ''
-#     for x in range(len(product_data['section'])):
-#         if product_data['section'][x]:
-#             if text == '':
-#                 text += product_data['section'][x]
-#             else: 
-#                 text += ' ' + product_data['section'][x]
-#     return str(text)
-
-# def productdata_reset():
-#     product_data['section'] = [False, False, False, False, False]
-#     product_data['qrcode'] = ''
-#     product_data['item_number'] = ''
-#     product_data['product_name'] = ''
-#     product_data['part_number'] = ''
-#     product_data['part_name'] = ''
-#     product_data['drawing_number'] = ''
-#     product_data['locker_number'] = [False, False, False, False, False, False, False, False, False, False, False, False]
-#     product_data['quantity'] = ''
-#     product_data['other'] = ''
-
-# def productdata_setedit(data):
- 
-#     product_data['section'] =  data.section
-#     product_data['qrcode'] =  data.qrcode
-#     product_data['item_number'] =  data.item_number
-#     product_data['product_name'] =  data.product_name
-#     product_data['part_number'] =  data.part_number
-#     product_data['part_name'] =  data.part_name
-#     product_data['drawing_number'] =  data.drawing_number
-#     product_data['locker_number'] =  data.locker_number
-#     product_data['quantity'] =  data.quantity
-#     product_data['other'] =  data.other
-
-#     old_qrcode = data.qrcode

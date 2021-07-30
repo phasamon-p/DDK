@@ -88,6 +88,7 @@ class Request_Finger:
             self.request_data = services.getpersonbyfingerid(self.fingerid[1])
             self.setdata()
             self.dataaccess = views.request_data.check_lockeraccess()
+            # print("dataaccess", self.dataaccess)
             if self.dataaccess:
                 if services.lockerrequest_open(self.dataaccess):
                     services.updatequantity_byqrcode(views.request_data.request_list2)
