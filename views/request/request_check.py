@@ -33,6 +33,8 @@ class Request_Check:
         self.index = 0 # Set default index value of listview page
         self.product_data = views.request_data.request_list2
         self.data = ''
+        for x in range(len(self.product_data)):  
+            print("product_data", self.product_data[x].qrcode)
         if config.locker_type == 0:
             self.check = [False, False, False, False, False, False, False, False, False, False, False, False]
         else:
@@ -84,7 +86,7 @@ class Request_Check:
     
     def active_button(self):
         """Check activation next button."""
-        if len(self.product_data) - (self.index * 6) > 6 :
+        if len(self.product_data) - (self.index * 5) > 5 :
             self.next_button = True
         else:
             self.next_button = False

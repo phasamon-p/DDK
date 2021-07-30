@@ -109,7 +109,7 @@ class Search:
                     self.information.append(services.getproductlocker_string(self.data[x][2]))
                     self.information.append(self.data[x][9])
                     self.information.append(self.data[x][10])
-                    print("informatyion:", self.information)
+                    # print("informatyion:", self.information)
                     views.search_data.list_add(self.information)
                 self.search_input.update('*')
             else:
