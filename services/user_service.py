@@ -154,9 +154,9 @@ def getdepartmentbyid_bool(id):
                    department[0] = True
                 if data[x] == 'AS2':
                    department[1] = True
-                if data[x] == 'MT1':
+                if data[x] == 'MO1':
                    department[2] = True
-                if data[x] == 'MT2':
+                if data[x] == 'MO2':
                    department[3] = True
                 if data[x] == 'PR':
                    department[4] = True

@@ -21,6 +21,8 @@ class Product_Qrcode:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
+        self.message = False # Set default status of output message1
+        self.message2 = False # Set default status of output message2
         self.editstage = editstage
         if self.editstage:
             self.caption = 'Edit product qr code'
@@ -81,7 +83,9 @@ class Product_Qrcode:
                         pygame.quit()
                     else:
                         self.qrcode_input.update('*')
-                        print("This qrcode already")
+                        self.message = False
+                        self.message2 = True
+                        print("This QR code is already")
             else:
                 if not services.qrcode_check(self.qrcode_value):
                     views.product_data.product_data['qrcode'] = self.qrcode_value
@@ -90,8 +94,12 @@ class Product_Qrcode:
                     pygame.quit()
                 else:
                     self.qrcode_input.update('*')
-                    print("This qrcode already")
+                    self.message = False
+                    self.message2 = True
+                    print("This QR code is already")
         else:
+            self.message2 = False
+            self.message = True
             print("Please enter part number")
 
     def cancel_click(self):
@@ -128,6 +136,15 @@ class Product_Qrcode:
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
+                        if self.editstage:
+                            elements.Header_Table("  •  Please edit product QR code.", 1, 5, app=(self.screen)).draw()
+                            elements.Header_Table("  •  If you don't want to edit, Please press next.", 1, 6, app=(self.screen)).draw()
+                        else:
+                            elements.Header_Table('  •  Please scan or enter product QR code.', 1, 5, app=(self.screen)).draw()
+                        if self.message:
+                            elements.Output_Message("  •  Please scan or enter product QR code.", 1, 10, app=(self.screen)).draw()
+                        if self.message2:
+                            elements.Output_Message("  •  This product QR code is already.", 1, 10, app=(self.screen)).draw()
                         self.qrcode_input.draw()                  
                     """Initialize Numpad."""
                     if row >= 4 and row <= 7 and column >= 8 and column <= 10:

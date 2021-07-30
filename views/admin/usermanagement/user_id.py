@@ -25,6 +25,8 @@ class User_Id:
         self.previous_button = False # Set default avtivation status of previous button
         self.index = 0 # Set default index value of listview page
         self.product_data = ""
+        self.message = False # Set default status of output message1
+        self.message2 = False # Set default status of output message2
         self.editstage = editstage
         if self.editstage:
             self.caption = 'Edit user id'
@@ -84,7 +86,9 @@ class User_Id:
                         pygame.quit()
                     else:
                         self.userid_input.update('*')
-                        print("This user id already")
+                        self.message = False
+                        self.message2 = True
+                        print("This user id is already")
             else:
                 if not services.selectpersonbyid(self.userid_value)[0]:
                     views.user_data.user_data['user_id'] = self.userid_value
@@ -92,8 +96,12 @@ class User_Id:
                     pygame.quit()
                 else:
                     self.userid_input.update('*')
-                    print("This user id already")
+                    self.message = False
+                    self.message2 = True
+                    print("This user id is already")
         else:
+            self.message2 = False
+            self.message = True
             print("Please enter user id")
 
     def cancel_click(self):
@@ -131,6 +139,15 @@ class User_Id:
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
+                        if self.editstage:
+                            elements.Header_Table("  •  Please edit user id.", 1, 5, app=(self.screen)).draw()
+                            elements.Header_Table("  •  If you don't want to edit, Please press next.", 1, 6, app=(self.screen)).draw()
+                        else:
+                            elements.Header_Table('  •  Please enter user id.', 1, 5, app=(self.screen)).draw()
+                        if self.message:
+                            elements.Output_Message("  •  Please enter user id.", 1, 10, app=(self.screen)).draw()
+                        if self.message2:
+                            elements.Output_Message("  •  This user id is already.", 1, 10, app=(self.screen)).draw()
                         self.userid_input.draw()                  
                     """Initialize Numpad."""
                     if row >= 4 and row <= 7 and column >= 8 and column <= 10:

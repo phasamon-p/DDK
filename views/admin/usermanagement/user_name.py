@@ -24,6 +24,7 @@ class User_Name:
         self.previous_button = False # Set default avtivation status of previous button
         self.index = 0 # Set default index value of listview page
         self.product_data = ""
+        self.message = False
         self.editstage = editstage
         if self.editstage:
             self.caption = 'Edit user name'
@@ -83,6 +84,7 @@ class User_Name:
                 views.User_Lname(False).run()
                 pygame.quit()
         else:
+            self.message = True
             print("Please enter user name")
 
     def cancel_click(self):
@@ -117,6 +119,13 @@ class User_Name:
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
+                        if self.editstage:
+                            elements.Header_Table("  •  Please edit user name.", 1, 5, app=(self.screen)).draw()
+                            elements.Header_Table("  •  If you don't want to edit, Please press next.", 1, 6, app=(self.screen)).draw()
+                        else:
+                            elements.Header_Table('  •  Please enter user name.', 1, 5, app=(self.screen)).draw()
+                        if self.message:
+                            elements.Output_Message("  •  Please enter user name.", 1, 10, app=(self.screen)).draw()
                         self.username_input.draw()                  
                     """Initialize Button."""
                     if row == 4 and column == 8:

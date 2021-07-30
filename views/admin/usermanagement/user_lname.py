@@ -20,6 +20,7 @@ class User_Lname:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
+        self.message = False
         self.next_button = False # Set default avtivation status of next button
         self.previous_button = False # Set default avtivation status of previous button
         self.index = 0 # Set default index value of listview page
@@ -83,6 +84,7 @@ class User_Lname:
                 views.User_Department(False).run()
                 pygame.quit()
         else:
+            self.message = True
             print("Please enter user lastname")
 
     def cancel_click(self):
@@ -117,6 +119,13 @@ class User_Lname:
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
+                        if self.editstage:
+                            elements.Header_Table("  •  Please edit user last name.", 1, 5, app=(self.screen)).draw()
+                            elements.Header_Table("  •  If you don't want to edit, Please press next.", 1, 6, app=(self.screen)).draw()
+                        else:
+                            elements.Header_Table('  •  Please enter user last name.', 1, 5, app=(self.screen)).draw()
+                        if self.message:
+                            elements.Output_Message("  •  Please enter user last name.", 1, 10, app=(self.screen)).draw()
                         self.userlastname_input.draw()                  
                     """Initialize Button."""
                     if row == 4 and column == 8:

@@ -143,6 +143,12 @@ class Product_Section:
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
+    def selectsection_check(self):
+        for x in range(len(self.section_value)):
+            if self.section_value[x]:
+                return True
+        return False
+
     def next_click(self):
         if self.section_button[0]:
             self.section_value[0] = 'AS1'
@@ -156,14 +162,17 @@ class Product_Section:
             self.section_value[4] = 'PR'
 
         if self.section_value != '':
-            if self.editstage:
-                views.product_data.product_data['section'] = self.section_value
-                views.Product_Qrcode(True).run()
-                pygame.quit()
+            if self.selectsection_check():
+                if self.editstage:
+                    views.product_data.product_data['section'] = self.section_value
+                    views.Product_Qrcode(True).run()
+                    pygame.quit()
+                else:
+                    views.product_data.product_data['section'] = self.section_value
+                    views.Product_Qrcode(False).run()
+                    pygame.quit()
             else:
-                views.product_data.product_data['section'] = self.section_value
-                views.Product_Qrcode(False).run()
-                pygame.quit()
+                print("Please select product section")
         else:
             print("Please select product section")
 

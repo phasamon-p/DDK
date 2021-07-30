@@ -20,6 +20,7 @@ class Drawing_Number:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
+        self.message = False # Set default status of message output
         self.next_button = False # Set default avtivation status of next button
         self.previous_button = False # Set default avtivation status of previous button
         self.editstage = editstage
@@ -110,6 +111,13 @@ class Drawing_Number:
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
+                        if self.editstage:
+                            elements.Header_Table("  •  Please edit drawing number.", 1, 5, app=(self.screen)).draw()
+                            elements.Header_Table("  •  If you don't want to edit, Please press next.", 1, 6, app=(self.screen)).draw()
+                        else:
+                            elements.Header_Table('  •  Please enter drawing number.', 1, 5, app=(self.screen)).draw()
+                            elements.Header_Table("  •  If you don't want to enter drawing number.", 1, 6, app=(self.screen)).draw()
+                            elements.Header_Table("     •  Please press next.", 1, 7, app=(self.screen)).draw()
                         self.drawing_input.draw()                  
                     """Initialize Numpad."""
                     if row >= 4 and row <= 7 and column >= 8 and column <= 10:

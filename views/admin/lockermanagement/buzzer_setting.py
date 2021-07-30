@@ -21,6 +21,8 @@ class Buzzer_Setting:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
+        self.message = False # Set default status of output message1
+        self.message2 = False # Set default status of output message2
         self.caption = 'Buzzer setting'
         self.title = 'BUZZER SETTING'
 
@@ -65,11 +67,18 @@ class Buzzer_Setting:
 
     def next_click(self):
         if self.buzzer_value != '':
-            services.updatebuzzer(int(self.buzzer_value))
-            views.Locker_Management().run()
-            pygame.quit()
+            if int(self.buzzer_value) > 0:
+                services.updatebuzzer(int(self.buzzer_value))
+                views.Locker_Management().run()
+                pygame.quit()
+            else:
+                self.message = False
+                self.message2 = True
+                print("Please enter number more than 0")
         else:
-            print("Please enter buzzer time")
+            self.message2 = False
+            self.message = True
+            print("Please enter buzzer timer")
 
     def cancel_click(self):
         views.Locker_Management().run()
@@ -98,6 +107,13 @@ class Buzzer_Setting:
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
+                        elements.Header_Table("  •  Please edit buzzer timer.", 1, 5, app=(self.screen)).draw()
+                        elements.Header_Table("  •  If you don't want to edit.", 1, 6, app=(self.screen)).draw()
+                        elements.Header_Table("     •  Please press next or cancel.", 1, 7, app=(self.screen)).draw()
+                        if self.message:
+                            elements.Output_Message("  •  Please enter buzzer timer.", 1, 10, app=(self.screen)).draw()
+                        if self.message2:
+                            elements.Output_Message("  •  Please enter number more than 0.", 1, 10, app=(self.screen)).draw()
                         self.buzzer_input.draw()                  
                     """Initialize Numpad."""
                     if row >= 4 and row <= 7 and column >= 8 and column <= 10:

@@ -123,6 +123,13 @@ class Other:
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
+                        if self.editstage:
+                            elements.Header_Table("  •  Please edit product other (description).", 1, 5, app=(self.screen)).draw()
+                            elements.Header_Table("  •  If you don't want to edit, Please press next.", 1, 6, app=(self.screen)).draw()
+                        else:
+                            elements.Header_Table('  •  Please enter product other (description).', 1, 5, app=(self.screen)).draw()
+                            elements.Header_Table("  •  If you don't want to enter product other.", 1, 6, app=(self.screen)).draw()
+                            elements.Header_Table("     •  Please press next.", 1, 7, app=(self.screen)).draw()
                         self.other_input.draw()                  
                     """Initialize Button."""
                     if row == 4 and column == 8:

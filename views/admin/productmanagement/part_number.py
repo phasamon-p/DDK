@@ -21,7 +21,7 @@ class Part_Number:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
-        self.next_button = False # Set default avtivation status of next button
+        self.message = False # Set default status of message output
         self.previous_button = False # Set default avtivation status of previous button
         self.index = 0 # Set default index value of listview page
         self.editstage = editstage
@@ -80,6 +80,7 @@ class Part_Number:
                 views.Part_Name(False).run()
                 pygame.quit()
         else:
+            self.message = True
             print("Please enter part number")
 
     def cancel_click(self):
@@ -115,6 +116,13 @@ class Part_Number:
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
+                        if self.editstage:
+                            elements.Header_Table("  •  Please edit part number.", 1, 5, app=(self.screen)).draw()
+                            elements.Header_Table("  •  If you don't want to edit, Please press next.", 1, 6, app=(self.screen)).draw()
+                        else:
+                            elements.Header_Table('  •  Please enter part number.', 1, 5, app=(self.screen)).draw()
+                        if self.message:
+                            elements.Output_Message("  •  Please enter part number.", 1, 10, app=(self.screen)).draw()
                         self.partnumber_input.draw()                  
                     """Initialize Numpad."""
                     if row >= 4 and row <= 7 and column >= 8 and column <= 10:

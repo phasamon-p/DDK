@@ -21,6 +21,7 @@ class Inventory_Edit:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
+        self.message = False # Set default status of message output
         self.editstage = editstage
         if self.editstage:
             self.caption = 'Edit product quantity'
@@ -76,6 +77,7 @@ class Inventory_Edit:
             else:
                 print("Can not update inventory")
         else:
+            self.message = True
             print("Please enter product quantity")
 
     def cancel_click(self):
@@ -112,6 +114,11 @@ class Inventory_Edit:
                         elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
+                        elements.Header_Table("  •  Please edit or update product quantiy.", 1, 5, app=(self.screen)).draw()
+                        elements.Header_Table("  •  If you don't want to edit or update.", 1, 6, app=(self.screen)).draw()
+                        elements.Header_Table("     •  Please press next or cancel.", 1, 7, app=(self.screen)).draw()
+                        if self.message:
+                            elements.Output_Message("  •  Please enter product quantity.", 1, 10, app=(self.screen)).draw()
                         self.quantity_input.draw()                  
                     """Initialize Numpad."""
                     if row >= 4 and row <= 7 and column >= 8 and column <= 10:
