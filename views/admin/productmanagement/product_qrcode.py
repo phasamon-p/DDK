@@ -71,12 +71,13 @@ class Product_Qrcode:
             if self.editstage:
                 if not services.qrcode_check(self.qrcode_value):
                     views.product_data.product_data['qrcode'] = self.qrcode_value
-                    views.Item_Number(True).run()
+                    views.Product_Name(True).run()
                     pygame.quit()
                 else:
                     if self.qrcode_value == views.product_data.old_qrcode:
                         views.product_data.product_data['qrcode'] = self.qrcode_value
-                        views.Item_Number(True).run()
+                        views.product_data.product_data['item_number'] = self.qrcode_value.replace("\r", "")
+                        views.Product_Name(True).run()
                         pygame.quit()
                     else:
                         self.qrcode_input.update('*')
@@ -84,7 +85,8 @@ class Product_Qrcode:
             else:
                 if not services.qrcode_check(self.qrcode_value):
                     views.product_data.product_data['qrcode'] = self.qrcode_value
-                    views.Item_Number(False).run()
+                    views.product_data.product_data['item_number'] = self.qrcode_value.replace("\r", "")
+                    views.Product_Name(False).run()
                     pygame.quit()
                 else:
                     self.qrcode_input.update('*')
@@ -98,6 +100,7 @@ class Product_Qrcode:
             pygame.quit() 
         else:
             views.product_data.product_data['qrcode'] = ''
+            views.product_data.product_data['item_number'] = ''
             views.Product_Section(False).run()
             pygame.quit()
 

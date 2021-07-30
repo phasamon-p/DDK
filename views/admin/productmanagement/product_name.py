@@ -86,11 +86,11 @@ class Product_Name:
 
     def cancel_click(self):
         if self.editstage:
-            views.Item_Number(True).run()
+            views.Product_Qrcode(True).run()
             pygame.quit()
         else:
             views.product_data.product_data['product_name'] = ''
-            views.Item_Number(False).run()
+            views.Product_Qrcode(False).run()
             pygame.quit()
 
     def run(self):
