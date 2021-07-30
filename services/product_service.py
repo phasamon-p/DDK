@@ -379,15 +379,10 @@ def selectproductbysearch(search): ##
     print(str(search))
     try:
         connection = mysqlconnect()
-        sql_select_Query = "SELECT * FROM products WHERE section = %s " \
-                           "OR qr_code = %s " \
-                           "OR item_no = %s " \
-                           "OR product_name = %s " \
-                           "OR part_no = %s " \
-                           "OR part_name = %s " \
-                           "OR drawing_no = %s"
+        sql_select_Query = "SELECT * FROM products WHERE qr_code = %s " 
+        
         cursor = connection.cursor()
-        cursor.execute(sql_select_Query, (search,search,search,search,search,search,search,))
+        cursor.execute(sql_select_Query, (search,))
         # get all records
         records = cursor.fetchall()
         rowcount = cursor.rowcount
@@ -419,6 +414,37 @@ def selectproductbysearch_2(search): ##
                            "OR drawing_no = %s"
         cursor = connection.cursor()
         cursor.execute(sql_select_Query, (search,search,search,search,search,search,search,))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+        print("Total number of rows in table: ", cursor.rowcount)
+
+        if cursor.rowcount:
+            return records
+        else:
+            return False
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+def selectproductbysearch_like(search): ##
+    print(str(search))
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM products WHERE section LIKE %s " \
+                           "OR qr_code LIKE %s " \
+                           "OR item_no LIKE %s " \
+                           "OR product_name LIKE %s " \
+                           "OR part_no LIKE %s " \
+                           "OR part_name LIKE %s " \
+                           "OR drawing_no LIKE %s"
+        cursor = connection.cursor()
+        cursor.execute(sql_select_Query, ("%" + search + "%","%" + search + "%","%" + search + "%","%" + search + "%","%" + search + "%","%" + search + "%","%" + search + "%",))
         # get all records
         records = cursor.fetchall()
         rowcount = cursor.rowcount

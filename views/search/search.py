@@ -9,18 +9,6 @@ import services
 import views
 import data_example
 
-class product_list():
-    section = ""
-    qrcode = ""
-    item_number = ""
-    product_name = ""
-    part_number = ""
-    part_name = ""
-    drawing_number = ""
-    locker_number = ""
-    quantity = ""
-    other = ""
-
 class Search:
     """Create a single-window app with multiple scenes."""
 
@@ -35,7 +23,6 @@ class Search:
         self.previous_button = False # Set default avtivation status of previous button
         self.index = 0 # Set default index value of listview page
         self.product_data = views.search_data.request_list
-        self.product_list = product_list()
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -83,36 +70,25 @@ class Search:
         if (column_click, row_click) in self.click:
             exec(self.click[column_click, row_click])
 
-    def reset(self):
-        self.product_list.section = ""
-        self.product_list.qrcode = ""
-        self.product_list.item_number = ""
-        self.product_list.product_name = ""
-        self.product_list.part_number = ""
-        self.product_list.part_name = ""
-        self.product_list.drawing_number = ""
-        self.product_list.locker_number = ""
-        self.product_list.quantity = ""
-        self.product_list.other = ""
-
     def search_click(self):
         views.search_data.list_reset()
         if self.search_value != '':
-            self.data = services.selectproductbysearch_2(self.search_value.replace("\r", ""))
+            self.data = services.selectproductbysearch_like(self.search_value.replace("\r", ""))
             if self.data:
                 for x in range(len(self.data)):
-                    self.reset()
-                    self.product_list.section = self.data[x][1]
-                    self.product_list.qrcode = self.data[x][2]
-                    self.product_list.item_number = self.data[x][3]
-                    self.product_list.product_name = self.data[x][4]
-                    self.product_list.part_number = self.data[x][5]
-                    self.product_list.part_name = self.data[x][6]
-                    self.product_list.drawing_number = self.data[x][7]
-                    self.product_list.locker_number = services.getproductlocker_string(self.data[x][2])
-                    self.product_list.quantity = str(self.data[x][9])
-                    self.product_list.other = self.data[x][10]
-                    views.search_data.list_add(self.product_list)
+                    self.information = []
+                    self.information.append(self.data[x][1])
+                    self.information.append(self.data[x][2])
+                    self.information.append(self.data[x][3])
+                    self.information.append(self.data[x][4])
+                    self.information.append(self.data[x][5])
+                    self.information.append(self.data[x][6])
+                    self.information.append(self.data[x][7])
+                    self.information.append(services.getproductlocker_string(self.data[x][2]))
+                    self.information.append(self.data[x][9])
+                    self.information.append(self.data[x][10])
+                    print("informatyion:", self.information)
+                    views.search_data.list_add(self.information)
                 self.search_input.update('*')
             else:
                 views.search_data.list_reset()
@@ -122,18 +98,19 @@ class Search:
             self.data = services.selectproduct()
             if self.data:
                 for x in range(len(self.data)):
-                    self.reset()
-                    self.product_list.section = self.data[x][1]
-                    self.product_list.qrcode = self.data[x][2]
-                    self.product_list.item_number = self.data[x][3]
-                    self.product_list.product_name = self.data[x][4]
-                    self.product_list.part_number = self.data[x][5]
-                    self.product_list.part_name = self.data[x][6]
-                    self.product_list.drawing_number = self.data[x][7]
-                    self.product_list.locker_number = services.getproductlocker_string(self.data[x][2])
-                    self.product_list.quantity = str(self.data[x][9])
-                    self.product_list.other = self.data[x][10]
-                    views.search_data.list_add(self.product_list)
+                    self.information = []
+                    self.information.append(self.data[x][1])
+                    self.information.append(self.data[x][2])
+                    self.information.append(self.data[x][3])
+                    self.information.append(self.data[x][4])
+                    self.information.append(self.data[x][5])
+                    self.information.append(self.data[x][6])
+                    self.information.append(self.data[x][7])
+                    self.information.append(services.getproductlocker_string(self.data[x][2]))
+                    self.information.append(self.data[x][9])
+                    self.information.append(self.data[x][10])
+                    print("informatyion:", self.information)
+                    views.search_data.list_add(self.information)
                 self.search_input.update('*')
             else:
                 views.search_data.list_reset()
