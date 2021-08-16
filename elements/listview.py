@@ -66,9 +66,69 @@ class Search_Listview:
             self.quantity_rect[x + self.index] = self.quantity[x + self.index].get_rect()
             self.quantity_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
-            self.locker_number[x + self.index] = self.font.render(str(self.data[x + self.index][7]), True, self.color)
+            self.locker_number[x + self.index] = self.font.render(self.string_locker(self.data[x + self.index][7]) + str(self.data[x + self.index][10]) + '-' + str(self.data[x + self.index][11]), True, self.color)
             self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
             self.locker_rect[x + self.index].topleft = ((6 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+    def string_locker(self, lockernumber):
+        if config.locker_type > 0:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
+            if int(lockernumber) == 13:
+                return "M"
+            if int(lockernumber) == 14:
+                return "N"
+            if int(lockernumber) == 15:
+                return "O"
+            if int(lockernumber) == 16:
+                return "P"
+        else:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
 
     def draw(self):
         if len(self.data) - self.index >= self.h_row :
@@ -147,9 +207,69 @@ class Productedit_Listview:
             self.quantity_rect[x + self.index] = self.quantity[x + self.index].get_rect()
             self.quantity_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
-            self.locker_number[x + self.index] = self.font.render(self.data[x + self.index].locker_number, True, self.color)
+            self.locker_number[x + self.index] = self.font.render(self.string_locker(self.data[x + self.index].locker_number) + str(self.data[x + self.index].drawer) + '-' + str(self.data[x + self.index].cavity), True, self.color)
             self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
             self.locker_rect[x + self.index].topleft = ((6 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+    def string_locker(self, lockernumber):
+        if config.locker_type > 0:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
+            if int(lockernumber) == 13:
+                return "M"
+            if int(lockernumber) == 14:
+                return "N"
+            if int(lockernumber) == 15:
+                return "O"
+            if int(lockernumber) == 16:
+                return "P"
+        else:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
 
     def draw(self):
         if len(self.data) - self.index > self.h_row :
@@ -228,9 +348,71 @@ class Productadd_Listview:
             self.quantity_rect[x + self.index] = self.quantity[x + self.index].get_rect()
             self.quantity_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
-            self.locker_number[x + self.index] = self.font.render(str(self.data[x + self.index].locker_number), True, self.color)
+
+            self.locker_number[x + self.index] = self.font.render(self.string_locker(self.data[x + self.index].locker_number) + str(self.data[x + self.index].drawer) + '-' + str(self.data[x + self.index].cavity), True, self.color)
             self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
             self.locker_rect[x + self.index].topleft = ((6 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+    def string_locker(self, lockernumber):
+        if config.locker_type > 0:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
+            if int(lockernumber) == 13:
+                return "M"
+            if int(lockernumber) == 14:
+                return "N"
+            if int(lockernumber) == 15:
+                return "O"
+            if int(lockernumber) == 16:
+                return "P"
+        else:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
+            
 
     def draw(self):
         if len(self.data) - self.index > self.h_row :
@@ -401,9 +583,69 @@ class Request_Listview:
             self.quantity_rect[x + self.index] = self.quantity[x + self.index].get_rect()
             self.quantity_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
-            self.locker_number[x + self.index] = self.font.render(str(self.data[x + self.index].locker_number), True, self.color)
+            self.locker_number[x + self.index] = self.font.render(self.string_locker(self.data[x + self.index].locker_number) + str(self.data[x + self.index].drawer) + '-' + str(self.data[x + self.index].cavity), True, self.color)
             self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
             self.locker_rect[x + self.index].topleft = ((6 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+    def string_locker(self, lockernumber):
+        if config.locker_type > 0:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
+            if int(lockernumber) == 13:
+                return "M"
+            if int(lockernumber) == 14:
+                return "N"
+            if int(lockernumber) == 15:
+                return "O"
+            if int(lockernumber) == 16:
+                return "P"
+        else:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
 
     def draw(self):
         if len(self.data) - self.index > self.h_row :
@@ -500,11 +742,71 @@ class Request_Check_Listview:
             self.quantity_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             if self.check[x + self.index]:
-                self.locker_number[x + self.index] = self.font2.render(self.data[x + self.index].locker_number, True, config.blue)
+                self.locker_number[x + self.index] = self.font2.render(self.string_locker(self.data[x + self.index].locker_number) + str(self.data[x + self.index].drawer) + '-' + str(self.data[x + self.index].cavity), True, config.blue)
             else:
-                self.locker_number[x + self.index] = self.font.render(self.data[x + self.index].locker_number, True, self.color)
+                self.locker_number[x + self.index] = self.font.render(self.string_locker(self.data[x + self.index].locker_number) + str(self.data[x + self.index].drawer) + '-' + str(self.data[x + self.index].cavity), True, self.color)
             self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
             self.locker_rect[x + self.index].topleft = ((6 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+    def string_locker(self, lockernumber):
+        if config.locker_type > 0:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
+            if int(lockernumber) == 13:
+                return "M"
+            if int(lockernumber) == 14:
+                return "N"
+            if int(lockernumber) == 15:
+                return "O"
+            if int(lockernumber) == 16:
+                return "P"
+        else:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
 
     def draw(self):
         if len(self.data) - self.index > self.h_row :

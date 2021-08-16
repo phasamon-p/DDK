@@ -20,6 +20,8 @@ class product_list():
     locker_number = ""
     quantity = ""
     other = ""
+    drawer = ""
+    cavity = ""
 
 class product_edit():
     section = ""
@@ -32,6 +34,8 @@ class product_edit():
     locker_number = ""
     quantity = ""
     other = ""
+    drawer = ""
+    cavity = ""
 
 class Product_Edit:
     """Create a single-window app with multiple scenes."""
@@ -107,7 +111,9 @@ class Product_Edit:
 
     def search_click(self):
         self.data = services.selectproductbysearch(self.search_value.replace("\r", ""))
+        print("data", self.data)
         if self.data[0]:
+            self.drawers = services.getproduct_drawer(self.data[1][0][0][2])
             self.product_list.section = self.data[1][0][0][1]
             self.product_list.qrcode = self.data[1][0][0][2]
             self.product_list.item_number = self.data[1][0][0][3]
@@ -118,10 +124,13 @@ class Product_Edit:
             self.product_list.locker_number = services.getproductlocker_string(self.data[1][0][0][2])
             self.product_list.quantity = str(self.data[1][0][0][9])
             self.product_list.other = self.data[1][0][0][10]
+            self.product_list.drawer = self.drawers[3] 
+            self.product_list.cavity = self.drawers[4] 
             views.product_data.list_reset()
             views.product_data.list_add(self.product_list)
             views.product_data.old_qrcode = self.data[1][0][0][2]
         else:
+            self.search_input.update("*")
             views.product_data.productdata_reset()
             views.product_data.list_reset()
             print("don't have product")
@@ -162,6 +171,7 @@ class Product_Edit:
     
     def setdata(self):
         if self.data[0]:
+            self.drawers = services.getproduct_drawer(self.data[1][0][0][2])
             self.product_edit.section = services.getsection_bool(self.data[1][0][0][2])
             self.product_edit.qrcode = self.data[1][0][0][2]
             self.product_edit.item_number = self.data[1][0][0][3]
@@ -172,13 +182,14 @@ class Product_Edit:
             self.product_edit.locker_number = services.getproductlocker_byqrcode_bool(self.data[1][0][0][2])
             self.product_edit.quantity = str(self.data[1][0][0][9])
             self.product_edit.other = self.data[1][0][0][10]
+            self.product_edit.drawer = self.drawers[3] 
+            self.product_edit.cavity = self.drawers[4] 
         views.product_data.productdata_setedit(self.product_edit)
 
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption('Product search' + config.VERSION)
         self.search_input = elements.Product_Search(1, 3, 7, 1, app = (self.screen), active = True, numpad_active = True)
-
         """Run the main event loop."""
         while self.running:
             self.number = 1

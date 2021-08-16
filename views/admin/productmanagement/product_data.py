@@ -1,6 +1,9 @@
 import pygame
 from pygame.locals import *
 
+# Set Valiable of activattion input box
+inbox_active = [False, False]
+
 # Valiable and function of request product
 request_list = []
 old_qrcode = ''
@@ -23,7 +26,9 @@ product_data = {    'section' : [False, False, False, False, False],
                     'drawing_number' : "",
                     'locker_number' : [False, False, False, False, False, False, False, False, False, False, False, False],
                     'quantity' : "",
-                    'other' : ""}
+                    'other' : "",
+                    'drawer' : "",
+                    'cavity' : ""}
 
 def add(object):
     product_data.append(object)
@@ -66,6 +71,8 @@ def productdata_reset():
     product_data['locker_number'] = [False, False, False, False, False, False, False, False, False, False, False, False]
     product_data['quantity'] = ''
     product_data['other'] = ''
+    product_data['drawer'] = ''
+    product_data['cavity'] = ''
 
 def productdata_setedit(data):
  
@@ -79,5 +86,8 @@ def productdata_setedit(data):
     product_data['locker_number'] =  data.locker_number
     product_data['quantity'] =  data.quantity
     product_data['other'] =  data.other
+    product_data['drawer'] = data.drawer
+    product_data['cavity'] = data.cavity
+    
     old_qrcode = data.qrcode
 

@@ -122,6 +122,31 @@ def getproductlocker2(qrcode):
             connection.close()
             print("MySQL connection is closed")
 
+def getproduct_drawer(qrcode):
+    try:
+        connection = mysqlconnect()
+        sql_select_Query = "SELECT * FROM products_lockers WHERE pl_products = %s "
+        cursor = connection.cursor()
+        print(qrcode.replace("\r", ""))
+        cursor.execute(sql_select_Query, (qrcode.replace("\r", ""),))
+        # get all records
+        records = cursor.fetchall()
+        rowcount = cursor.rowcount
+        if cursor.rowcount:
+            return records[0]
+        else:
+            return False
+
+    except mysql.connector.Error as error:
+        print("Failed e record: ", error)
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
 def getproductlocker_string(qrcode):
     try:
         connection = mysqlconnect()
@@ -273,18 +298,27 @@ def getproductlocker_byqrcode_bool(barcode):
             connection.close()
             print("MySQL connection is closed")
 
-def insertproductlocker(qrcode, permission):
+def insertproductlocker(qrcode, permission, drawer, cavity):
     try:
-        print("permission:", permission)
+        # print("permission:", permission)
+        # print("drawer:", drawer)
+        # print("cavity:", cavity)
         connection = mysqlconnect()
         cursor = connection.cursor()
         for x in range(len(permission)):
 #             print("lengh of ml_locker :", len(permission))
             if permission[x]:
                 if not getproductlockerbylocker(qrcode.replace("\r", ""), x + 1):
-                    mySql_insert_query = """INSERT INTO products_lockers (pl_products, pl_locker, status) VALUES ( %s, %s, %s) """
-                    record = (qrcode.replace("\r", ""), x + 1, 1)
+                    mySql_insert_query = """INSERT INTO products_lockers (pl_products, pl_locker, pl_drawer, pl_cavity, status) VALUES ( %s, %s, %s, %s, %s) """
+                    record = (qrcode.replace("\r", ""), x + 1, int(drawer), int(cavity), 1)
                     cursor.execute(mySql_insert_query, record)
+                    connection.commit()
+                else:
+                    print("update")
+                    sql_Update_Query = "UPDATE products_lockers set pl_products = %s, pl_locker = %s , pl_drawer = %s, pl_cavity = %s, status = %s where pl_products = %s and pl_locker = %s"
+                    # mySql_insert_query = """INSERT INTO products_lockers (pl_products, pl_locker, pl_drawer, pl_cavity, status) VALUES ( %s, %s, %s, %s, %s) """
+                    record = (qrcode.replace("\r", ""), x + 1, int(drawer), int(cavity), 1, qrcode.replace("\r", ""), x + 1)
+                    cursor.execute(sql_Update_Query, record)
                     connection.commit()
 #                     print("Insert ml_locker : ", record)
             else:

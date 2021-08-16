@@ -20,6 +20,9 @@ class Product_Locker:
         self.editstage = editstage
         self.locker_button = [False, False, False, False, False, False, False, False, False, False, False, False]
         self.productlocker_value = [False, False, False, False, False, False, False, False, False, False, False, False]
+        self.locker_one = ["A", "B", "C", "D", "E"]
+        self.locker_two = ["F", "G", "H", "I", "J"]
+        self.locker_three = ["K", "L"]
         self.first_check()
 
         if self.editstage:
@@ -152,11 +155,11 @@ class Product_Locker:
         if self.productlocker_value != '':
             if self.editstage:
                 views.product_data.product_data['locker_number'] = self.productlocker_value
-                views.Quantity(True).run()
+                views.Product_Drawer(True).run()
                 pygame.quit()
             else:
                 views.product_data.product_data['locker_number'] = self.productlocker_value
-                views.Quantity(False).run()
+                views.Product_Drawer(False).run()
                 pygame.quit()
         else:
             print("Please select product locker")
@@ -190,7 +193,7 @@ class Product_Locker:
                     x = (config.margin + config.bwidth) * column + config.margin
                     position = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1), (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
                     position2 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 50, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 25)
-                    position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 40, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 25)
+                    position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 50, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 25)
                     position4 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 150, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
                     if row == 0 and column == 0:
                         elements.Title(self.title, pos=(230, 67), app=(self.screen)).draw()  
@@ -201,30 +204,34 @@ class Product_Locker:
                                 elements.Button(self.screen, config.green, x, y, config.bwidth + 107, config.bheight + 67).Rect()
                             else:
                                 elements.Button(self.screen, config.blue, x, y, config.bwidth + 107, config.bheight + 67).Rect()
-                            if (index + 1) > 9:
-                                elements.Text_Button_Medium(str(index + 1), position3, app=(self.screen)).draw()
-                            else:
-                                elements.Text_Button_Medium(str(index + 1), position2, app=(self.screen)).draw()
+                            elements.Text_Button_Medium(self.locker_one[index], position3, app=(self.screen)).draw()
+                            
+                            # if (index + 1) > 9:
+                            #     elements.Text_Button_Medium(str(index + 1), position3, app=(self.screen)).draw()
+                            # else:
+                            #     elements.Text_Button_Medium(str(index + 1), position2, app=(self.screen)).draw()
                     for index in range(5):
                         if row == 5 and column == index + (index + 1):
                             if self.locker_button[index + 5]:
                                 elements.Button(self.screen, config.green, x, y, config.bwidth + 107, config.bheight + 67).Rect()
                             else:
                                 elements.Button(self.screen, config.blue, x, y, config.bwidth + 107, config.bheight + 67).Rect()
-                            if (index + 6) > 9:
-                                elements.Text_Button_Medium(str(index + 6), position3, app=(self.screen)).draw()
-                            else:
-                                elements.Text_Button_Medium(str(index + 6), position2, app=(self.screen)).draw()
+                            elements.Text_Button_Medium(self.locker_two[index], position3, app=(self.screen)).draw()
+                            # if (index + 6) > 9:
+                            #     elements.Text_Button_Medium(str(index + 6), position3, app=(self.screen)).draw()
+                            # else:
+                            #     elements.Text_Button_Medium(str(index + 6), position2, app=(self.screen)).draw()
                     for index in range(2):
                         if row == 7 and column == index + (index + 4):
                             if self.locker_button[index + 10]:
                                 elements.Button(self.screen, config.green, x, y, config.bwidth + 107, config.bheight + 67).Rect()
                             else:
                                 elements.Button(self.screen, config.blue, x, y, config.bwidth + 107, config.bheight + 67).Rect()
-                            if (index + 11) > 9:
-                                elements.Text_Button_Medium(str(index + 11), position3, app=(self.screen)).draw()
-                            else:
-                                elements.Text_Button_Medium(str(index + 11), position2, app=(self.screen)).draw()
+                            elements.Text_Button_Medium(self.locker_three[index], position3, app=(self.screen)).draw()
+                            # if (index + 11) > 9:
+                            #     elements.Text_Button_Medium(str(index + 11), position3, app=(self.screen)).draw()
+                            # else:
+                            #     elements.Text_Button_Medium(str(index + 11), position2, app=(self.screen)).draw()
                     if row == 9 and column == 1:
                         elements.Button(self.screen, config.red, x, y, config.bwidth + 428, config.bheight + 67).Rect()
                         elements.Text_Button_Medium('CANCEL', position4, app=(self.screen)).draw()

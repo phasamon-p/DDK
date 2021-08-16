@@ -38,7 +38,7 @@ pygame.display.init()  # Initialize the display module
 pygame.display.get_surface()
 # screensize = width, height = (pygame.display.Info().current_w, pygame.display.Info().current_h) 
 screensize = width, height = (1280,800) 
-flags = FULLSCREEN
+flags = RESIZABLE
 
 time_extention = 0
 door_status = False

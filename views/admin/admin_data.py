@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
 
+adminlog_id = ''
+
 admin_data = {   'admin_id' : "",
                 'admin_name' : "",
                 'admin_lname' : "",

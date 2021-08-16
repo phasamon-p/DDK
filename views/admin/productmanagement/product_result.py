@@ -103,7 +103,7 @@ class Product_Result:
         if self.editstage:
             self.set_data()
             services.updateproductbyid(views.product_data.old_qrcode, self.product_data)
-            services.insertproductlocker(self.product_data[1], self.product_data[7]) #insert product locker
+            services.insertproductlocker(self.product_data[1], self.product_data[7], self.product_data[10], self.product_data[11]) #insert product locker
             views.product_data.productdata_reset()
             views.product_data.list_reset()
             views.Product_Management().run()
@@ -111,7 +111,7 @@ class Product_Result:
         else:
             self.set_data()
             services.insertproduct(self.product_data) # Insert nmew product
-            services.insertproductlocker(self.product_data[1], self.product_data[7]) #insert product locker
+            services.insertproductlocker(self.product_data[1], self.product_data[7], self.product_data[10], self.product_data[11]) #insert product locker
             views.product_data.productdata_reset()
             views.product_data.list_reset()
             views.Product_Management().run()
@@ -137,7 +137,69 @@ class Product_Result:
         self.product_data.append(views.product_data.product_data['locker_number'])
         self.product_data.append(views.product_data.product_data['quantity'])
         self.product_data.append(views.product_data.product_data['other'])
+        self.product_data.append(views.product_data.product_data['drawer'])
+        self.product_data.append(views.product_data.product_data['cavity'])
         return self.product_data 
+
+    def string_locker(self, lockernumber):
+        if config.locker_type > 0:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
+            if int(lockernumber) == 13:
+                return "M"
+            if int(lockernumber) == 14:
+                return "N"
+            if int(lockernumber) == 15:
+                return "O"
+            if int(lockernumber) == 16:
+                return "P"
+        else:
+            if int(lockernumber) == 1:
+                return "A"
+            if int(lockernumber) == 2:
+                return "B"
+            if int(lockernumber) == 3:
+                return "C"
+            if int(lockernumber) == 4:
+                return "D"
+            if int(lockernumber) == 5:
+                return "E"
+            if int(lockernumber) == 6:
+                return "F"
+            if int(lockernumber) == 7:
+                return "G"
+            if int(lockernumber) == 8:
+                return "H"
+            if int(lockernumber) == 9:
+                return "I"
+            if int(lockernumber) == 10:
+                return "J"
+            if int(lockernumber) == 11:
+                return "K"
+            if int(lockernumber) == 12:
+                return "L"
 
     def run(self):
         """Initialize Caption and Valiable."""
@@ -177,12 +239,16 @@ class Product_Result:
                             elements.Header_Table(views.product_data.product_data['drawing_number'], 4, 10, app=(self.screen)).draw()
                         else:
                             elements.Header_Result('  Product locker : ', 1, 4, app=(self.screen)).draw()
-                            elements.Header_Result('  Product quantity : ', 1, 5, app=(self.screen)).draw()
-                            elements.Header_Result('  Product other : ', 1, 6, app=(self.screen)).draw()
+                            elements.Header_Result('  Product drawer : ', 1, 5, app=(self.screen)).draw()
+                            elements.Header_Result('  Product cavity : ', 1, 6, app=(self.screen)).draw()
+                            elements.Header_Result('  Product quantity : ', 1, 7, app=(self.screen)).draw()
+                            elements.Header_Result('  Product other : ', 1, 8, app=(self.screen)).draw()
                             # User information
                             elements.Header_Table(views.product_data.lengh_lockeraccess(), 4, 4, app=(self.screen)).draw()
-                            elements.Header_Table(views.product_data.product_data['quantity'], 4, 5, app=(self.screen)).draw()
-                            elements.Header_Table(views.product_data.product_data['other'], 4, 6, app=(self.screen)).draw()
+                            elements.Header_Table(views.product_data.product_data['drawer'], 4, 5, app=(self.screen)).draw()
+                            elements.Header_Table(views.product_data.product_data['cavity'], 4, 6, app=(self.screen)).draw()
+                            elements.Header_Table(views.product_data.product_data['quantity'], 4, 7, app=(self.screen)).draw()
+                            elements.Header_Table(views.product_data.product_data['other'], 4, 8, app=(self.screen)).draw()
                     """Initialize Button."""
                     if row == 4 and column == 8:
                         if self.previous_button:

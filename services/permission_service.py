@@ -89,7 +89,7 @@ def getpermission_byid_bool(id):
         # get all records
         records = cursor.fetchall()
         rowcount = cursor.rowcount
-        print("record", records)
+        # print("record", records)
         if cursor.rowcount:
             if config.locker_type > 0:
                 locker = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]

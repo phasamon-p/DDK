@@ -1,10 +1,11 @@
-from services.product_service import mysqlconnect, insertproduct, getproductlocker, getproductlocker2, getproductlockerbylocker, insertproductlocker, deleteproductlockerbybarcode, selectproduct, selectproductbybarcode, selectproductbysearch, updateproductbyid, deleteproductbyid, getproductlocker_string, getsection_bool, getproductlocker_byqrcode_bool, updatequantity_byqrcode, getquantity_byqrcode, qrcode_check, updateinventory_byqrcode, selectproductbysearch_2, selectproductbysearch_like
+from services.product_service import mysqlconnect, insertproduct, getproductlocker, getproductlocker2, getproductlockerbylocker, insertproductlocker, deleteproductlockerbybarcode, selectproduct, selectproductbybarcode, selectproductbysearch, updateproductbyid, deleteproductbyid, getproductlocker_string, getsection_bool, getproductlocker_byqrcode_bool, updatequantity_byqrcode, getquantity_byqrcode, qrcode_check, updateinventory_byqrcode, selectproductbysearch_2, selectproductbysearch_like, getproduct_drawer
 from services.controller_service import init, uninit, lockertimeout, alarmOff, alarmOn, getStatus, locker_open, locker_close, checkstatus, lockerrequest_open, getAllStatus
 from services.user_service import selectperson, selectpersonbyid, getpersonbyfingerid, getpersoncount, getpersonbyid, insertperson, updatepersonbyid, deletepersonbyid, getdepartmentbyid_bool
 from services.permission_service import getpermission, getpermissionbylocker, checkpermission, insertpermission, deletepermissionbyid, getpermission_byid_string, getpermission_byid_bool
 from services.fingerprint_service import getfingerid, updatefinrgerprint, get_fingerprint, enroll_finger, delete_fingerprint
-from services.log_service import getdate, getlog, getlogbydate, insertlog
 from services.buzzer_service import getbuzzer, updatebuzzer, insertbuzzer
+from services.requestlog_service import get_requestlog, insert_requestlog, update_requestlog_check
+from services.adminlog_service import get_adminlog, insert_adminlog, update_adminlog_logout
 
 __all__ = { 'mysqlconnect',
             'insertproduct', 
@@ -58,4 +59,11 @@ __all__ = { 'mysqlconnect',
             'insertbuzzer',
             'getAllStatus',
             'selectproductbysearch_2',
-            'selectproductbysearch_like'}
+            'selectproductbysearch_like',
+            'get_requestlog',
+            'insert_requestlog',
+            'update_requestlog_check',
+            'get_adminlog',
+            'insert_adminlog',
+            'update_adminlog_logout',
+            'getproduct_drawer'}

@@ -19,6 +19,9 @@ class product_list():
     locker_number = ""
     quantity = ""
     other = ""
+    drawer = ""
+    cavity = ""
+
 class Request_Add:
     """Create a single-window app with multiple scenes."""
     def __init__(self):
@@ -86,6 +89,7 @@ class Request_Add:
                 if self.quantity_value != "":
                     if int(self.quantity_value) <= int(self.product_list.quantity):
                         if int(self.quantity_value) > 0:
+                            self.drawers = services.getproduct_drawer(self.data[1][0][0][2])
                             self.product_list.section = self.data[1][0][0][1]
                             self.product_list.qrcode = self.data[1][0][0][2]
                             self.product_list.item_number = self.data[1][0][0][3]
@@ -96,6 +100,8 @@ class Request_Add:
                             self.product_list.locker_number = services.getproductlocker_string(self.data[1][0][0][2])
                             self.product_list.quantity = str(self.quantity_value)
                             self.product_list.other = self.data[1][0][0][10]
+                            self.product_list.drawer = self.drawers[3] 
+                            self.product_list.cavity = self.drawers[4]
                             views.request_data.list_reset()
                             views.request_data.list_check_add(False)
                             views.request_data.add(self.product_list)
@@ -145,6 +151,7 @@ class Request_Add:
     def search_click(self):
         self.data = services.selectproductbysearch(self.search_value.replace("\r", ""))
         if self.data[0]:
+            self.drawers = services.getproduct_drawer(self.data[1][0][0][2])
             self.product_list.section = self.data[1][0][0][1]
             self.product_list.qrcode = self.data[1][0][0][2]
             self.product_list.item_number = self.data[1][0][0][3]
@@ -155,6 +162,8 @@ class Request_Add:
             self.product_list.locker_number = services.getproductlocker_string(self.data[1][0][0][2])
             self.product_list.quantity = str(self.data[1][0][0][9])
             self.product_list.other = self.data[1][0][0][10]
+            self.product_list.drawer = self.drawers[3] 
+            self.product_list.cavity = self.drawers[4]
             views.request_data.list_reset()
             views.request_data.list_add(self.product_list)
             views.request_data.inbox_active[0] = False # Set default input box activation

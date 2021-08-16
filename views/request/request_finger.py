@@ -92,6 +92,7 @@ class Request_Finger:
             if self.dataaccess:
                 if services.lockerrequest_open(self.dataaccess):
                     services.updatequantity_byqrcode(views.request_data.request_list2)
+                    services.insert_requestlog(views.request_data.requester_data, views.request_data.request_list2)
                     views.Request_Check().run()
                     pygame.quit()
             else:

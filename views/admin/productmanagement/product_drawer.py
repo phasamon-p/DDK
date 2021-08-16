@@ -6,11 +6,12 @@ import os
 import config 
 import elements
 import views
+import services
 import data_example
 
 
 
-class Quantity:
+class Product_Drawer:
     """Create a single-window app with multiple scenes."""
 
     def __init__(self, editstage):
@@ -19,15 +20,18 @@ class Quantity:
         pygame.display.init()  # Initialize the display module
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
-        self.running = True
-        self.message = False # Set default status of message output
+        self.running = True 
+        self.message = False # Set default status of output message1
+        self.message2 = False # Set default status of output message2
+        views.product_data.inbox_active[0] = True # Set default input box activation
+        views.product_data.inbox_active[1] = False # Set default input box activation
         self.editstage = editstage
         if self.editstage:
-            self.caption = 'Edit product quantity'
-            self.title = 'EDIT PRODUCT QUANTITY'
+            self.caption = 'Edit product drawer'
+            self.title = 'EDIT PRODUCT DRAWER'
         else:
-            self.caption = 'Add product quantity'
-            self.title = 'ADD PRODUCT QUANTITY'
+            self.caption = 'Add product drawer'
+            self.title = 'ADD PRODUCT DRAWER'
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -67,38 +71,53 @@ class Quantity:
             exec(self.click[column_click, row_click])
 
     def next_click(self):
-        if self.quantity_value != '':
-            if self.editstage:
-                views.product_data.product_data['quantity'] = self.quantity_value
-                views.Other(True).run()
-                pygame.quit()
+        if self.drawer_value != '':
+            if self.cavity_value  != '':
+                if self.editstage:
+                    views.product_data.product_data['drawer'] = self.drawer_value
+                    views.product_data.product_data['cavity'] = self.cavity_value
+                    views.Quantity(True).run()
+                    pygame.quit()
+
+                else:
+                    views.product_data.product_data['drawer'] = self.drawer_value
+                    views.product_data.product_data['cavity'] = self.cavity_value
+                    views.Quantity(False).run()
+                    pygame.quit()
             else:
-                views.product_data.product_data['quantity'] = self.quantity_value
-                views.Other(False).run()
-                pygame.quit()
+                self.message2 = True
+                self.message = False
+                views.product_data.inbox_active[0] = False
+                views.product_data.inbox_active[1] = True
         else:
+            self.message2 = False
             self.message = True
-            print("Please enter product quantity")
+            views.product_data.inbox_active[0] = True
+            views.product_data.inbox_active[1] = False
 
     def cancel_click(self):
         if self.editstage:
-            views.Product_Drawer(True).run()
+            views.Product_Locker(True).run()
             pygame.quit() 
         else:
-            views.product_data.product_data['quantity'] = ''
-            views.Product_Drawer(False).run()
+            views.product_data.product_data['drawer'] = ''
+            views.product_data.product_data['cavity'] = ''
+            views.Product_Locker(False).run()
             pygame.quit()
-             
 
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
-        self.quantity_input = elements.InputBox_Number(1, 3, 10, 1, views.product_data.product_data['quantity'], app = (self.screen), active = True, numpad_active = True)
+        self.drawer_input = elements.InputBox_Drawer(1, 4, 7, 1, views.product_data.product_data['drawer'], app = (self.screen), active = views.request_data.inbox_active[0], numpad_active = True)
+        self.cavity_input = elements.InputBox_Drawer(1, 7, 7, 1, views.product_data.product_data['cavity'], app = (self.screen), active = views.request_data.inbox_active[1], numpad_active = True)
+        # self.qrcode_input = elements.InputBox_Qrcode(1, 3, 10, 1, views.product_data.product_data['qrcode'], app = (self.screen), active = True, numpad_active = True)
         print("Product_data :", views.product_data.product_data)
         """Run the main event loop."""
         while self.running:
             self.number = 1
-            self.screen.fill(Color('white'))      
+            self.screen.fill(Color('white'))  
+            self.drawer_input.active = views.product_data.inbox_active[0]
+            self.cavity_input.active = views.product_data.inbox_active[1]    
             """Initialize user interface."""
             for row in range(12):
                 y = (config.margin + config.bheight) * row + config.margin
@@ -109,19 +128,22 @@ class Quantity:
                     position3 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 10, (config.margin + config.bheight) * row + (config.bheight / 3.5) + 30)
                     position4 = ((config.margin + config.bwidth) * column + (config.bwidth / 2.1) + 10, (config.margin + config.bheight) * row + (config.bheight / 3.5) - 5)
                     if row == 0 and column == 0:
-                        elements.Title(self.title, pos=(200, 67), app=(self.screen)).draw()
-                        elements.Header_Table('MESSAGE', 1, 4, app=(self.screen)).draw()
-                        elements.Rectangle(1, 5, 7, 4, app=(self.screen)).draw()
+                        elements.Title(self.title, pos=(230, 67), app=(self.screen)).draw()
+                        elements.Header_Table('DRAWER NUMBER', 1, 3, app=(self.screen)).draw()
+                        elements.Header_Table('CAVITY NUMBER', 1, 6, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()
-                        if self.editstage:
-                            elements.Header_Table("  •  Please edit product quantiy.", 1, 5, app=(self.screen)).draw()
-                            elements.Header_Table("  •  If you don't want to edit, Please press next.", 1, 6, app=(self.screen)).draw()
-                        else:
-                            elements.Header_Table('  •  Please enter product quantiy.', 1, 5, app=(self.screen)).draw()
+                        # if self.editstage:
+                        #     elements.Header_Table("  •  Please edit product QR code.", 1, 5, app=(self.screen)).draw()
+                        #     elements.Header_Table("  •  If you don't want to edit, Please press next.", 1, 6, app=(self.screen)).draw()
+                        # else:
+                        #     elements.Header_Table('  •  Please scan or enter product QR code.', 1, 5, app=(self.screen)).draw()
                         if self.message:
-                            elements.Output_Message("  •  Please enter product quantiy.", 1, 10, app=(self.screen)).draw()
-                        self.quantity_input.draw()                  
+                            elements.Output_Message("  •  Please enter drawer number.", 1, 10, app=(self.screen)).draw()
+                        if self.message2:
+                            elements.Output_Message("  •  Please enter cavity number.", 1, 10, app=(self.screen)).draw()
+                        self.drawer_input.draw()  
+                        self.cavity_input.draw()                 
                     """Initialize Numpad."""
                     if row >= 4 and row <= 7 and column >= 8 and column <= 10:
                         if row == 7 and column == 8:
@@ -146,9 +168,10 @@ class Quantity:
                    
 
             for event in pygame.event.get():
-                self.quantity_value = self.quantity_input.handle_event(event)
+                self.drawer_value = self.drawer_input.handle_event(event, 1)
+                self.cavity_value = self.cavity_input.handle_event(event, 2)
                 if event.type == KEYDOWN:
-                    self.do_shortcut(event)
+                        self.do_shortcut(event)
                 if event.type == QUIT:
                     self.running = False
                 if event.type == MOUSEBUTTONDOWN or event.type == FINGERDOWN:

@@ -76,6 +76,7 @@ class Search:
             self.data = services.selectproductbysearch_like(self.search_value.replace("\r", ""))
             if self.data:
                 for x in range(len(self.data)):
+                    self.drawers = services.getproduct_drawer(self.data[x][2])
                     self.information = []
                     self.information.append(self.data[x][1])
                     self.information.append(self.data[x][2])
@@ -87,6 +88,8 @@ class Search:
                     self.information.append(services.getproductlocker_string(self.data[x][2]))
                     self.information.append(self.data[x][9])
                     self.information.append(self.data[x][10])
+                    self.information.append(self.drawers[3])
+                    self.information.append(self.drawers[4])
                     print("informatyion:", self.information)
                     views.search_data.list_add(self.information)
                 self.search_input.update('*')
@@ -98,6 +101,7 @@ class Search:
             self.data = services.selectproduct()
             if self.data:
                 for x in range(len(self.data)):
+                    self.drawers = services.getproduct_drawer(self.data[x][2])
                     self.information = []
                     self.information.append(self.data[x][1])
                     self.information.append(self.data[x][2])
@@ -109,6 +113,8 @@ class Search:
                     self.information.append(services.getproductlocker_string(self.data[x][2]))
                     self.information.append(self.data[x][9])
                     self.information.append(self.data[x][10])
+                    self.information.append(self.drawers[3])
+                    self.information.append(self.drawers[4])
                     # print("informatyion:", self.information)
                     views.search_data.list_add(self.information)
                 self.search_input.update('*')

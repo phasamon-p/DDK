@@ -5,6 +5,7 @@ from views.admin.usermanagement.user_data import *
 import time
 import datetime
 import services
+import views
 
 ########################################### ABOUT CONECTION ###########################################
 
@@ -42,11 +43,11 @@ def getdate():
     except Error as e:
         print("Error : ", e)
 
-def getlog():
+def get_adminlog():
     try:
         connection = mysqlconnect()
 
-        mySql_select_query = "select * from log"
+        mySql_select_query = "select * from admin_log"
 
         cursor = connection.cursor()
         cursor.execute(mySql_select_query)
@@ -69,11 +70,32 @@ def getlog():
             cursor.close()
             print("MySQL connection is closed")
 
-def getlogbydate(date):
+def getlast_idlog():
+    try:
+        connection = mysqlconnect()
+
+        mySql_select_query = "select * from admin_log"
+
+        cursor = connection.cursor()
+        cursor.execute(mySql_select_query)
+        # get all records
+        records = cursor.fetchall()
+
+        return records[len(records) - 1][0]
+
+    except mysql.connector.Error as e:
+        print("Error reading data from MySQL table", e)
+    finally:
+        if connection.is_connected():
+            connection.close()
+            cursor.close()
+            print("MySQL connection is closed")
+
+def getadminlog_bydate(date):
     try:
         connection = mysqlconnect()
         print("date ", date)
-        mySql_select_query = "select * from log WHERE date= %s"
+        mySql_select_query = "select * from admin_log WHERE date= %s"
 
         cursor = connection.cursor()
         cursor.execute(mySql_select_query, (date,))
@@ -89,23 +111,36 @@ def getlogbydate(date):
             cursor.close()
             print("MySQL connection is closed")
 
-def insertlog(employee,product,activity):
+def insert_adminlog(admin):
     try:
         connection = mysqlconnect()
-        mySql_insert_query = """INSERT INTO log (date, time, employeeid, name, lastname, item_number, product_name, part_no, part_name, drawing_no, quantity, locker, activity) 
-                                                       VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) """
-        for x in range(len(product)):
-            results = services.getproductlocker(product[x][1])
-            lockernumber = results[1]
-            for y in range(len(lockernumber)):
-                locker = lockernumber[y][2]
-                record = (
-                datetime.datetime.now().date(), datetime.datetime.now().time(), employee[0], employee[1], employee[2],
-                product[x][2], product[x][3], product[x][4], product[x][5], product[x][6],product[x][7],
-                locker, activity)
-                cursor = connection.cursor()
-                cursor.execute(mySql_insert_query, record)
-                connection.commit()
+        mySql_insert_query = """INSERT INTO admin_log (adminid, date_login, time_login, status) VALUES ( %s, %s, %s, %s) """
+        record = (admin['admin_id'], datetime.datetime.now().date(), datetime.datetime.now().time(), 1)
+        cursor = connection.cursor()
+        cursor.execute(mySql_insert_query, record)
+        connection.commit()
+        views.admin_data.adminlog_id = getlast_idlog()
+        print("admin last id ",views.admin_data.adminlog_id)
+            
     except mysql.connector.Error as e:
         print("Failed to update columns of table: {}".format(e))
         return False
+
+def update_adminlog_logout():
+        try:
+            connection = mysqlconnect()
+            cursor = connection.cursor()
+            sql_Update_Query = "UPDATE admin_log set date_logout = %s, time_logout = %s where id = %s"
+            input = (datetime.datetime.now().date(), datetime.datetime.now().time(), views.admin_data.adminlog_id)
+            cursor.execute(sql_Update_Query, input)
+            connection.commit()
+            return True
+
+        except mysql.connector.Error as e:
+            print("Failed to update columns of table: {}".format(e))
+            return False
+        finally:
+            if connection.is_connected():
+                connection.close()
+                cursor.close()
+                print("MySQL connection is closed")

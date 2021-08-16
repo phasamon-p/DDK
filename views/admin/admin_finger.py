@@ -84,10 +84,11 @@ class Admin_Finger:
         if self.fingerid:
             # print("finger id", self.fingerid[1])
             self.admin_data = services.getpersonbyfingerid(self.fingerid[1])
-            print(self.admin_data)
+            # print(self.admin_data)
             if self.admin_data[0]:
                 if self.admin_data[1][0][5] == 'admin':
                     self.setdata()
+                    services.insert_adminlog(views.admin_data.admin_data)
                     views.System_Management().run()
                     pygame.quit()
                 else:

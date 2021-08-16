@@ -140,6 +140,9 @@ class System_Management:
         pygame.quit()
   
     def logout_click(self):
+        if views.admin_data.adminlog_id != '':
+            services.update_adminlog_logout()
+        views.admin_data.adminlog_id = ''
         views.admin_data.admindata_reset()
         views.Home().run(); 
         pygame.quit()

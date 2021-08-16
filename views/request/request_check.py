@@ -106,6 +106,8 @@ class Request_Check:
 
     def confirm_click(self):
         if services.lockertimeout():
+            services.update_requestlog_check()
+            views.request_data.list_idcheck_reset()
             views.request_data.list_check_reset()
             views.request_data.list_reset()
             views.request_data.reset()
@@ -126,6 +128,7 @@ class Request_Check:
         pygame.display.set_caption('Requestion check' + config.VERSION)
         self.search_input = elements.InputBox_Request_Check(1, 3, 7, 1, "", app = (self.screen), active = True, numpad_active = True)
         print(views.request_data.request_list2_check)
+        print(views.request_data.request_list2_idcheck)
         """Run the main event loop."""
         while self.running:
             services.lockertimeout() # Check door opening
