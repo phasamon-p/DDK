@@ -413,10 +413,10 @@ def selectproductbysearch(search): ##
     print(str(search))
     try:
         connection = mysqlconnect()
-        sql_select_Query = "SELECT * FROM products WHERE qr_code = %s " 
+        sql_select_Query = "SELECT * FROM products WHERE qr_code LIKE %s " 
         
         cursor = connection.cursor()
-        cursor.execute(sql_select_Query, (search,))
+        cursor.execute(sql_select_Query, ("%" + search + "%",))
         # get all records
         records = cursor.fetchall()
         rowcount = cursor.rowcount
