@@ -33,6 +33,9 @@ class Locker_Control:
             (K_x, KMOD_LMETA + KMOD_LALT): 'print("cmd+alt+X")',
             (K_x, KMOD_LMETA + KMOD_LALT + KMOD_LSHIFT): 'print("cmd+alt+shift+X")',
         }
+        self.locker_one = ["A", "B", "C", "D", "E"]
+        self.locker_two = ["F", "G", "H", "I", "J"]
+        self.locker_three = ["K", "L"]
 
         self.click = {
             # Click 1 button
@@ -313,30 +316,35 @@ class Locker_Control:
                                 elements.Button(self.screen, config.green, x, y, config.bwidth + 107, config.bheight + 67).Rect()
                             else:
                                 elements.Button(self.screen, config.blue, x, y, config.bwidth + 107, config.bheight + 67).Rect()
-                            if (index + 1) > 9:
-                                elements.Text_Button_Medium(str(index + 1), position3, app=(self.screen)).draw()
-                            else:
-                                elements.Text_Button_Medium(str(index + 1), position2, app=(self.screen)).draw()
+                            elements.Text_Button_Medium(self.locker_one[index], position3, app=(self.screen)).draw()
+                            
+                            # if (index + 1) > 9:
+                            #     elements.Text_Button_Medium(str(index + 1), position3, app=(self.screen)).draw()
+                            # else:
+                            #     elements.Text_Button_Medium(str(index + 1), position2, app=(self.screen)).draw()
                     for index in range(5):
                         if row == 5 and column == index + (index + 1):
                             if self.locker_button[index + 5]:
                                 elements.Button(self.screen, config.green, x, y, config.bwidth + 107, config.bheight + 67).Rect()
                             else:
                                 elements.Button(self.screen, config.blue, x, y, config.bwidth + 107, config.bheight + 67).Rect()
-                            if (index + 6) > 9:
-                                elements.Text_Button_Medium(str(index + 6), position3, app=(self.screen)).draw()
-                            else:
-                                elements.Text_Button_Medium(str(index + 6), position2, app=(self.screen)).draw()
+                            elements.Text_Button_Medium(self.locker_two[index], position3, app=(self.screen)).draw()
+                            # if (index + 6) > 9:
+                            #     elements.Text_Button_Medium(str(index + 6), position3, app=(self.screen)).draw()
+                            # else:
+                            #     elements.Text_Button_Medium(str(index + 6), position2, app=(self.screen)).draw()
                     for index in range(2):
                         if row == 7 and column == index + (index + 1):
                             if self.locker_button[index + 10]:
                                 elements.Button(self.screen, config.green, x, y, config.bwidth + 107, config.bheight + 67).Rect()
                             else:
                                 elements.Button(self.screen, config.blue, x, y, config.bwidth + 107, config.bheight + 67).Rect()
-                            if (index + 11) > 9:
-                                elements.Text_Button_Medium(str(index + 11), position3, app=(self.screen)).draw()
-                            else:
-                                elements.Text_Button_Medium(str(index + 11), position2, app=(self.screen)).draw()
+                            elements.Text_Button_Medium(self.locker_three[index], position3, app=(self.screen)).draw()
+                            # if (index + 11) > 9:
+                            #     elements.Text_Button_Medium(str(index + 11), position3, app=(self.screen)).draw()
+                            # else:
+                            #     elements.Text_Button_Medium(str(index + 11), position2, app=(self.screen)).draw()
+                            
                     if row == 9 and column == 9:
                         elements.Button(self.screen, config.red, x, y, config.bwidth + 107, config.bheight + 67).Rect()
                         elements.Text_Button_Medium(' BACK', position4, app=(self.screen)).draw()

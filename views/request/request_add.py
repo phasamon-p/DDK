@@ -168,7 +168,7 @@ class Request_Add:
             views.request_data.list_add(self.product_list)
             views.request_data.inbox_active[0] = False # Set default input box activation
             views.request_data.inbox_active[1] = True # Set default input box activation
-            self.search_input.update('*')
+            #self.search_input.update('*')
             if int(self.data[1][0][0][9]) < 1:
                 self.message = False
                 self.message2 = False 

@@ -92,7 +92,7 @@ class Search:
                     self.information.append(self.drawers[4])
                     print("informatyion:", self.information)
                     views.search_data.list_add(self.information)
-                self.search_input.update('*')
+                #self.search_input.update('*')
             else:
                 views.search_data.list_reset()
                 self.search_input.update('*')
