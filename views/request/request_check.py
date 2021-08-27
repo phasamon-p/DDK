@@ -150,9 +150,12 @@ class Request_Check:
                     if row == 0 and column == 0:
                         elements.Title('REQUESTION CHECK', pos=(280, 67), app=(self.screen)).draw()
                         elements.Header_Table('No.', 1, 4, app=(self.screen)).draw()
-                        elements.Header_Table('Product name', 2, 4, app=(self.screen)).draw()
-                        elements.Header_Table('QTY.', 5, 4, app=(self.screen)).draw()
-                        elements.Header_Table('Locker', 6, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Product name', 1.5, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Part no.', 3.2, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Part name', 4.2, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Draw no.', 5.6, 4, app=(self.screen)).draw()
+                        elements.Header_Table('QTY.', 6.8, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Locker', 7.4, 4, app=(self.screen)).draw()
                         self.search_input.draw()
                         self.requestcheck_listview.draw()                     
                     if row == 3 and column == 8:

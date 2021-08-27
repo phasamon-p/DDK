@@ -155,7 +155,7 @@ class Request_Add:
             self.product_list.section = self.data[1][0][0][1]
             self.product_list.qrcode = self.data[1][0][0][2]
             self.product_list.item_number = self.data[1][0][0][3]
-            self.product_list.product_name = self.data[1][0][0][4]
+            self.product_list.product_name = (self.data[1][0][0][4])
             self.product_list.part_number = self.data[1][0][0][5]
             self.product_list.part_name = self.data[1][0][0][6]
             self.product_list.drawing_number = self.data[1][0][0][7]
@@ -218,9 +218,12 @@ class Request_Add:
                     if row == 0 and column == 0:
                         elements.Title('ADD PRODUCT REQUEST', pos=(230, 67), app=(self.screen)).draw()
                         elements.Header_Table('No.', 1, 4, app=(self.screen)).draw()
-                        elements.Header_Table('Product name', 2, 4, app=(self.screen)).draw()
-                        elements.Header_Table('QTY.', 5, 4, app=(self.screen)).draw()
-                        elements.Header_Table('Locker', 6, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Product name', 1.5, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Part no.', 3.2, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Part name', 4.2, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Draw no.', 5.6, 4, app=(self.screen)).draw()
+                        elements.Header_Table('QTY.', 6.8, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Locker', 7.4, 4, app=(self.screen)).draw()
                         elements.Header_Table('Quantity Requesition', 1, 7, app=(self.screen)).draw()
                         elements.Header_Table('OUTPUT', 1, 9, app=(self.screen)).draw()
                         elements.Rectangle(1, 10, 7, 1, app=(self.screen)).draw()

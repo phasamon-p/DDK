@@ -17,7 +17,7 @@ def list_delete():
 def list_reset():
     request_list.clear()
 
-product_data = {    'section' : [False, False, False, False, False],
+product_data = {    'section' : "",
                     'qrcode' : "",
                     'item_number' : "",
                     'product_name' : "",
@@ -61,7 +61,7 @@ def section():
     return str(text)
 
 def productdata_reset():
-    product_data['section'] = [False, False, False, False, False]
+    product_data['section'] = ''
     product_data['qrcode'] = ''
     product_data['item_number'] = ''
     product_data['product_name'] = ''

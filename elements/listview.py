@@ -25,6 +25,12 @@ class Search_Listview:
         self.number_rect = numpy.empty(len(self.data), dtype=object)
         self.product_name = numpy.empty(len(self.data), dtype=object) 
         self.product_rect = numpy.empty(len(self.data), dtype=object)
+        self.part_number = numpy.empty(len(self.data), dtype=object)
+        self.part_number_rect = numpy.empty(len(self.data), dtype=object)
+        self.part_name = numpy.empty(len(self.data), dtype=object)
+        self.part_name_rect = numpy.empty(len(self.data), dtype=object)
+        self.drawing_number = numpy.empty(len(self.data), dtype=object)
+        self.drawing_number_rect = numpy.empty(len(self.data), dtype=object)
         self.quantity = numpy.empty(len(self.data), dtype=object)
         self.quantity_rect = numpy.empty(len(self.data), dtype=object) 
         self.locker_number = numpy.empty(len(self.data), dtype=object)
@@ -58,17 +64,29 @@ class Search_Listview:
             self.number_rect[x + self.index] = self.number[x + self.index].get_rect()
             self.number_rect[x + self.index].topleft = ((1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
-            self.product_name[x + self.index] = self.font.render(str(self.data[x + self.index][3][:25]), True, self.color)
+            self.product_name[x + self.index] = self.font.render(str(self.data[x + self.index][3][:10]), True, self.color)
             self.product_rect[x + self.index] = self.product_name[x + self.index].get_rect()
-            self.product_rect[x + self.index].topleft = ((2 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.product_rect[x + self.index].topleft = ((1.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+            self.part_number[x + self.index] = self.font.render(str(self.data[x + self.index][4][:6]), True, self.color)
+            self.part_number_rect[x + self.index] = self.part_number[x + self.index].get_rect()
+            self.part_number_rect[x + self.index].topleft = ((3.1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+            self.part_name[x + self.index] = self.font.render(self.data[x + self.index][5][:8], True, self.color)
+            self.part_name_rect[x + self.index] = self.part_name[x + self.index].get_rect()
+            self.part_name_rect[x + self.index].topleft = ((4.1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            
+            self.drawing_number[x + self.index] = self.font.render(self.data[x + self.index][6][:8], True, self.color)
+            self.drawing_number_rect[x + self.index] = self.drawing_number[x + self.index].get_rect()
+            self.drawing_number_rect[x + self.index].topleft = ((5.5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             self.quantity[x + self.index] = self.font.render(str(self.data[x + self.index][8]), True, self.color)
             self.quantity_rect[x + self.index] = self.quantity[x + self.index].get_rect()
-            self.quantity_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.quantity_rect[x + self.index].topleft = ((6.8 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             self.locker_number[x + self.index] = self.font.render(self.string_locker(self.data[x + self.index][7]) + str(self.data[x + self.index][10]) + '-' + str(self.data[x + self.index][11]), True, self.color)
             self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
-            self.locker_rect[x + self.index].topleft = ((6 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.locker_rect[x + self.index].topleft = ((7.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
     def string_locker(self, lockernumber):
         if config.locker_type > 0:
@@ -139,6 +157,9 @@ class Search_Listview:
         for x in range(self.list_index):
             self.app.blit(self.number[x + self.index], self.number_rect[x + self.index])
             self.app.blit(self.product_name[x + self.index], self.product_rect[x + self.index])
+            self.app.blit(self.part_number[x + self.index], self.part_number_rect[x + self.index])
+            self.app.blit(self.part_name[x + self.index], self.part_name_rect[x + self.index])
+            self.app.blit(self.drawing_number[x + self.index], self.drawing_number_rect[x + self.index])
             self.app.blit(self.quantity[x + self.index], self.quantity_rect[x + self.index])
             self.app.blit(self.locker_number[x + self.index], self.locker_rect[x + self.index])
         # Blit the rect.
@@ -166,6 +187,12 @@ class Productedit_Listview:
         self.number_rect = numpy.empty(len(self.data), dtype=object)
         self.product_name = numpy.empty(len(self.data), dtype=object) 
         self.product_rect = numpy.empty(len(self.data), dtype=object)
+        self.part_number = numpy.empty(len(self.data), dtype=object)
+        self.part_number_rect = numpy.empty(len(self.data), dtype=object)
+        self.part_name = numpy.empty(len(self.data), dtype=object)
+        self.part_name_rect = numpy.empty(len(self.data), dtype=object)
+        self.drawing_number = numpy.empty(len(self.data), dtype=object)
+        self.drawing_number_rect = numpy.empty(len(self.data), dtype=object)
         self.quantity = numpy.empty(len(self.data), dtype=object)
         self.quantity_rect = numpy.empty(len(self.data), dtype=object) 
         self.locker_number = numpy.empty(len(self.data), dtype=object)
@@ -199,17 +226,29 @@ class Productedit_Listview:
             self.number_rect[x + self.index] = self.number[x + self.index].get_rect()
             self.number_rect[x + self.index].topleft = ((1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
-            self.product_name[x + self.index] = self.font.render(self.data[x + self.index].product_name[:25], True, self.color)
+            self.product_name[x + self.index] = self.font.render(self.data[x + self.index].product_name[:10], True, self.color)
             self.product_rect[x + self.index] = self.product_name[x + self.index].get_rect()
-            self.product_rect[x + self.index].topleft = ((2 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.product_rect[x + self.index].topleft = ((1.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+            self.part_number[x + self.index] = self.font.render(self.data[x + self.index].part_number[:6], True, self.color)
+            self.part_number_rect[x + self.index] = self.product_name[x + self.index].get_rect()
+            self.part_number_rect[x + self.index].topleft = ((3.1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            
+            self.part_name[x + self.index] = self.font.render(self.data[x + self.index].part_name[:8], True, self.color)
+            self.part_name_rect[x + self.index] = self.product_name[x + self.index].get_rect()
+            self.part_name_rect[x + self.index].topleft = ((4.1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            
+            self.drawing_number[x + self.index] = self.font.render(self.data[x + self.index].drawing_number[:8], True, self.color)
+            self.drawing_number_rect[x + self.index] = self.product_name[x + self.index].get_rect()
+            self.drawing_number_rect[x + self.index].topleft = ((5.5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             self.quantity[x + self.index] = self.font.render(self.data[x + self.index].quantity, True, self.color)
             self.quantity_rect[x + self.index] = self.quantity[x + self.index].get_rect()
-            self.quantity_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.quantity_rect[x + self.index].topleft = ((6.8 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             self.locker_number[x + self.index] = self.font.render(self.string_locker(self.data[x + self.index].locker_number) + str(self.data[x + self.index].drawer) + '-' + str(self.data[x + self.index].cavity), True, self.color)
             self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
-            self.locker_rect[x + self.index].topleft = ((6 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.locker_rect[x + self.index].topleft = ((7.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
     def string_locker(self, lockernumber):
         if config.locker_type > 0:
@@ -280,6 +319,9 @@ class Productedit_Listview:
         for x in range(self.list_index):
             self.app.blit(self.number[x + self.index], self.number_rect[x + self.index])
             self.app.blit(self.product_name[x + self.index], self.product_rect[x + self.index])
+            self.app.blit(self.part_number[x + self.index], self.part_number_rect[x + self.index])
+            self.app.blit(self.part_name[x + self.index], self.part_name_rect[x + self.index])
+            self.app.blit(self.drawing_number[x + self.index], self.drawing_number_rect[x + self.index])
             self.app.blit(self.quantity[x + self.index], self.quantity_rect[x + self.index])
             self.app.blit(self.locker_number[x + self.index], self.locker_rect[x + self.index])
         # Blit the rect.
@@ -307,6 +349,12 @@ class Productadd_Listview:
         self.number_rect = numpy.empty(len(self.data), dtype=object)
         self.product_name = numpy.empty(len(self.data), dtype=object) 
         self.product_rect = numpy.empty(len(self.data), dtype=object)
+        self.part_number = numpy.empty(len(self.data), dtype=object)
+        self.part_number_rect = numpy.empty(len(self.data), dtype=object)
+        self.part_name = numpy.empty(len(self.data), dtype=object)
+        self.part_name_rect = numpy.empty(len(self.data), dtype=object)
+        self.drawing_number = numpy.empty(len(self.data), dtype=object)
+        self.drawing_number_rect = numpy.empty(len(self.data), dtype=object)
         self.quantity = numpy.empty(len(self.data), dtype=object)
         self.quantity_rect = numpy.empty(len(self.data), dtype=object) 
         self.locker_number = numpy.empty(len(self.data), dtype=object)
@@ -340,18 +388,30 @@ class Productadd_Listview:
             self.number_rect[x + self.index] = self.number[x + self.index].get_rect()
             self.number_rect[x + self.index].topleft = ((1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
-            self.product_name[x + self.index] = self.font.render(self.data[x + self.index].product_name[:25], True, self.color)
+            self.product_name[x + self.index] = self.font.render(self.data[x + self.index].product_name[:10], True, self.color)
             self.product_rect[x + self.index] = self.product_name[x + self.index].get_rect()
-            self.product_rect[x + self.index].topleft = ((2 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.product_rect[x + self.index].topleft = ((1.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+            self.part_number[x + self.index] = self.font.render(self.data[x + self.index].part_number[:6], True, self.color)
+            self.part_number_rect[x + self.index] = self.product_name[x + self.index].get_rect()
+            self.part_number_rect[x + self.index].topleft = ((3.1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            
+            self.part_name[x + self.index] = self.font.render(self.data[x + self.index].part_name[:8], True, self.color)
+            self.part_name_rect[x + self.index] = self.product_name[x + self.index].get_rect()
+            self.part_name_rect[x + self.index].topleft = ((4.1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            
+            self.drawing_number[x + self.index] = self.font.render(self.data[x + self.index].drawing_number[:8], True, self.color)
+            self.drawing_number_rect[x + self.index] = self.product_name[x + self.index].get_rect()
+            self.drawing_number_rect[x + self.index].topleft = ((5.5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             self.quantity[x + self.index] = self.font.render(self.data[x + self.index].quantity, True, self.color)
             self.quantity_rect[x + self.index] = self.quantity[x + self.index].get_rect()
-            self.quantity_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.quantity_rect[x + self.index].topleft = ((6.8 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
 
             self.locker_number[x + self.index] = self.font.render(self.string_locker(self.data[x + self.index].locker_number) + str(self.data[x + self.index].drawer) + '-' + str(self.data[x + self.index].cavity), True, self.color)
             self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
-            self.locker_rect[x + self.index].topleft = ((6 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.locker_rect[x + self.index].topleft = ((7.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
     def string_locker(self, lockernumber):
         if config.locker_type > 0:
@@ -423,6 +483,9 @@ class Productadd_Listview:
         for x in range(self.list_index):
             self.app.blit(self.number[x + self.index], self.number_rect[x + self.index])
             self.app.blit(self.product_name[x + self.index], self.product_rect[x + self.index])
+            self.app.blit(self.part_number[x + self.index], self.part_number_rect[x + self.index])
+            self.app.blit(self.part_name[x + self.index], self.part_name_rect[x + self.index])
+            self.app.blit(self.drawing_number[x + self.index], self.drawing_number_rect[x + self.index])
             self.app.blit(self.quantity[x + self.index], self.quantity_rect[x + self.index])
             self.app.blit(self.locker_number[x + self.index], self.locker_rect[x + self.index])
         # Blit the rect.
@@ -495,7 +558,7 @@ class Useredit_Listview:
 
             self.user_lname[x + self.index] = self.font.render(self.data[x + self.index].user_lname, True, self.color)
             self.userlname_rect[x + self.index] = self.user_lname[x + self.index].get_rect()
-            self.userlname_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.userlname_rect[x + self.index].topleft = ((6.8 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             self.permission[x + self.index] = self.font.render(self.data[x + self.index].permission, True, self.color)
             self.permission_rect[x + self.index] = self.permission[x + self.index].get_rect()
@@ -542,6 +605,12 @@ class Request_Listview:
         self.number_rect = numpy.empty(len(self.data), dtype=object)
         self.product_name = numpy.empty(len(self.data), dtype=object) 
         self.product_rect = numpy.empty(len(self.data), dtype=object)
+        self.part_number = numpy.empty(len(self.data), dtype=object)
+        self.part_number_rect = numpy.empty(len(self.data), dtype=object)
+        self.part_name = numpy.empty(len(self.data), dtype=object)
+        self.part_name_rect = numpy.empty(len(self.data), dtype=object)
+        self.drawing_number = numpy.empty(len(self.data), dtype=object)
+        self.drawing_number_rect = numpy.empty(len(self.data), dtype=object)
         self.quantity = numpy.empty(len(self.data), dtype=object)
         self.quantity_rect = numpy.empty(len(self.data), dtype=object) 
         self.locker_number = numpy.empty(len(self.data), dtype=object)
@@ -575,17 +644,30 @@ class Request_Listview:
             self.number_rect[x + self.index] = self.number[x + self.index].get_rect()
             self.number_rect[x + self.index].topleft = ((1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
-            self.product_name[x + self.index] = self.font.render(self.data[x + self.index].product_name[:25], True, self.color)
+            self.product_name[x + self.index] = self.font.render(self.data[x + self.index].product_name[:10], True, self.color)
             self.product_rect[x + self.index] = self.product_name[x + self.index].get_rect()
-            self.product_rect[x + self.index].topleft = ((2 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.product_rect[x + self.index].topleft = ((1.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+            self.part_number[x + self.index] = self.font.render(self.data[x + self.index].part_number[:6], True, self.color)
+            self.part_number_rect[x + self.index] = self.product_name[x + self.index].get_rect()
+            self.part_number_rect[x + self.index].topleft = ((3.1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+            self.part_name[x + self.index] = self.font.render(self.data[x + self.index].part_name[:8], True, self.color)
+            self.part_name_rect[x + self.index] = self.product_name[x + self.index].get_rect()
+            self.part_name_rect[x + self.index].topleft = ((4.1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            
+            self.drawing_number[x + self.index] = self.font.render(self.data[x + self.index].drawing_number[:8], True, self.color)
+            self.drawing_number_rect[x + self.index] = self.product_name[x + self.index].get_rect()
+            self.drawing_number_rect[x + self.index].topleft = ((5.5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             self.quantity[x + self.index] = self.font.render(self.data[x + self.index].quantity, True, self.color)
             self.quantity_rect[x + self.index] = self.quantity[x + self.index].get_rect()
-            self.quantity_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.quantity_rect[x + self.index].topleft = ((6.8 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
 
             self.locker_number[x + self.index] = self.font.render(self.string_locker(self.data[x + self.index].locker_number) + str(self.data[x + self.index].drawer) + '-' + str(self.data[x + self.index].cavity), True, self.color)
             self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
-            self.locker_rect[x + self.index].topleft = ((6 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.locker_rect[x + self.index].topleft = ((7.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
     def string_locker(self, lockernumber):
         if config.locker_type > 0:
@@ -656,6 +738,9 @@ class Request_Listview:
         for x in range(self.list_index):
             self.app.blit(self.number[x + self.index], self.number_rect[x + self.index])
             self.app.blit(self.product_name[x + self.index], self.product_rect[x + self.index])
+            self.app.blit(self.part_number[x + self.index], self.part_number_rect[x + self.index])
+            self.app.blit(self.part_name[x + self.index], self.part_name_rect[x + self.index])
+            self.app.blit(self.drawing_number[x + self.index], self.drawing_number_rect[x + self.index])
             self.app.blit(self.quantity[x + self.index], self.quantity_rect[x + self.index])
             self.app.blit(self.locker_number[x + self.index], self.locker_rect[x + self.index])
         # Blit the rect.
@@ -687,6 +772,12 @@ class Request_Check_Listview:
         self.number_rect = numpy.empty(len(self.data), dtype=object)
         self.product_name = numpy.empty(len(self.data), dtype=object) 
         self.product_rect = numpy.empty(len(self.data), dtype=object)
+        self.part_number = numpy.empty(len(self.data), dtype=object)
+        self.part_number_rect = numpy.empty(len(self.data), dtype=object)
+        self.part_name = numpy.empty(len(self.data), dtype=object)
+        self.part_name_rect = numpy.empty(len(self.data), dtype=object)
+        self.drawing_number = numpy.empty(len(self.data), dtype=object)
+        self.drawing_number_rect = numpy.empty(len(self.data), dtype=object)
         self.quantity = numpy.empty(len(self.data), dtype=object)
         self.quantity_rect = numpy.empty(len(self.data), dtype=object) 
         self.locker_number = numpy.empty(len(self.data), dtype=object)
@@ -728,25 +819,46 @@ class Request_Check_Listview:
             self.number_rect[x + self.index].topleft = ((1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             if self.check[x + self.index]:
-                self.product_name[x + self.index] = self.font2.render(self.data[x + self.index].product_name[:25], True, config.blue)
+                self.product_name[x + self.index] = self.font2.render(self.data[x + self.index].product_name[:10], True, config.blue)
             else:
-                self.product_name[x + self.index] = self.font.render(self.data[x + self.index].product_name[:25], True, self.color)
+                self.product_name[x + self.index] = self.font.render(self.data[x + self.index].product_name[:10], True, self.color)
             self.product_rect[x + self.index] = self.product_name[x + self.index].get_rect()
-            self.product_rect[x + self.index].topleft = ((2 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.product_rect[x + self.index].topleft = ((1.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
+            if self.check[x + self.index]:
+                self.part_number[x + self.index] = self.font2.render(self.data[x + self.index].part_number[:6], True, config.blue)
+            else:
+                self.part_number[x + self.index] = self.font.render(self.data[x + self.index].part_number[:6], True, self.color)
+            self.part_number_rect[x + self.index] = self.part_number[x + self.index].get_rect()
+            self.part_number_rect[x + self.index].topleft = ((3.1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+            if self.check[x + self.index]:
+                self.part_name[x + self.index] = self.font2.render(self.data[x + self.index].part_name[:6], True, config.blue)
+            else:
+                self.part_name[x + self.index] = self.font.render(self.data[x + self.index].part_name[:6], True, self.color)
+            self.part_name_rect[x + self.index] = self.part_name[x + self.index].get_rect()
+            self.part_name_rect[x + self.index].topleft = ((4.1 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+
+            if self.check[x + self.index]:
+                self.drawing_number[x + self.index] = self.font2.render(self.data[x + self.index].drawing_number[:8], True, config.blue)
+            else:
+                self.drawing_number[x + self.index] = self.font.render(self.data[x + self.index].drawing_number[:8], True, self.color)
+            self.drawing_number_rect[x + self.index] = self.drawing_number[x + self.index].get_rect()
+            self.drawing_number_rect[x + self.index].topleft = ((5.5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+ 
             if self.check[x + self.index]:
                 self.quantity[x + self.index] = self.font2.render(self.data[x + self.index].quantity, True, config.blue)
             else:
                 self.quantity[x + self.index] = self.font.render(self.data[x + self.index].quantity, True, self.color)
             self.quantity_rect[x + self.index] = self.quantity[x + self.index].get_rect()
-            self.quantity_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.quantity_rect[x + self.index].topleft = ((6.8 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             if self.check[x + self.index]:
                 self.locker_number[x + self.index] = self.font2.render(self.string_locker(self.data[x + self.index].locker_number) + str(self.data[x + self.index].drawer) + '-' + str(self.data[x + self.index].cavity), True, config.blue)
             else:
                 self.locker_number[x + self.index] = self.font.render(self.string_locker(self.data[x + self.index].locker_number) + str(self.data[x + self.index].drawer) + '-' + str(self.data[x + self.index].cavity), True, self.color)
             self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
-            self.locker_rect[x + self.index].topleft = ((6 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.locker_rect[x + self.index].topleft = ((7.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
     def string_locker(self, lockernumber):
         if config.locker_type > 0:
@@ -817,6 +929,9 @@ class Request_Check_Listview:
         for x in range(self.list_index):
             self.app.blit(self.number[x + self.index], self.number_rect[x + self.index])
             self.app.blit(self.product_name[x + self.index], self.product_rect[x + self.index])
+            self.app.blit(self.part_number[x + self.index], self.part_number_rect[x + self.index])
+            self.app.blit(self.part_name[x + self.index], self.part_name_rect[x + self.index])
+            self.app.blit(self.drawing_number[x + self.index], self.drawing_number_rect[x + self.index])
             self.app.blit(self.quantity[x + self.index], self.quantity_rect[x + self.index])
             self.app.blit(self.locker_number[x + self.index], self.locker_rect[x + self.index])
         # Blit the rect.
@@ -880,7 +995,7 @@ class Product_Listview:
 
             self.product_name[x + self.index] = self.font.render(self.data[x + self.index]['product_name'][:25] + "...", True, self.color)
             self.product_rect[x + self.index] = self.product_name[x + self.index].get_rect()
-            self.product_rect[x + self.index].topleft = ((2 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.product_rect[x + self.index].topleft = ((1.4 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             self.quantity[x + self.index] = self.font.render(self.data[x + self.index]['quantity'], True, self.color)
             self.quantity_rect[x + self.index] = self.quantity[x + self.index].get_rect()

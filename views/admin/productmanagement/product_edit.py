@@ -172,7 +172,7 @@ class Product_Edit:
     def setdata(self):
         if self.data[0]:
             self.drawers = services.getproduct_drawer(self.data[1][0][0][2])
-            self.product_edit.section = services.getsection_bool(self.data[1][0][0][2])
+            self.product_edit.section = self.data[1][0][0][1]
             self.product_edit.qrcode = self.data[1][0][0][2]
             self.product_edit.item_number = self.data[1][0][0][3]
             self.product_edit.product_name = self.data[1][0][0][4]
@@ -208,9 +208,12 @@ class Product_Edit:
                     if row == 0 and column == 0:
                         elements.Title('PRODUCT SEARCH', pos=(320, 67), app=(self.screen)).draw()
                         elements.Header_Table('No.', 1, 4, app=(self.screen)).draw()
-                        elements.Header_Table('Product name', 2, 4, app=(self.screen)).draw()
-                        elements.Header_Table('QTY.', 5, 4, app=(self.screen)).draw()
-                        elements.Header_Table('Locker', 6, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Product name', 1.5, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Part no.', 3.2, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Part name', 4.2, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Draw no.', 5.6, 4, app=(self.screen)).draw()
+                        elements.Header_Table('QTY.', 6.8, 4, app=(self.screen)).draw()
+                        elements.Header_Table('Locker', 7.4, 4, app=(self.screen)).draw()
                         # elements.Rectangle(1, 5, 7, 5, app=(self.screen)).draw()
                         self.search_input.draw() 
                         self.product_listview.draw()                     

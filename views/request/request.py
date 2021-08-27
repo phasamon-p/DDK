@@ -148,9 +148,12 @@ class Request:
                     if row == 0 and column == 0:
                         elements.Title('PRODUCT REQUEST LIST', pos=(230, 67), app=(self.screen)).draw()
                         elements.Header_Table('No.', 1, 3, app=(self.screen)).draw()
-                        elements.Header_Table('Product name', 2, 3, app=(self.screen)).draw()
-                        elements.Header_Table('QTY.', 5, 3, app=(self.screen)).draw()
-                        elements.Header_Table('Locker', 6, 3, app=(self.screen)).draw()
+                        elements.Header_Table('Product name', 1.5, 3, app=(self.screen)).draw()
+                        elements.Header_Table('Part no.', 3.2, 3, app=(self.screen)).draw()
+                        elements.Header_Table('Part name', 4.2, 3, app=(self.screen)).draw()
+                        elements.Header_Table('Draw no.', 5.6, 3, app=(self.screen)).draw()
+                        elements.Header_Table('QTY.', 6.8, 3, app=(self.screen)).draw()
+                        elements.Header_Table('Locker', 7.4, 3, app=(self.screen)).draw()
                         self.product_listview.draw()      
                     if row == 4 and column == 8:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 214, config.bheight + 67).Rect()
