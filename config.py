@@ -42,4 +42,4 @@ flags  = FULLSCREEN
 
 time_extention = 0
 door_status = False
-time_out = 300 # Set time out 5 minutes exit to home page. 
+time_out = 600 # Set time out 10 minutes exit to home page. 
