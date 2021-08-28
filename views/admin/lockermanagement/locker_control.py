@@ -36,6 +36,8 @@ class Locker_Control:
         self.locker_one = ["A", "B", "C", "D", "E"]
         self.locker_two = ["F", "G", "H", "I", "J"]
         self.locker_three = ["K", "L"]
+        self.tout = config.time_out
+        self.start_time = time.time()
 
         self.click = {
             # Click 1 button
@@ -290,11 +292,21 @@ class Locker_Control:
                     self.locker_button[8] = True 
             else:
                     self.locker_button[8] = False
+
+    def pagetimeout(self):  # function check timeout after touch
+        if (time.time() - self.start_time) > self.tout:
+            return True
+
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
         """Run the main event loop."""
         while self.running:
+
+            if(self.pagetimeout()) and services.lockertimeout():
+                views.Home().run()
+                pygame.quit()    
+
             services.lockertimeout()
             self.screen.fill(Color('white'))  
             self.checklocker_status()    

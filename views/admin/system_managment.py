@@ -26,6 +26,8 @@ class System_Management:
             (K_x, KMOD_LMETA + KMOD_LALT): 'print("cmd+alt+X")',
             (K_x, KMOD_LMETA + KMOD_LALT + KMOD_LSHIFT): 'print("cmd+alt+shift+X")',
         }
+        self.tout = config.time_out
+        self.start_time = time.time()
         self.click = {
             # Click user managment button
             (1, 3): 'self.user_click()',
@@ -147,11 +149,20 @@ class System_Management:
         views.Home().run(); 
         pygame.quit()
 
+    def pagetimeout(self):  # function check timeout after touch
+        if (time.time() - self.start_time) > self.tout:
+            return True
+
     def run(self):
         """Initialize Caption and Valiable."""
         self.number = 1
         pygame.display.set_caption('Product request' + config.VERSION)
         while self.running:
+
+            if(self.pagetimeout()):
+                views.Home().run()
+                pygame.quit()
+
             """Refresh surface."""
             self.screen.fill(Color('white')) 
             """Initialize user interface."""
