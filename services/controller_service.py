@@ -202,6 +202,7 @@ def lockerrequest_open(data):
                         relay = (((x + 1) - 1) // 16) + relay  #div get relay
                         pos = (((x + 1) - 1) % 16)   #mod get pos
                         try: 
+                                """" add 16 locker control """
                                 if relay >= 0 and pos >= 0 :
                                         pin[relay][pos].value = False    # Set pin to HIGH (ON) (1)
                                         time.sleep(0.5)

@@ -117,7 +117,7 @@ class Locker_Management:
             views.Locker_Control().run(); 
             pygame.quit()
         else:
-            views.Locker_Control2().run(); 
+            views.Locker_Control().run(); 
             pygame.quit()
 
     def buzzer_click(self):

@@ -145,6 +145,7 @@ class User_Finger:
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
+        print("User_data :", views.user_data.user_data)
         while self.running:
             """Refresh surface."""
             self.screen.fill(Color('white'))

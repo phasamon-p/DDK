@@ -114,6 +114,7 @@ class Product_Edit:
         print("data", self.data)
         if self.data[0]:
             self.drawers = services.getproduct_drawer(self.data[1][0][0][2])
+            print(self.drawers)
             self.product_list.section = self.data[1][0][0][1]
             self.product_list.qrcode = self.data[1][0][0][2]
             self.product_list.item_number = self.data[1][0][0][3]

@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+import config 
 
 request_list = []
 old_id = ''
@@ -13,13 +14,22 @@ def list_delete():
 def list_reset():
     request_list.clear()
 
-user_data = {   'user_id' : "",
-                'user_name' : "",
-                'user_lname' : "",
-                'department' : [False, False, False, False, False],
-                'fingerid' : "",
-                'permission' : "",
-                'locker_access' : [False, False, False, False, False, False, False, False, False, False, False, False]}
+if config.locker_type == 0 :
+    user_data = {   'user_id' : "",
+                    'user_name' : "",
+                    'user_lname' : "",
+                    'department' : [False, False, False, False, False],
+                    'fingerid' : "",
+                    'permission' : "",
+                    'locker_access' : [False, False, False, False, False, False, False, False, False, False, False, False]}
+else :
+    user_data = {   'user_id' : "",
+                    'user_name' : "",
+                    'user_lname' : "",
+                    'department' : [False, False, False, False, False],
+                    'fingerid' : "",
+                    'permission' : "",
+                    'locker_access' : [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]}
 
 def add(object):
     user_data.append(object)
@@ -58,7 +68,10 @@ def userdata_reset():
     user_data['department'] = [False, False, False, False, False]
     user_data['fingerid'] = ''
     user_data['permission'] = ''
-    user_data['locker_access'] = [False, False, False, False, False, False, False, False, False, False, False, False]
+    if config.locker_type == 0 :
+        user_data['locker_access'] = [False, False, False, False, False, False, False, False, False, False, False, False]
+    else :
+        user_data['locker_access'] = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
 
 def userdata_setedit(data):
     user_data['user_id'] = data.user_id   

@@ -558,7 +558,7 @@ class Useredit_Listview:
 
             self.user_lname[x + self.index] = self.font.render(self.data[x + self.index].user_lname, True, self.color)
             self.userlname_rect[x + self.index] = self.user_lname[x + self.index].get_rect()
-            self.userlname_rect[x + self.index].topleft = ((6.8 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.userlname_rect[x + self.index].topleft = ((5 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             self.permission[x + self.index] = self.font.render(self.data[x + self.index].permission, True, self.color)
             self.permission_rect[x + self.index] = self.permission[x + self.index].get_rect()
