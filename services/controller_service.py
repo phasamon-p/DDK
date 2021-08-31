@@ -1,4 +1,4 @@
-from views.admin.usermanagement.user_data import reset
+# from views.admin.usermanagement.user_data import reset
 import board
 import busio
 import time
@@ -18,8 +18,12 @@ error = False
 mux_out = [0,1,2,3]
 mux_in = [4,5,6,7]
 IR = [0,7,6,5,4,3,2,0,0,0,0,0,0,0]
-buzzer = [0,15]
-on_circuit = [0,12]
+if config.locker_type == 0:
+        buzzer = [0,15]
+        on_circuit = [0,12]
+else:
+        buzzer = [1,1]
+        on_circuit = [1,0]
 on_sensor = [1,3]
 
 extention_time = 0
@@ -84,7 +88,88 @@ def lockertimeout(): # function check timeout after touch
         tout = services.getbuzzer() * 60
         if status:
                 if config.locker_type > 0:
-                                pass
+                        if services.getStatus_2(8):
+                                config.time_extention += 60 
+                        # Check status locker 8
+                        if services.getStatus(1):
+                                if (time.time() - views.request_data.locker_time[7]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False
+                        # Check status locker 7
+                        if services.getStatus(2):
+                                if (time.time() - views.request_data.locker_time[6]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 6
+                        if services.getStatus(3):
+                                if (time.time() - views.request_data.locker_time[5]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 5
+                        if services.getStatus(4):
+                                if (time.time() - views.request_data.locker_time[4]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 4
+                        if services.getStatus(5):
+                                if (time.time() - views.request_data.locker_time[3]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 3
+                        if services.getStatus(6):
+                                if (time.time() - views.request_data.locker_time[2]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 2
+                        if services.getStatus(7):
+                                if (time.time() - views.request_data.locker_time[1]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 1
+                        if services.getStatus(8):
+                                if (time.time() - views.request_data.locker_time[0]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False
+                        # Check status locker 16
+                        if services.getStatus(9):
+                                if (time.time() - views.request_data.locker_time[3]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 15
+                        if services.getStatus(10):
+                                if (time.time() - views.request_data.locker_time[2]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 14
+                        if services.getStatus(11):
+                                if (time.time() - views.request_data.locker_time[1]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 13
+                        if services.getStatus(12):
+                                if (time.time() - views.request_data.locker_time[0]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False
+                        # Check status locker 12
+                        if services.getStatus(13):
+                                if (time.time() - views.request_data.locker_time[11]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 11
+                        if services.getStatus(14):
+                                if (time.time() - views.request_data.locker_time[10]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False 
+                        # Check status locker 10
+                        if services.getStatus(15):
+                                if (time.time() - views.request_data.locker_time[9]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False
+                        # Check status locker 9
+                        if services.getStatus(16):
+                                if (time.time() - views.request_data.locker_time[8]) > (tout + config.time_extention):
+                                        alarmOn()
+                                        return False
                 else:
                         if services.getStatus(12):
                                 config.time_extention += 60 
@@ -175,6 +260,14 @@ def getStatus(lockNo):
         except:
             print("I2C error")
 
+def getStatus_2(lockNo):
+        try:
+            relay = ((lockNo-1) // 16) + 5 #div get status
+            pos = ((lockNo-1) % 16)   #mod get pos
+            return not pin[relay][pos].value
+        except:
+            print("I2C error")
+
 def getAllStatus():
         if config.locker_type > 0:
                 locker = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
@@ -242,6 +335,8 @@ def locker_close(relay, lockNo):
 def checkstatus():
     for x in range(18):
         print("No. ", x+1, " : ", getStatus(x+1))
+    print("Buzeer No. 8 : ", getStatus_2(8))
+
 
 
 def get_num():
@@ -265,13 +360,13 @@ def get_num():
 #     print("d) Exit Testing")
 #     print("----------------")
 #     c = input(" ")
-
+  
 #     if c == "e":
 #         checkstatus()
 
 #     if c == "f":
 #         i = get_num()
-#         locker_open(0, i )
+#         locker_open(1, i )
 
 #     if c == "d":
 #         status = False
