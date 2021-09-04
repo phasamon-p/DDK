@@ -127,7 +127,7 @@ class Product_Result:
 
     def set_data(self):
         self.product_data = []
-        self.product_data.append(views.product_data.section())
+        self.product_data.append(views.product_data.product_data['section'])
         self.product_data.append(views.product_data.product_data['qrcode'])
         self.product_data.append(views.product_data.product_data['item_number'])
         self.product_data.append(views.product_data.product_data['product_name'])
