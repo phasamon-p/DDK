@@ -15,7 +15,6 @@ class Home:
     """Create a single-window app with multiple scenes."""
 
     def __init__(self):
-        services.checkstatus()
         """Initialize pygame and the application."""
         pygame.init() # Initialize the pygame
         pygame.display.init()  # Initialize the display module
