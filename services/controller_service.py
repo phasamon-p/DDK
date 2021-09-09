@@ -132,22 +132,22 @@ def lockertimeout(): # function check timeout after touch
                                         return False
                         # Check status locker 16
                         if services.getStatus(9):
-                                if (time.time() - views.request_data.locker_time[3]) > (tout + config.time_extention):
+                                if (time.time() - views.request_data.locker_time[15]) > (tout + config.time_extention):
                                         alarmOn()
                                         return False 
                         # Check status locker 15
                         if services.getStatus(10):
-                                if (time.time() - views.request_data.locker_time[2]) > (tout + config.time_extention):
+                                if (time.time() - views.request_data.locker_time[14]) > (tout + config.time_extention):
                                         alarmOn()
                                         return False 
                         # Check status locker 14
                         if services.getStatus(11):
-                                if (time.time() - views.request_data.locker_time[1]) > (tout + config.time_extention):
+                                if (time.time() - views.request_data.locker_time[13]) > (tout + config.time_extention):
                                         alarmOn()
                                         return False 
                         # Check status locker 13
                         if services.getStatus(12):
-                                if (time.time() - views.request_data.locker_time[0]) > (tout + config.time_extention):
+                                if (time.time() - views.request_data.locker_time[12]) > (tout + config.time_extention):
                                         alarmOn()
                                         return False
                         # Check status locker 12
