@@ -42,23 +42,32 @@ class Home:
             (9, 3): 'self.search_click()',
             (10, 3): 'self.search_click()',
             # Click request button
+            (7, 4): 'self.request_click()',
+            (8, 4): 'self.request_click()',
+            (9, 4): 'self.request_click()',
+            (10, 4): 'self.request_click()',
             (7, 5): 'self.request_click()',
             (8, 5): 'self.request_click()',
             (9, 5): 'self.request_click()',
             (10, 5): 'self.request_click()',
-            (7, 6): 'self.request_click()',
-            (8, 6): 'self.request_click()',
-            (9, 6): 'self.request_click()',
-            (10, 6): 'self.request_click()',
             # Click admin button
-            (7, 8): 'self.admin_click()',
-            (8, 8): 'self.admin_click()',
-            (9, 8): 'self.admin_click()',
-            (10, 8): 'self.admin_click()',
-            (7, 9): 'self.admin_click()',
-            (8, 9): 'self.admin_click()',
-            (9, 9): 'self.admin_click()',
-            (10, 9): 'self.admin_click()',
+            (7, 6): 'self.admin_click()',
+            (8, 6): 'self.admin_click()',
+            (9, 6): 'self.admin_click()',
+            (10, 6): 'self.admin_click()',
+            (7, 7): 'self.admin_click()',
+            (8, 7): 'self.admin_click()',
+            (9, 7): 'self.admin_click()',
+            (10, 7): 'self.admin_click()',
+             # Click emergency button
+            (7, 8): 'self.emergency_click()',
+            (8, 8): 'self.emergency_click()',
+            (9, 8): 'self.emergency_click()',
+            (10, 8): 'self.emergency_click()',
+            (7, 9): 'self.emergency_click()',
+            (8, 9): 'self.emergency_click()',
+            (9, 9): 'self.emergency_click()',
+            (10, 9): 'self.emergency_click()',
         }
 
     def do_shortcut(self, event):
@@ -87,6 +96,10 @@ class Home:
         views.Admin_Finger().run()
         pygame.quit()
 
+    def emergency_click(self):
+        views.emergency_login().run()
+        pygame.quit()     
+
     def exit_fullscreen(self):
         print("alt+X")
         config.flags = RESIZABLE
@@ -112,12 +125,15 @@ class Home:
                     if row == 2 and column == 7:
                         elements.Button(self.screen, config.green, x, y, config.bwidth + 321, config.bheight + 67).Rect()
                         elements.Text_Mainbutton('   SEARCH', position, app=(self.screen)).draw()
-                    if row == 5 and column == 7:
+                    if row == 4 and column == 7:
                         elements.Button(self.screen, config.blue, x, y, config.bwidth + 321, config.bheight + 67).Rect()  
                         elements.Text_Mainbutton('  REQUEST', position, app=(self.screen)).draw()
-                    if row == 8 and column == 7:
+                    if row == 6 and column == 7:
                         elements.Button(self.screen, config.red, x, y, config.bwidth + 321, config.bheight + 67).Rect()
                         elements.Text_Mainbutton('    ADMIN', position, app=(self.screen)).draw()
+                    if row == 8 and column == 7:
+                        elements.Button(self.screen, config.dark_yellow, x, y, config.bwidth + 321, config.bheight + 67).Rect()
+                        elements.Text_Mainbutton('EMERGENCY', position, app=(self.screen)).draw()
             
             """Run the main event loop."""
             for event in pygame.event.get():

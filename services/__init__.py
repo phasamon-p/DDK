@@ -6,6 +6,8 @@ from services.fingerprint_service import getfingerid, updatefinrgerprint, get_fi
 from services.buzzer_service import getbuzzer, updatebuzzer, insertbuzzer
 from services.requestlog_service import get_requestlog, insert_requestlog, update_requestlog_check
 from services.adminlog_service import get_adminlog, insert_adminlog, update_adminlog_logout
+from services.emergency_service import checkuserbyid
+from services.emergencylog_service import insert_emegency_log
 
 __all__ = { 'mysqlconnect',
             'insertproduct', 
@@ -67,4 +69,6 @@ __all__ = { 'mysqlconnect',
             'insert_adminlog',
             'update_adminlog_logout',
             'getproduct_drawer',
-            'getStatus_2'}
+            'getStatus_2',
+            'checkuserbyid',
+            'insert_emegency_log'}

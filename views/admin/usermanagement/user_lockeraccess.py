@@ -276,15 +276,23 @@ class User_Lockeraccess:
             if self.editstage:
                 if self.check:
                     views.user_data.user_data['locker_access'] = self.lockeraccess_value
-                    views.User_Finger(True).run()
-                    pygame.quit()
+                    if views.user_data.user_data['permission'] == 'emergency':
+                        views.User_Result(True).run()
+                        pygame.quit()
+                    else:
+                        views.User_Finger(True).run()
+                        pygame.quit()
                 else:
                     print("Please select user locker access")
             else:
                 if self.check:
                     views.user_data.user_data['locker_access'] = self.lockeraccess_value
-                    views.User_Finger(False).run()
-                    pygame.quit()
+                    if views.user_data.user_data['permission'] == 'emergency':
+                        views.user_data.user_data['fingerid'] = str(0)
+                        views.User_Result(False).run()
+                        pygame.quit()
+                    else :
+                        views.User_Finger(False).run()
                 else:
                     print("Please select user locker access")
         else:

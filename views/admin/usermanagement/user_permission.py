@@ -26,14 +26,18 @@ class User_Permission:
         self.permission_value = ''
         self.general_button = False
         self.admin_button = False
+        self.emergency_button = False
         
         if views.user_data.user_data['permission'] == "general":
             self.general_button = True
         elif views.user_data.user_data['permission'] == "admin":
             self.admin_button = True
+        elif views.user_data.user_data['permission'] == "emergency":
+            self.emergency_button = True
         else:
             self.general_button = False
             self.admin_button = False
+            self.emergency_button = False
 
         if self.editstage:
             self.caption = 'Edit user permission'
@@ -72,6 +76,15 @@ class User_Permission:
             (8, 4): 'self.general_click()',
             (9, 4): 'self.general_click()',
             # Click admin button
+            (1, 5): 'self.admin_click()',
+            (2, 5): 'self.admin_click()',
+            (3, 5): 'self.admin_click()',
+            (4, 5): 'self.admin_click()',
+            (5, 5): 'self.admin_click()',
+            (6, 5): 'self.admin_click()',
+            (7, 5): 'self.admin_click()',
+            (8, 5): 'self.admin_click()',
+            (9, 5): 'self.admin_click()',
             (1, 6): 'self.admin_click()',
             (2, 6): 'self.admin_click()',
             (3, 6): 'self.admin_click()',
@@ -81,15 +94,25 @@ class User_Permission:
             (7, 6): 'self.admin_click()',
             (8, 6): 'self.admin_click()',
             (9, 6): 'self.admin_click()',
-            (1, 7): 'self.admin_click()',
-            (2, 7): 'self.admin_click()',
-            (3, 7): 'self.admin_click()',
-            (4, 7): 'self.admin_click()',
-            (5, 7): 'self.admin_click()',
-            (6, 7): 'self.admin_click()',
-            (7, 7): 'self.admin_click()',
-            (8, 7): 'self.admin_click()',
-            (9, 7): 'self.admin_click()',
+            # Click admin button
+            (1, 7): 'self.emergency_click()',
+            (2, 7): 'self.emergency_click()',
+            (3, 7): 'self.emergency_click()',
+            (4, 7): 'self.emergency_click()',
+            (5, 7): 'self.emergency_click()',
+            (6, 7): 'self.emergency_click()',
+            (7, 7): 'self.emergency_click()',
+            (8, 7): 'self.emergency_click()',
+            (9, 7): 'self.emergency_click()',
+            (1, 8): 'self.emergency_click()',
+            (2, 8): 'self.emergency_click()',
+            (3, 8): 'self.emergency_click()',
+            (4, 8): 'self.emergency_click()',
+            (5, 8): 'self.emergency_click()',
+            (6, 8): 'self.emergency_click()',
+            (7, 8): 'self.emergency_click()',
+            (8, 8): 'self.emergency_click()',
+            (9, 8): 'self.emergency_click()',
             # Click next button
             (6, 9): 'self.next_click()',
             (7, 9): 'self.next_click()',
@@ -129,26 +152,53 @@ class User_Permission:
             exec(self.click[column_click, row_click])
 
     def general_click(self):
-        self.toggle_button("GENERAL")
+        if views.user_data.user_data['permission'] !='emergency':
+            self.toggle_button("GENERAL")
     
     def admin_click(self):
-        self.toggle_button("ADMIN")
+        if views.user_data.user_data['permission'] !='emergency':
+            self.toggle_button("ADMIN")
+
+    def emergency_click(self):
+        if views.user_data.user_data['permission'] =='emergency' or views.user_data.user_data['permission'] =='':
+            self.toggle_button("EMERGENCY")
+
 
     def next_click(self):
         if self.general_button:
             self.permission_value = 'general'
         if self.admin_button:
             self.permission_value += 'admin'
+        if self.emergency_button:
+            self.permission_value += 'emergency'
 
         if self.permission_value != '':
             if self.editstage:
                 views.user_data.user_data['permission'] = self.permission_value
-                views.User_Lockeraccess(True).run()
-                pygame.quit()
+                if self.permission_value == 'emergency':
+                    if config.locker_type == 0:
+                        views.user_data.user_data['locker_access'] = [True, True, True, True, True, True, True, True, True, True, True, True]
+                    else:
+                        views.user_data.user_data['locker_access'] = [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+                    views.User_Result(True).run()
+                    pygame.quit()
+                else:
+                    views.User_Lockeraccess(True).run()
+                    pygame.quit()
             else:
                 views.user_data.user_data['permission'] = self.permission_value
-                views.User_Lockeraccess(False).run()
-                pygame.quit()
+                if self.permission_value == 'emergency':
+                    if config.locker_type == 0:
+                        views.user_data.user_data['locker_access'] = [True, True, True, True, True, True, True, True, True, True, True, True]
+                    else:
+                        views.user_data.user_data['locker_access'] = [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]
+                    views.user_data.user_data['fingerid'] = str(0)
+                    views.User_Result(False).run()
+                    pygame.quit()
+                else:
+                    views.User_Lockeraccess(False).run()
+                    pygame.quit()   
+                
         else:
             print("Please select user permission")
 
@@ -167,12 +217,21 @@ class User_Permission:
             else:
                 self.general_button = True
                 self.admin_button = False
+                self.emergency_button = False
         if event == "ADMIN":
             if self.admin_button:
                 self.admin_button = False
             else:
                 self.admin_button = True
-                self.general_button = False       
+                self.general_button = False
+                self.emergency_button = False           
+        if event == "EMERGENCY":
+            if self.emergency_button:
+                self.emergency_button = False
+            else:
+                self.emergency_button= True
+                self.general_button = False
+                self.admin_button = False       
 
     def run(self):
         """Initialize Caption and Valiable."""
@@ -199,12 +258,19 @@ class User_Permission:
                         else:
                             elements.Button(self.screen, config.blue, x, y, config.bwidth + 963, config.bheight + 67).Rect()
                         elements.Text_Button_Medium('  GENERAL', position3, app=(self.screen)).draw()
-                    if row == 6 and column == 1:
+                    if row == 5 and column == 1:
                         if self.admin_button:
                             elements.Button(self.screen, config.green, x, y, config.bwidth + 963, config.bheight + 67).Rect()
                         else:
                             elements.Button(self.screen, config.blue, x, y, config.bwidth + 963, config.bheight + 67).Rect()
                         elements.Text_Button_Medium('   ADMIN', position3, app=(self.screen)).draw()
+
+                    if row == 7 and column == 1:
+                        if self.emergency_button:
+                            elements.Button(self.screen, config.green, x, y, config.bwidth + 963, config.bheight + 67).Rect()
+                        else:
+                            elements.Button(self.screen, config.blue, x, y, config.bwidth + 963, config.bheight + 67).Rect()
+                        elements.Text_Button_Medium('EMERGENCY', position3, app=(self.screen)).draw()  
 
                     if row == 9 and column == 1:
                         elements.Button(self.screen, config.red, x, y, config.bwidth + 428, config.bheight + 67).Rect()

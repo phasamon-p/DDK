@@ -79,7 +79,8 @@ class User_Result:
         if self.editstage:
             self.set_data()
             services.updatepersonbyid(views.user_data.old_id, self.user_data)
-            services.insertpermission(self.user_data[0], self.user_data[6])
+            if views.user_data.user_data['permission'] != 'emergency':
+                services.insertpermission(self.user_data[0], self.user_data[6])
             views.user_data.userdata_reset()
             views.user_data.list_reset()
             views.User_Edit().run()
@@ -87,21 +88,30 @@ class User_Result:
         else: 
             self.set_data()
             services.insertperson(self.user_data)
-            services.updatefinrgerprint(self.user_data[4])
             services.insertpermission(self.user_data[0], self.user_data[6])
+            if views.user_data.user_data['permission'] != 'emergency':
+                 services.updatefinrgerprint(self.user_data[4])
             views.user_data.userdata_reset()
             views.User_Management().run()
             pygame.quit()
 
     def back_click(self):
         if self.editstage:
-            views.User_Finger(True).run()
-            pygame.quit()
+            if views.user_data.user_data['permission'] == 'emergency':
+                views.User_Lockeraccess(True).run()
+                pygame.quit()
+            else:
+                views.User_Finger(True).run()
+                pygame.quit()
         else:
-            services.delete_fingerprint(int(views.user_data.user_data['fingerid']))
-            views.user_data.user_data['fingerid'] = ''
-            views.User_Finger(False).run()
-            pygame.quit()
+            if views.user_data.user_data['permission'] == 'emergency':
+                views.User_Lockeraccess(True).run()
+                pygame.quit()
+            else:
+                services.delete_fingerprint(int(views.user_data.user_data['fingerid']))
+                views.user_data.user_data['fingerid'] = ''
+                views.User_Finger(False).run()
+                pygame.quit()
     
     def set_data(self):
         self.user_data = []
@@ -117,7 +127,6 @@ class User_Result:
     def run(self):
         """Initialize Caption and Valiable."""
         pygame.display.set_caption(self.caption + config.VERSION)
-        print("User_data :", views.user_data.user_data)
         """Run the main event loop."""
         while self.running:
             self.screen.fill(Color('white'))      

@@ -562,7 +562,7 @@ class Useredit_Listview:
 
             self.permission[x + self.index] = self.font.render(self.data[x + self.index].permission, True, self.color)
             self.permission_rect[x + self.index] = self.permission[x + self.index].get_rect()
-            self.permission_rect[x + self.index].topleft = ((7 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
+            self.permission_rect[x + self.index].topleft = ((6.9 * config.bwidth) + config.margin + 15 ,((x + self.start_column) * config.bheight) + (config.margin * ((x + 5) - 1)) + ((config.bheight - self.fontsize + config.margin) / 2))
 
             # self.locker_number[x + self.index] = self.font.render(self.data[x + self.index].locker, True, self.color)
             # self.locker_rect[x + self.index] = self.locker_number[x + self.index].get_rect()
