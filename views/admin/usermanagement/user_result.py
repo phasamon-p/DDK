@@ -98,14 +98,18 @@ class User_Result:
     def back_click(self):
         if self.editstage:
             if views.user_data.user_data['permission'] == 'emergency':
-                views.User_Lockeraccess(True).run()
+                views.User_Permission(True).run()
                 pygame.quit()
             else:
                 views.User_Finger(True).run()
                 pygame.quit()
         else:
             if views.user_data.user_data['permission'] == 'emergency':
-                views.User_Lockeraccess(True).run()
+                if config.locker_type == 0:
+                    views.user_data.user_data['locker_access'] = [False, False, False, False, False, False, False, False, False, False, False, False]
+                else:
+                    views.user_data.user_data['locker_access'] = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+                views.User_Permission(False).run()
                 pygame.quit()
             else:
                 services.delete_fingerprint(int(views.user_data.user_data['fingerid']))

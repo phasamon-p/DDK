@@ -152,16 +152,26 @@ class User_Permission:
             exec(self.click[column_click, row_click])
 
     def general_click(self):
-        if views.user_data.user_data['permission'] !='emergency':
+        if self.editstage:
+            if views.user_data.user_data['permission'] !='emergency':
+                self.toggle_button("GENERAL")
+        else:
             self.toggle_button("GENERAL")
     
     def admin_click(self):
-        if views.user_data.user_data['permission'] !='emergency':
+        if self.editstage:
+            if views.user_data.user_data['permission'] !='emergency':
+                self.toggle_button("ADMIN")
+        else:
             self.toggle_button("ADMIN")
 
     def emergency_click(self):
-        if views.user_data.user_data['permission'] =='emergency' or views.user_data.user_data['permission'] =='':
+        if self.editstage:
+            if views.user_data.user_data['permission'] =='emergency' or views.user_data.user_data['permission'] =='':
+                self.toggle_button("EMERGENCY")
+        else:
             self.toggle_button("EMERGENCY")
+
 
 
     def next_click(self):
