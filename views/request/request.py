@@ -9,6 +9,15 @@ import elements
 import views
 import services
 
+class requester_data():
+    requester_id = ""
+    requester_name = ""
+    requester_lname = ""
+    department = ""
+    fingerid = ""
+    permission = ""
+    locker = ""
+
 class Request:
     """Create a single-window app with multiple scenes."""
 
@@ -19,6 +28,7 @@ class Request:
         self.screen = pygame.display.set_mode(config.screensize, config.flags) # Set mode of screen
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True
+        self.requester_information = requester_data()
 
         self.next_button = False # Set default avtivation status of next button
         self.previous_button = False # Set default avtivation status of previous button
@@ -108,9 +118,29 @@ class Request:
 
     def confirm_click(self):
         if len(self.product_data) > 0:
-            views.Request_Finger().run()
-            pygame.quit()
+            if not (views.emergency_data.emergency_data['emergency_request']):
+                views.Request_Finger().run()
+                pygame.quit()
+            else:
+                self.request_data = services.getpersonbyid(views.emergency_data.emergency_data['user_id'])
+                self.setdata()
+                self.dataaccess = views.request_data.emergency_open()
+                print(self.dataaccess)
+                if self.dataaccess:
+                    if services.lockerrequest_open(self.dataaccess):
+                        services.updatequantity_byqrcode(views.request_data.request_list2)
+                        services.insert_emergency_requestlog(views.request_data.requester_data, views.request_data.request_list2)
+                        views.request_data.list_idcheck_reset()
+                        views.request_data.list_check_reset()
+                        views.request_data.list_reset()
+                        views.request_data.reset()
+                        views.request_data.requester_reset()
+                        views.emergency_data.emergrncydata_reset()
+                        views.Home().run()
+                        pygame.quit()
+               
         else:
+            
             print("Please enter you request")
 
     def delete_list(self):
@@ -122,8 +152,20 @@ class Request:
     def cancel_click(self):
         views.request_data.list_reset()
         views.request_data.reset()
+        views.emergency_data.emergrncydata_reset()
         views.Home().run()
         pygame.quit()
+
+    def setdata(self):
+        if self.request_data[0]:
+            self.requester_information.requester_id = self.request_data[1][0][0][0]
+            self.requester_information.requester_name = self.request_data[1][0][0][1]
+            self.requester_information.requester_lname = self.request_data[1][0][0][2]
+            self.requester_information.department = services.getdepartmentbyid_bool(self.request_data[1][0][0][0])
+            self.requester_information.fingerid = str(self.request_data[1][0][0][4])
+            self.requester_information.permission = self.request_data[1][0][0][5]
+            self.requester_information.locker = services.getpermission_byid_bool(self.request_data[1][0][0][0])
+        views.request_data.requesterdata_setedit(self.requester_information)
 
     def run(self):
         """Initialize Caption and Valiable."""

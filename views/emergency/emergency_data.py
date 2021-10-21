@@ -1,3 +1,4 @@
+from numpy.core.numeric import True_
 import pygame
 from pygame.locals import *
 import config 
@@ -14,8 +15,9 @@ def list_delete():
 def list_reset():
     request_list.clear()
 
-emergency_data = { 'user_id' : "",
-                   'locker' :1}
+emergency_data = { 'user_id' :'',
+                   'locker' :'',
+                   'emergency_request':False}
 
 def add(object):
     emergency_data.append(object)
@@ -26,9 +28,12 @@ def delete():
 def reset():
     emergency_data.clear()
 
-def userdata_reset():
-    emergency_data['user_id'] = ''
+def emergrncydata_reset():
+    emergency_data ['user_id']=''
+    emergency_data ['locker']=''
+    emergency_data ['emergency_request']=False
 
 
+    
         
 

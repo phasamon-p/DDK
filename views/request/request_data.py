@@ -127,3 +127,22 @@ def check_lockeraccess():
             else:
                 return False
     return access_list
+
+
+def emergency_open():
+    if config.locker_type == 0:
+        access_list = [False, False, False, False, False, False, False, False, False, False, False, False]
+    else:
+        access_list = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+    
+    for x in range(len(request_list2)):
+        locker = request_list2[x].locker_number.split(",")
+        # print("locker", locker)
+        # print("request_list2[x].locker_number", request_list2[x].locker_number)
+        for y in range(len(locker)):
+            # print(requester_data['locker_access'])
+            # print(x, int(locker[y]) +1)
+            
+            access_list[int(locker[y]) - 1] = True
+         
+    return access_list

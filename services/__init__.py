@@ -4,7 +4,7 @@ from services.user_service import selectperson, selectpersonbyid, getpersonbyfin
 from services.permission_service import getpermission, getpermissionbylocker, checkpermission, insertpermission, deletepermissionbyid, getpermission_byid_string, getpermission_byid_bool
 from services.fingerprint_service import getfingerid, updatefinrgerprint, get_fingerprint, enroll_finger, delete_fingerprint
 from services.buzzer_service import getbuzzer, updatebuzzer, insertbuzzer
-from services.requestlog_service import get_requestlog, insert_requestlog, update_requestlog_check
+from services.requestlog_service import get_requestlog, insert_requestlog, update_requestlog_check ,insert_emergency_requestlog
 from services.adminlog_service import get_adminlog, insert_adminlog, update_adminlog_logout
 from services.emergency_service import checkuserbyid
 from services.emergencylog_service import insert_emegency_log
@@ -71,4 +71,5 @@ __all__ = { 'mysqlconnect',
             'getproduct_drawer',
             'getStatus_2',
             'checkuserbyid',
-            'insert_emegency_log'}
+            'insert_emegency_log',
+            'insert_emergency_requestlog'}

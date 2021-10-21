@@ -77,7 +77,7 @@ class emergency_login :
             if config.locker_type == 0:
                 if  services.checkuserbyid(self.userid_value)[0]:
                     views.emergency_data.emergency_data['user_id'] = self.userid_value
-                    views.locker_control_emegency().run();
+                    views.emergency_mode().run();
                     pygame.quit()
                 else:
                     self.message=False
@@ -85,7 +85,7 @@ class emergency_login :
             else:
                 if  services.checkuserbyid(self.userid_value)[0]:
                     views.emergency_data.emergency_data['user_id'] = self.userid_value
-                    views.locker_control_emegency().run();
+                    views.emergency_mode().run();
                     pygame.quit()
                 else:
                     self.message=False

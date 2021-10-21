@@ -19,7 +19,7 @@ class locker_control_emegency:
         self.screen.fill(Color('white')) # Set background color of screen
         self.running = True 
         self.caption = 'locker control'
-        self.title = 'EMERGENCY LOCKER CONTROL'
+        self.title = 'LOCKER CONTROL'
 
         self.shortcuts = {
             (K_x, KMOD_LMETA): 'print("cmd+X")',
@@ -233,6 +233,7 @@ class locker_control_emegency:
 
     def cancel_click(self):
         if services.lockertimeout():
+                views.emergency_data.emergrncydata_reset()
                 views.Home().run()
                 pygame.quit()
         else: 
@@ -252,6 +253,7 @@ class locker_control_emegency:
                 self.locker_button[event - 1] = True
                 services.locker_open(0, event)
                 services.insert_emegency_log(views.emergency_data.emergency_data,event)
+                views.emergency_data.emergrncydata_reset()
                 views.Home().run()
                 pygame.quit()
         
@@ -260,6 +262,7 @@ class locker_control_emegency:
                 self.locker_button[event - 1] = True
                 services.locker_open(0, event)
                 services.insert_emegency_log(views.emergency_data.emergency_data,event)
+                views.emergency_data.emergrncydata_reset()
                 views.Home().run()
                 pygame.quit()
 

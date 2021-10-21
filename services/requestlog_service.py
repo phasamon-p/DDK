@@ -147,3 +147,19 @@ def update_requestlog_check():
                 connection.close()
                 cursor.close()
                 print("MySQL connection is closed")
+
+def insert_emergency_requestlog(employee,product):
+    try:
+        connection = mysqlconnect()
+        mySql_insert_query = """INSERT INTO request_log (date, time, personid, qrcode, request, recheck, activity, status) 
+                                                       VALUES ( %s, %s, %s, %s, %s, %s, %s, %s) """
+        for x in range(len(product)):
+            record = (datetime.datetime.now().date(), datetime.datetime.now().time(), employee['requester_id'], product[x].qrcode, product[x].quantity, "False", "emergency", 1)
+            cursor = connection.cursor()
+            cursor.execute(mySql_insert_query, record)
+            connection.commit()
+            views.request_data.list_idcheck_add(getlast_idlog())
+            
+    except mysql.connector.Error as e:
+        print("Failed to update columns of table: {}".format(e))
+        return False
